@@ -1,0 +1,22 @@
+{
+  "name": "TVK69",
+  "short_name": "TVK69",
+  "description": "ระบบห้องเรียนออนไลน์ ศูนย์รวมเอกสารและพื้นที่ฝากไฟล์",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#f3f4f6",
+  "theme_color": "#4f46e5",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "uploads/tvk69.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "uploads/tvk69.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
