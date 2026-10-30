@@ -1,6 +1,6 @@
 # 📊 Website Analysis: tvk69.site
 
-[![Website Status](https://img.shields.io/website?url=https%3A%2F%2Ftvk69.site)](https://tvk69.site)
+[![Website Status](https://img.shields.io/website?url=https://tvk69.site)](https://www.tvk69.site)
 [![Analysis Date](https://img.shields.io/badge/Analyzed-July_2026-blue)](#)
 
 ## 📝 Overview (ภาพรวมของโปรเจกต์)
