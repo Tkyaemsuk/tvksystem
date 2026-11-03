@@ -1087,8 +1087,11 @@
 
 <!-- TVK69 INLINE RECORDINGS -->
 <style>
-/* TVK69 recordings page - inherits existing Kanit/Tailwind design */
-.rec-banner{display:flex;align-items:center;gap:22px;padding:30px;border-radius:22px;border:1px solid #e2e4ff;background:linear-gradient(110deg,#f0efff,#fafaff 70%,#eff8ff);margin-bottom:24px}.rec-banner-icon{width:70px;height:70px;display:grid;place-items:center;flex-shrink:0;border-radius:20px;background:#e2dfff;color:#5b50d8;font-size:30px}.rec-eyebrow{color:#7473bd;font-size:10px;letter-spacing:.13em;font-weight:600}.rec-banner h3{font-size:24px;font-weight:600;color:#222b4b;margin:5px 0}.rec-banner p{color:#73809a;font-size:13px;line-height:1.8}.rec-controls{display:grid;grid-template-columns:minmax(200px,1fr) 190px 145px;gap:12px;margin-bottom:22px}.rec-search{display:flex;align-items:center;gap:10px;background:white;border:1px solid #e5eaf3;border-radius:13px;padding:0 16px;color:#8b92aa}.rec-search input{width:100%;min-height:48px;background:transparent;outline:0!important;border:0!important;box-shadow:none!important;font-size:13px}.rec-controls select{min-height:48px;border:1px solid #e5eaf3;border-radius:13px;background:white;padding:0 13px;color:#4f5870;font-size:13px}.rec-list-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.rec-list-head h3{font-size:17px;font-weight:600;color:#23304a}.rec-list-head span{font-size:12px;color:#8390a5}.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}.rec-card{overflow:hidden;background:#fff;border:1px solid #e8ebf4;border-radius:18px;transition:transform .2s,box-shadow .2s}.rec-card:hover{transform:translateY(-3px);box-shadow:0 13px 34px #23304a12}.rec-thumb{position:relative;width:100%;aspect-ratio:16/9;display:grid;place-items:center;overflow:hidden;background:linear-gradient(125deg,#252c55,#5558a6);color:#ffffff70;font-size:52px}.rec-thumb>img{width:100%;height:100%;object-fit:cover}.rec-play{position:absolute;display:grid;place-items:center;width:47px;height:47px;border-radius:50%;background:#fff;color:#5851d9;font-size:17px;box-shadow:0 5px 20px #0003}.rec-card-body{padding:18px}.rec-subject{display:inline-block;background:#f1efff;color:#695ed0;padding:4px 9px;border-radius:7px;font-size:10px;font-weight:600}.rec-card-body h3{font-size:15px;line-height:1.55;color:#27314c;font-weight:600;margin:9px 0 5px;min-height:46px}.rec-card-body p{font-size:12px;color:#8390a4;line-height:1.6;min-height:38px}.rec-meta{display:flex;flex-wrap:wrap;gap:8px 14px;font-size:11px;color:#8792a3;margin:12px 0}.rec-watch{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;border-radius:11px;background:#eeedff;color:#5b52ce;font-size:12px;font-weight:600}.rec-watch:hover{background:#5b52ce;color:white}.rec-empty{grid-column:1/-1;text-align:center;padding:70px 20px;border:1px dashed #d5d9e9;border-radius:19px;background:#ffffffbb;color:#9ba3b6}.rec-empty>i{font-size:36px;margin-bottom:14px;color:#b1b0dd}.rec-empty h3{font-size:17px;font-weight:600;color:#536079}.rec-empty p{font-size:12px;margin-top:6px}.rec-message{font-size:12px;color:#b45309;margin-bottom:10px}.rec-viewer{margin-bottom:24px;background:white;border:1px solid #e6eaf3;border-radius:20px;overflow:hidden;box-shadow:0 12px 35px #2634510d}.rec-player-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 21px}.rec-player-head h3{font-size:16px;font-weight:600;color:#22304b}.rec-player-head p{font-size:11px;color:#8a93a8;margin-top:3px}.rec-player-head button{border-radius:9px;padding:9px 13px;color:#667085;background:#f3f5fa;font-size:12px;white-space:nowrap}.rec-player{aspect-ratio:16/9;background:#0b1020}.rec-player iframe{width:100%;height:100%;border:0}.rec-viewer.hidden{display:none}@media(max-width:760px){.rec-banner{padding:20px;gap:13px;align-items:flex-start}.rec-banner-icon{width:49px;height:49px;border-radius:14px;font-size:21px}.rec-banner h3{font-size:19px}.rec-banner p{font-size:11px}.rec-controls{grid-template-columns:1fr 1fr}.rec-search{grid-column:1/-1}.rec-grid{grid-template-columns:1fr}.rec-player-head{padding:14px}.rec-player-head h3{font-size:13px}}
+/* TVK69 recordings page - player + playlist layout */
+.rec-banner{display:flex;align-items:center;gap:18px;padding:24px;border-radius:20px;border:1px solid #e2e4ff;background:linear-gradient(110deg,#f0efff,#fafaff 70%,#eff8ff);margin-bottom:20px}.rec-banner-icon{width:58px;height:58px;display:grid;place-items:center;flex-shrink:0;border-radius:17px;background:#e2dfff;color:#5b50d8;font-size:24px}.rec-eyebrow{color:#7473bd;font-size:10px;letter-spacing:.13em;font-weight:600}.rec-banner h3{font-size:22px;font-weight:600;color:#222b4b;margin:3px 0}.rec-banner p{color:#73809a;font-size:12px;line-height:1.7}.rec-controls{display:grid;grid-template-columns:minmax(220px,1fr) 180px 140px;gap:10px;margin-bottom:18px}.rec-search{display:flex;align-items:center;gap:10px;background:white;border:1px solid #e5eaf3;border-radius:12px;padding:0 14px;color:#8b92aa}.rec-search input{width:100%;min-height:44px;background:transparent;outline:0!important;border:0!important;box-shadow:none!important;font-size:13px}.rec-controls select{min-height:44px;border:1px solid #e5eaf3;border-radius:12px;background:white;padding:0 12px;color:#4f5870;font-size:12px}.rec-list-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.rec-list-head h3{font-size:16px;font-weight:600;color:#23304a}.rec-list-head span{font-size:12px;color:#8390a5}.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}.rec-card{overflow:hidden;background:#fff;border:1px solid #e8ebf4;border-radius:16px;transition:transform .2s,box-shadow .2s}.rec-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px #23304a12}.rec-thumb{position:relative;width:100%;aspect-ratio:16/9;display:grid;place-items:center;overflow:hidden;background:linear-gradient(125deg,#252c55,#5558a6);color:#ffffff70;font-size:46px}.rec-thumb>img{width:100%;height:100%;object-fit:cover}.rec-play{position:absolute;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#fff;color:#5851d9;font-size:15px;box-shadow:0 5px 18px #0003}.rec-card-body{padding:15px}.rec-subject{display:inline-block;background:#f1efff;color:#695ed0;padding:4px 8px;border-radius:7px;font-size:10px;font-weight:600}.rec-card-body h3{font-size:14px;line-height:1.5;color:#27314c;font-weight:600;margin:8px 0 4px;min-height:42px}.rec-card-body p{font-size:11px;color:#8390a4;line-height:1.55;min-height:34px}.rec-meta{display:flex;flex-wrap:wrap;gap:7px 12px;font-size:10px;color:#8792a3;margin:10px 0}.rec-watch{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:10px;border-radius:10px;background:#eeedff;color:#5b52ce;font-size:11px;font-weight:600}.rec-watch:hover{background:#5b52ce;color:white}.rec-empty{grid-column:1/-1;text-align:center;padding:55px 20px;border:1px dashed #d5d9e9;border-radius:18px;background:#ffffffbb;color:#9ba3b6}.rec-empty>i{font-size:32px;margin-bottom:12px;color:#b1b0dd}.rec-empty h3{font-size:16px;font-weight:600;color:#536079}.rec-empty p{font-size:11px;margin-top:5px}.rec-message{font-size:12px;color:#b45309;margin-bottom:10px}
+.rec-viewer{margin-bottom:20px}.rec-viewer.hidden{display:none!important}.rec-watch-layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:16px;align-items:start}.rec-main{min-width:0}.rec-player-shell{overflow:hidden;background:#fff;border:1px solid #e4e8f1;border-radius:18px;box-shadow:0 10px 30px #26345110}.rec-player-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:14px 16px}.rec-player-head h3{font-size:16px;font-weight:600;color:#22304b;line-height:1.45}.rec-player-head p{font-size:10px;color:#8a93a8;margin-top:3px}.rec-player-head button{border-radius:9px;padding:8px 11px;color:#667085;background:#f3f5fa;font-size:11px;white-space:nowrap}.rec-player{width:100%;aspect-ratio:16/9;max-height:min(64vh,620px);background:#0b1020}.rec-player iframe,.rec-player video{display:block;width:100%;height:100%;border:0;object-fit:contain}.rec-detail{padding:15px 16px;border-top:1px solid #eef1f6}.rec-detail p{font-size:12px;line-height:1.7;color:#667085}.rec-side{position:sticky;top:18px;background:#fff;border:1px solid #e5e9f1;border-radius:18px;padding:14px;max-height:calc(100vh - 36px);overflow:auto}.rec-side-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.rec-side-head h3{font-size:14px;font-weight:600;color:#26324a}.rec-side-head span{font-size:10px;color:#94a0b4}.rec-related{display:grid;gap:9px}.rec-related-item{display:grid;grid-template-columns:112px minmax(0,1fr);gap:10px;width:100%;text-align:left;padding:7px;border-radius:12px;border:1px solid transparent;transition:.18s;background:#fff}.rec-related-item:hover{background:#f8f8ff;border-color:#ecebfd}.rec-related-item.current{background:#efefff;border-color:#dddcff}.rec-related-thumb{aspect-ratio:16/9;border-radius:9px;overflow:hidden;background:linear-gradient(125deg,#252c55,#5558a6);display:grid;place-items:center;color:#fff8;font-size:24px}.rec-related-thumb img{width:100%;height:100%;object-fit:cover}.rec-related-copy{min-width:0}.rec-related-copy strong{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:11px;line-height:1.45;color:#27314c}.rec-related-copy span{display:block;margin-top:4px;font-size:9px;color:#8b96aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rec-comments{margin-top:14px;background:#fff;border:1px solid #e5e9f1;border-radius:18px;padding:16px}.rec-comments-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.rec-comments-head h3{font-size:14px;font-weight:600;color:#26324a}.rec-comments-head span{font-size:10px;color:#8d98ab}.rec-comment-form{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:8px;margin-bottom:14px}.rec-comment-form input,.rec-comment-form textarea{border:1px solid #dfe5ef!important;border-radius:10px!important;padding:9px 10px!important;background:#fbfcff;font-size:11px;outline:0}.rec-comment-form textarea{resize:vertical;min-height:42px;max-height:110px}.rec-comment-form button{align-self:stretch;border:0;border-radius:10px;padding:0 14px;background:#5653d7;color:white;font-size:11px;font-weight:600}.rec-comment-form button:disabled{opacity:.6;cursor:not-allowed}.rec-comment-help{grid-column:1/-1;font-size:9px;color:#9aa4b5;margin-top:-3px}.rec-comment-list{display:grid;gap:4px}.rec-comment{display:flex;gap:12px;padding:14px 0;border-top:1px solid #f0f2f6}.rec-comment:first-child{border-top:0}.rec-comment-avatar{width:40px;height:40px;flex:none;border-radius:50%;object-fit:cover;background:#eef0ff;display:grid;place-items:center;color:#6b67d9;font-size:14px;box-shadow:0 0 0 1px #e5e9f3}.rec-comment-body{min-width:0;flex:1}.rec-comment-top{display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-height:22px}.rec-comment-author{font-size:12px;font-weight:600;color:#202738}.rec-comment-student{font-size:9px;color:#818da2;background:#f3f5f9;border-radius:999px;padding:2px 7px}.rec-comment-time{font-size:9px;color:#9aa4b5}.rec-comment-text{font-size:12px;line-height:1.65;color:#3f485a;margin-top:4px;white-space:pre-wrap;overflow-wrap:anywhere}.rec-comment-delete{margin-left:auto;border:0;background:transparent;color:#c7ccd6;font-size:11px;padding:4px 7px;border-radius:8px}.rec-comment-delete:hover{color:#dc2626;background:#fff1f2}.rec-comments-empty{text-align:center;padding:20px;color:#9aa4b5;font-size:11px}
+@media(max-width:1050px){.rec-watch-layout{grid-template-columns:minmax(0,1fr) 285px}.rec-related-item{grid-template-columns:96px minmax(0,1fr)}}@media(max-width:860px){.rec-watch-layout{grid-template-columns:1fr}.rec-side{position:static;max-height:none}.rec-related{grid-template-columns:repeat(2,minmax(0,1fr))}.rec-related-item{grid-template-columns:100px minmax(0,1fr)}}@media(max-width:760px){.rec-banner{padding:18px;gap:12px;align-items:flex-start}.rec-banner-icon{width:46px;height:46px;border-radius:13px;font-size:19px}.rec-banner h3{font-size:18px}.rec-banner p{font-size:11px}.rec-controls{grid-template-columns:1fr 1fr}.rec-search{grid-column:1/-1}.rec-grid{grid-template-columns:1fr}.rec-player-head{padding:12px}.rec-player-head h3{font-size:13px}.rec-player{max-height:none}.rec-comment-form{grid-template-columns:1fr}.rec-comment-form button{min-height:42px}.rec-related{grid-template-columns:1fr}.rec-related-item{grid-template-columns:112px minmax(0,1fr)}}
 
 </style>
 
@@ -3752,8 +3755,18 @@
             ensureRealtimeState();
             closeNavDropdowns();
             if (name !== 'stories' && storiesInterval) { clearInterval(storiesInterval); storiesInterval = null; document.getElementById('liveIndicator')?.classList.add('hidden'); }
-            ['documents', 'testingTab', 'students', 'resume', 'website', 'ranking', 'contact', 'admin', 'saveme', 'stories', 'diary', 'quota'].forEach(t => {
-                const btn = document.getElementById(t.includes('Tab') ? t : t + 'Tab'); const content = document.getElementById(t.replace('Tab', '') + 'Content');
+            // Reset every navigation item first so only one menu can stay active.
+            document.querySelectorAll('.nav-dropdown-item').forEach(btn => {
+                btn.classList.remove('nav-active');
+                btn.removeAttribute('data-active');
+            });
+            document.querySelectorAll('.nav-dropdown .nav-category-btn').forEach(btn => {
+                btn.setAttribute('data-current', 'false');
+            });
+
+            ['documents', 'testingTab', 'students', 'resume', 'website', 'ranking', 'contact', 'admin', 'saveme', 'stories', 'diary', 'quota', 'recordings'].forEach(t => {
+                const btn = document.getElementById(t.includes('Tab') ? t : t + 'Tab');
+                const content = document.getElementById(t.replace('Tab', '') + 'Content');
                 if (btn) {
                     btn.classList.remove('nav-active');
                     btn.removeAttribute('data-active');
@@ -3765,7 +3778,8 @@
                 activeBtn.classList.add('nav-active');
                 activeBtn.setAttribute('data-active', 'true');
             }
-            document.getElementById(name.replace('Tab', '') + 'Content').classList.remove('hidden');
+            const activeContent = document.getElementById(name.replace('Tab', '') + 'Content');
+            if (activeContent) activeContent.classList.remove('hidden');
 
             if (name === 'documents') { if (docState.documents.length || docState.teachers.length) refreshDocumentBrowser(); else loadDocuments(); }
             if (name === 'testingTab') { if (programsRealtimeCache.length) renderProgramsRealtime(programsRealtimeCache); else loadPrograms(); }
@@ -5475,10 +5489,14 @@ function calculateAttendanceQuota(isUserAction = false) {
 /* TVK69 - Online recorded lessons. Data source: authenticated TVK69 API */
 (() => {
   'use strict';
-  const state = { videos: [], subject: '', query: '', sort: 'newest', current: null };
+  const state = { videos: [], subject: '', query: '', sort: 'newest', current: null, comments: [] };
+  const studentProfileCache = new Map();
   const $ = id => document.getElementById(id);
   const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const dateStr = v => { if (!v) return 'ไม่ระบุวันที่'; const d = new Date(v); return isNaN(d) ? 'ไม่ระบุวันที่' : d.toLocaleDateString('th-TH', {year:'numeric',month:'short',day:'numeric'}); };
+  const commentDate = v => { const d = new Date(v); return isNaN(d) ? '' : d.toLocaleString('th-TH',{dateStyle:'medium',timeStyle:'short'}); };
+  const localCommentKey = id => `tvk69.recording.comments.${id}`;
+
   function parseVideo(url) {
     try {
       const u = new URL(url, window.location.href);
@@ -5497,9 +5515,10 @@ function calculateAttendanceQuota(isUserAction = false) {
         if (id) return {kind:'vimeo',src:`https://player.vimeo.com/video/${id}`};
       }
       if (/\.(?:mp4|webm|ogg)(?:$|\?)/i.test(u.pathname + u.search)) return {kind:'file',src:u.href};
-    } catch (_) { /* invalid URL */ }
+    } catch (_) {}
     return null;
   }
+
   async function load() {
     const area = $('recordingsGrid'); if (!area) return;
     $('recordingsMessage').textContent = 'กำลังโหลดวิดีโอจากเซิร์ฟเวอร์...';
@@ -5509,12 +5528,13 @@ function calculateAttendanceQuota(isUserAction = false) {
       $('recordingsMessage').textContent = response?.message || 'ไม่สามารถดึงข้อมูลวิดีโอจากเซิร์ฟเวอร์ได้';
       fillSubjects(); render(); return;
     }
-    const json = response.videos;
-    state.videos = json.filter(v => v && typeof v.title === 'string' && parseVideo(v.url))
+    state.videos = response.videos.filter(v => v && typeof v.title === 'string' && parseVideo(v.url))
       .map((v, i) => ({...v, _id: String(v.id ?? i)}));
     $('recordingsMessage').textContent = '';
     fillSubjects(); render();
+    if (state.current && state.videos.some(v => v._id === state.current)) renderRelated();
   }
+
   function fillSubjects() {
     const el = $('recordingsSubject'); if (!el) return;
     const subjects = [...new Set(state.videos.map(v => (v.subject || '').trim()).filter(Boolean))].sort((a,b) => a.localeCompare(b,'th'));
@@ -5522,34 +5542,217 @@ function calculateAttendanceQuota(isUserAction = false) {
     el.innerHTML = '<option value="">ทุกรายวิชา</option>' + subjects.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('');
     el.value = state.subject;
   }
-  function render() {
-    const grid = $('recordingsGrid'); if (!grid) return;
+
+  function filteredVideos() {
     const q = state.query.trim().toLocaleLowerCase();
     const rows = state.videos.filter(v => (!state.subject || v.subject === state.subject) && (!q || [v.title,v.subject,v.teacher,v.description].join(' ').toLocaleLowerCase().includes(q)));
     rows.sort((a,b) => state.sort === 'az' ? a.title.localeCompare(b.title,'th') : (Date.parse(b.date || 0) || 0) - (Date.parse(a.date || 0) || 0));
+    return rows;
+  }
+
+  function render() {
+    const grid = $('recordingsGrid'); if (!grid) return;
+    const rows = filteredVideos();
     $('recordingsCount').textContent = `${rows.length} วิดีโอ`;
-    if (!rows.length) { grid.innerHTML = `<div class="rec-empty"><i class="fas fa-video-slash"></i><h3>${state.videos.length ? 'ไม่พบคลิปที่ตรงกับการค้นหา' : 'ยังไม่มีวิดีโอบันทึกการเรียน'}</h3><p>${state.videos.length ? 'ลองเปลี่ยนคำค้นหาหรือเลือกวิชาอื่น' : 'รอผู้ดูแลเพิ่มรายการวิดีโอ'}</p></div>`; return; }
+    if (!rows.length) {
+      grid.innerHTML = `<div class="rec-empty"><i class="fas fa-video-slash"></i><h3>${state.videos.length ? 'ไม่พบคลิปที่ตรงกับการค้นหา' : 'ยังไม่มีวิดีโอบันทึกการเรียน'}</h3><p>${state.videos.length ? 'ลองเปลี่ยนคำค้นหาหรือเลือกวิชาอื่น' : 'รอผู้ดูแลเพิ่มรายการวิดีโอ'}</p></div>`;
+      return;
+    }
     grid.innerHTML = rows.map(v => {
-      const media = parseVideo(v.url);
       const thumb = typeof v.thumbnail === 'string' && /^https?:\/\//i.test(v.thumbnail) ? `<img loading="lazy" src="${esc(v.thumbnail)}" alt="" />` : '<i class="fas fa-play-circle"></i>';
       return `<article class="rec-card"><button class="rec-thumb" type="button" data-video="${esc(v._id)}" aria-label="เปิดคลิป ${esc(v.title)}">${thumb}<span class="rec-play"><i class="fas fa-play"></i></span></button><div class="rec-card-body"><span class="rec-subject">${esc(v.subject || 'ไม่ระบุวิชา')}</span><h3>${esc(v.title)}</h3><p>${esc(v.description || 'วิดีโอบันทึกการเรียนย้อนหลัง')}</p><div class="rec-meta"><span><i class="far fa-calendar"></i> ${esc(dateStr(v.date))}</span><span><i class="fas fa-user-tie"></i> ${esc(v.teacher || 'ไม่ระบุผู้สอน')}</span></div><button type="button" class="rec-watch" data-video="${esc(v._id)}"><i class="fas fa-circle-play"></i> รับชมย้อนหลัง</button></div></article>`;
     }).join('');
   }
-  function stop() { const player = $('recordingsPlayer'); if (player) player.replaceChildren(); state.current = null; }
+
+  function renderRelated() {
+    const box = $('recordingsRelated'); if (!box) return;
+    const rows = state.videos.filter(v => v._id !== state.current).sort((a,b)=>(Date.parse(b.date||0)||0)-(Date.parse(a.date||0)||0));
+    $('recordingsRelatedCount').textContent = `${rows.length} คลิป`;
+    if (!rows.length) { box.innerHTML = '<div class="rec-comments-empty">ยังไม่มีคลิปอื่น</div>'; return; }
+    box.innerHTML = rows.map(v => {
+      const thumb = v.thumbnail && /^https?:\/\//i.test(v.thumbnail) ? `<img src="${esc(v.thumbnail)}" alt="" loading="lazy">` : '<i class="fas fa-play-circle"></i>';
+      return `<button type="button" class="rec-related-item" data-video="${esc(v._id)}"><span class="rec-related-thumb">${thumb}</span><span class="rec-related-copy"><strong>${esc(v.title)}</strong><span>${esc(v.subject || 'ไม่ระบุวิชา')} · ${esc(v.teacher || 'ไม่ระบุผู้สอน')}</span><span>${esc(dateStr(v.date))}</span></span></button>`;
+    }).join('');
+  }
+
+  function readLocalComments(id) {
+    try { const x = JSON.parse(localStorage.getItem(localCommentKey(id)) || '[]'); return Array.isArray(x) ? x : []; } catch { return []; }
+  }
+  function writeLocalComments(id, rows) { localStorage.setItem(localCommentKey(id), JSON.stringify(rows)); }
+
+  async function loadComments() {
+    if (!state.current) return;
+    const list = $('recordingsCommentsList');
+    if (list) list.innerHTML = '<div class="rec-comments-empty"><i class="fas fa-spinner fa-spin"></i> กำลังโหลดความคิดเห็น...</div>';
+    let rows = [];
+    let apiMode = false;
+    try {
+      const r = await fetchData(`recording-comments?recordingId=${encodeURIComponent(state.current)}`);
+      if (r?.success && Array.isArray(r.comments)) { rows = r.comments; apiMode = true; }
+    } catch (_) {}
+    if (!apiMode) rows = readLocalComments(state.current);
+    state.comments = rows;
+    await refreshCommentProfiles(apiMode);
+  }
+
+  async function getStudentProfile(studentId) {
+    const sid = String(studentId || '').trim();
+    if (!sid) return null;
+    if (studentProfileCache.has(sid)) return studentProfileCache.get(sid);
+
+    try {
+      const r = await fetchData('get-bio-data', {
+        method:'POST',
+        body:JSON.stringify({studentId:sid})
+      });
+      if (r?.success && r?.student) {
+        const profile = {
+          student_id: sid,
+          student_name: r.student.student_name || r.student.name || sid,
+          images: r.student.images || r.student.image || ''
+        };
+        studentProfileCache.set(sid, profile);
+        return profile;
+      }
+    } catch (_) {}
+    studentProfileCache.set(sid, null);
+    return null;
+  }
+
+  async function hydrateCommentProfiles() {
+    const missing = [...new Set(state.comments
+      .map(c => String(c.student_id || c.studentId || '').trim())
+      .filter(Boolean)
+      .filter(sid => !studentProfileCache.has(sid)))];
+
+    if (!missing.length) return;
+    await Promise.all(missing.map(getStudentProfile));
+  }
+
+  function renderComments(apiMode = true) {
+    const list = $('recordingsCommentsList'); if (!list) return;
+    $('recordingsCommentsCount').textContent = `${state.comments.length} ความคิดเห็น${apiMode ? '' : ' · ในเครื่องนี้'}`;
+
+    const own = String(localStorage.getItem('studentId') || '');
+
+    if (!state.comments.length) {
+      list.innerHTML = '<div class="rec-comments-empty"><i class="far fa-comment-dots"></i><br>ยังไม่มีความคิดเห็น เป็นคนแรกที่แสดงความคิดเห็นได้เลย</div>';
+      return;
+    }
+
+    list.innerHTML = state.comments.map(c => {
+      const sid = String(c.student_id || c.studentId || '');
+      const cached = studentProfileCache.get(sid);
+      const name = c.student_name || c.studentName || cached?.student_name || sid || 'นักศึกษา';
+      const image = c.images || c.image || cached?.images || '';
+      const avatar = image && /^https?:\/\//i.test(image)
+        ? `<img class="rec-comment-avatar" src="${esc(image)}" alt="${esc(name)}" loading="lazy" onerror="this.outerHTML='<div class=&quot;rec-comment-avatar&quot;><i class=&quot;fas fa-user&quot;></i></div>'">`
+        : `<div class="rec-comment-avatar"><i class="fas fa-user"></i></div>`;
+      const canDelete = own && sid === own;
+
+      return `<article class="rec-comment" data-comment-id="${esc(c.id || '')}">
+        ${avatar}
+        <div class="rec-comment-body">
+          <div class="rec-comment-top">
+            <span class="rec-comment-author">${esc(name)}</span>
+            ${sid ? `<span class="rec-comment-student">${esc(sid)}</span>` : ''}
+            <span class="rec-comment-time">${esc(commentDate(c.created_at || c.createdAt || Date.now()))}</span>
+            ${canDelete ? `<button type="button" class="rec-comment-delete" data-delete-comment="${esc(c.id || '')}" title="ลบความคิดเห็น"><i class="fas fa-trash"></i></button>` : ''}
+          </div>
+          <div class="rec-comment-text">${esc(c.comment_text || c.comment || c.text || '')}</div>
+        </div>
+      </article>`;
+    }).join('');
+  }
+
+  async function refreshCommentProfiles(apiMode = true) {
+    await hydrateCommentProfiles();
+    renderComments(apiMode);
+  }
+
+  async function submitComment(event) {
+    event.preventDefault();
+    if (!state.current) return;
+    const sidInput = $('recordingsCommentStudentId');
+    const textInput = $('recordingsCommentText');
+    const button = $('recordingsCommentSubmit');
+    const studentId = String(sidInput.value || localStorage.getItem('studentId') || '').trim();
+    const comment = String(textInput.value || '').trim();
+    if (!studentId) return Swal.fire('กรุณากรอกรหัสนักศึกษา', 'ใช้รหัสนักศึกษาเพื่อระบุผู้แสดงความคิดเห็น', 'warning');
+    if (!comment) return Swal.fire('ยังไม่ได้พิมพ์ความคิดเห็น', '', 'warning');
+    if (comment.length > 1000) return Swal.fire('ความคิดเห็นยาวเกินไป', 'สูงสุด 1,000 ตัวอักษร', 'warning');
+    button.disabled = true;
+    try {
+      const verify = await fetchData('get-bio-data', {method:'POST',body:JSON.stringify({studentId})});
+      if (!verify?.success || !verify?.student) throw new Error('ไม่พบรหัสนักศึกษานี้ในระบบ');
+      localStorage.setItem('studentId', studentId);
+      sidInput.value = studentId;
+      studentProfileCache.set(studentId, {
+        student_id: studentId,
+        student_name: verify.student.student_name || verify.student.name || studentId,
+        images: verify.student.images || verify.student.image || ''
+      });
+      let saved = null;
+      try {
+        const r = await fetchData('recording-comment-add', {method:'POST',body:JSON.stringify({recordingId:Number(state.current),studentId,comment})});
+        if (r?.success) saved = r.comment || null;
+      } catch (_) {}
+      if (saved) {
+        textInput.value = '';
+        await loadComments();
+      } else {
+        const rows = readLocalComments(state.current);
+        rows.push({id:'local-'+Date.now(),student_id:studentId,student_name:verify.student.student_name || verify.student.name || studentId,images:verify.student.images || '',comment_text:comment,created_at:new Date().toISOString()});
+        writeLocalComments(state.current, rows);
+        textInput.value = '';
+        state.comments = rows;
+        renderComments(false);
+      }
+    } catch (e) {
+      Swal.fire('ส่งความคิดเห็นไม่สำเร็จ', e.message || 'กรุณาลองใหม่', 'error');
+    } finally { button.disabled = false; }
+  }
+
+  async function deleteComment(id) {
+    if (!id || !state.current) return;
+    const sid = String(localStorage.getItem('studentId') || '');
+    const confirm = await Swal.fire({title:'ลบความคิดเห็น?',icon:'warning',showCancelButton:true,confirmButtonText:'ลบ',cancelButtonText:'ยกเลิก',confirmButtonColor:'#dc2626'});
+    if (!confirm.isConfirmed) return;
+    if (String(id).startsWith('local-')) {
+      const rows = readLocalComments(state.current).filter(c => String(c.id) !== String(id));
+      writeLocalComments(state.current, rows); state.comments = rows; renderComments(false); return;
+    }
+    try {
+      const r = await fetchData('recording-comment-delete',{method:'DELETE',body:JSON.stringify({id:Number(id),studentId:sid})});
+      if (!r?.success) throw new Error(r?.message || 'ลบความคิดเห็นไม่สำเร็จ');
+      await loadComments();
+    } catch (e) { Swal.fire('ลบไม่สำเร็จ',e.message,'error'); }
+  }
+
+  function stop() {
+    const player = $('recordingsPlayer'); if (player) player.replaceChildren();
+    state.current = null; state.comments = [];
+  }
+
   function play(id) {
-    const v = state.videos.find(v => v._id === id); if (!v) return;
+    const v = state.videos.find(v => v._id === String(id)); if (!v) return;
     const media = parseVideo(v.url); if (!media) return;
-    stop(); state.current = id;
+    const player = $('recordingsPlayer'); player.replaceChildren(); state.current = v._id;
     $('recordingsPlayerTitle').textContent = v.title;
     $('recordingsPlayerInfo').textContent = [v.subject, v.teacher, dateStr(v.date)].filter(Boolean).join(' • ');
-    const player = $('recordingsPlayer');
+    $('recordingsPlayerDescription').textContent = v.description || 'วิดีโอบันทึกการเรียนย้อนหลัง';
     if (media.kind === 'file') {
-      const video = document.createElement('video'); video.controls = true; video.playsInline = true; video.preload = 'metadata'; video.src = media.src; video.style.width = '100%'; video.style.height = '100%'; player.append(video);
+      const video = document.createElement('video'); video.controls = true; video.playsInline = true; video.preload = 'metadata'; video.src = media.src; player.append(video);
     } else {
       const iframe = document.createElement('iframe'); iframe.src = media.src; iframe.title = v.title; iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'; iframe.allowFullscreen = true; iframe.referrerPolicy = 'strict-origin-when-cross-origin'; player.append(iframe);
     }
-    $('recordingsViewer').classList.remove('hidden'); $('recordingsViewer').scrollIntoView({behavior:'smooth',block:'start'});
+    renderRelated();
+    $('recordingsViewer').classList.remove('hidden');
+    const savedStudent = localStorage.getItem('studentId'); if (savedStudent) $('recordingsCommentStudentId').value = savedStudent;
+    loadComments();
+    $('recordingsViewer').scrollIntoView({behavior:'smooth',block:'start'});
   }
+
   function init() {
     const list = $('learningDropdown')?.querySelector('.nav-dropdown-items');
     if (!list || $('recordingsContent')) return;
@@ -5557,19 +5760,23 @@ function calculateAttendanceQuota(isUserAction = false) {
     button.innerHTML = '<span class="nav-item-icon bg-rose-50 text-rose-600"><i class="fas fa-video"></i></span><span><b>บันทึกออนไลน์</b><small>รับชมวิดีโอการเรียนย้อนหลัง</small></span>';
     button.addEventListener('click', () => showTab('recordings'));
     list.insertBefore(button, list.children[1] || null);
+
     const content = document.createElement('section'); content.id = 'recordingsContent'; content.className = 'fade-in hidden';
     content.innerHTML = `<div class="rec-banner"><div class="rec-banner-icon"><i class="fas fa-clapperboard"></i></div><div><div class="rec-eyebrow">TVK CLASSROOM · VIDEO LIBRARY</div><h3>เรียนย้อนหลังได้ทุกเวลา</h3><p>ทบทวนบทเรียนด้วยคลิปวิดีโอย้อนหลัง ค้นหาตามชื่อคลิปหรือรายวิชาได้ทันที</p></div></div>
-      <div id="recordingsViewer" class="rec-viewer hidden"><div class="rec-player-head"><div><h3 id="recordingsPlayerTitle"></h3><p id="recordingsPlayerInfo"></p></div><button id="recordingsClose" type="button" aria-label="ปิดวิดีโอ"><i class="fas fa-times"></i> ปิด</button></div><div id="recordingsPlayer" class="rec-player"></div></div>
-      <div class="rec-controls"><label class="rec-search"><i class="fas fa-search"></i><input id="recordingsSearch" type="search" placeholder="ค้นหาชื่อบทเรียน วิชา หรือครูผู้สอน" aria-label="ค้นหาวิดีโอ"></label><select id="recordingsSubject" aria-label="กรองตามรายวิชา"><option value="">ทุกรายวิชา</option></select><select id="recordingsSort" aria-label="เรียงลำดับ"><option value="newest">ใหม่ล่าสุด</option><option value="az">ชื่อ ก-ฮ</option></select></div>
+      <div id="recordingsViewer" class="rec-viewer hidden"><div class="rec-watch-layout"><div class="rec-main"><div class="rec-player-shell"><div class="rec-player-head"><div><h3 id="recordingsPlayerTitle"></h3><p id="recordingsPlayerInfo"></p></div><button id="recordingsClose" type="button"><i class="fas fa-times"></i> ปิด</button></div><div id="recordingsPlayer" class="rec-player"></div><div class="rec-detail"><p id="recordingsPlayerDescription"></p></div></div><section class="rec-comments"><div class="rec-comments-head"><h3><i class="far fa-comments"></i> ความคิดเห็น</h3><span id="recordingsCommentsCount">0 ความคิดเห็น</span></div><form id="recordingsCommentForm" class="rec-comment-form"><input id="recordingsCommentStudentId" inputmode="numeric" autocomplete="off" placeholder="รหัสนักศึกษา" aria-label="รหัสนักศึกษา"><textarea id="recordingsCommentText" maxlength="1000" placeholder="แสดงความคิดเห็นเกี่ยวกับบทเรียน..." aria-label="ความคิดเห็น"></textarea><button id="recordingsCommentSubmit" type="submit"><i class="fas fa-paper-plane"></i> ส่ง</button><p class="rec-comment-help">ใช้รหัสนักศึกษาที่มีอยู่ใน TVK69 เพื่อแสดงความคิดเห็น</p></form><div id="recordingsCommentsList" class="rec-comment-list"></div></section></div><aside class="rec-side"><div class="rec-side-head"><h3>คลิปอื่น ๆ</h3><span id="recordingsRelatedCount">0 คลิป</span></div><div id="recordingsRelated" class="rec-related"></div></aside></div></div>
+      <div class="rec-controls"><label class="rec-search"><i class="fas fa-search"></i><input id="recordingsSearch" type="search" placeholder="ค้นหาชื่อบทเรียน วิชา หรือครูผู้สอน"></label><select id="recordingsSubject"><option value="">ทุกรายวิชา</option></select><select id="recordingsSort"><option value="newest">ใหม่ล่าสุด</option><option value="az">ชื่อ ก-ฮ</option></select></div>
       <div class="rec-list-head"><h3>คลิปวิดีโอทั้งหมด</h3><span id="recordingsCount">0 วิดีโอ</span></div><p id="recordingsMessage" role="status" class="rec-message"></p><div id="recordingsGrid" class="rec-grid"></div>`;
-    const shell = $('documentsContent')?.parentElement;
-    if (!shell) return;
-    shell.append(content);
+    const shell = $('documentsContent')?.parentElement; if (!shell) return; shell.append(content);
+
     $('recordingsSearch').addEventListener('input', e => {state.query=e.target.value;render();});
     $('recordingsSubject').addEventListener('change', e => {state.subject=e.target.value;render();});
     $('recordingsSort').addEventListener('change', e => {state.sort=e.target.value;render();});
     $('recordingsClose').addEventListener('click', () => {stop();$('recordingsViewer').classList.add('hidden');});
     $('recordingsGrid').addEventListener('click', e => {const btn=e.target.closest('[data-video]');if(btn)play(btn.dataset.video);});
+    $('recordingsRelated').addEventListener('click', e => {const btn=e.target.closest('[data-video]');if(btn)play(btn.dataset.video);});
+    $('recordingsCommentForm').addEventListener('submit', submitComment);
+    $('recordingsCommentsList').addEventListener('click', e => {const b=e.target.closest('[data-delete-comment]');if(b)deleteComment(b.dataset.deleteComment);});
+
     const priorShowTab = window.showTab;
     window.showTab = function(name) {
       if (name === 'recordings') {
@@ -5577,11 +5784,12 @@ function calculateAttendanceQuota(isUserAction = false) {
         document.querySelectorAll('#documentsContent,#testingContent,#studentsContent,#resumeContent,#websiteContent,#rankingContent,#contactContent,#adminContent,#savemeContent,#storiesContent,#diaryContent,#quotaContent,#recordingsContent').forEach(el=>el.classList.add('hidden'));
         document.querySelectorAll('.nav-dropdown-item').forEach(el=>{el.classList.remove('nav-active');el.removeAttribute('data-active');});
         content.classList.remove('hidden'); button.classList.add('nav-active'); button.setAttribute('data-active','true');
-        if ($('workspacePageTitle')) $('workspacePageTitle').textContent='บันทึกออนไลน์'; if ($('workspacePageSubtitle')) $('workspacePageSubtitle').textContent='คลังวิดีโอการเรียนย้อนหลัง เลือกวิชา ค้นหา และรับชมบทเรียน';
+        if ($('workspacePageTitle')) $('workspacePageTitle').textContent='บันทึกออนไลน์';
+        if ($('workspacePageSubtitle')) $('workspacePageSubtitle').textContent='คลังวิดีโอการเรียนย้อนหลัง พร้อมความคิดเห็นของนักศึกษา';
         document.querySelectorAll('.nav-dropdown').forEach(drop => drop.querySelector('.nav-category-btn')?.setAttribute('data-current',String(drop.contains(button))));
         load();
       } else {
-        stop();$('recordingsViewer').classList.add('hidden'); content.classList.add('hidden');
+        stop(); $('recordingsViewer').classList.add('hidden'); content.classList.add('hidden');
         if (typeof priorShowTab === 'function') priorShowTab(name);
       }
     };
