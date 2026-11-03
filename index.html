@@ -3675,63 +3675,24 @@
 
         <!-- ปุ่มกระดิ่งบน Navbar -->
         async function ensureNotificationIdentity() {
-            let studentId = currentSaveMeId || localStorage.getItem('studentId') || '';
+            const studentId = String(currentSaveMeId || localStorage.getItem('studentId') || '').trim();
 
-            if (studentId) {
-                if (!currentSaveMeId) {
-                    currentSaveMeId = studentId;
-                    currentDiaryId = currentDiaryId || studentId;
-                }
-                realtimeJoinCurrentStudent();
-                return studentId;
-            }
-
-            const result = await Swal.fire({
-                title: 'การแจ้งเตือนส่วนตัว',
-                text: 'กรอกรหัสนักศึกษาเพื่อดูการแจ้งเตือนของคุณ',
-                input: 'text',
-                inputPlaceholder: 'รหัสนักศึกษา',
-                showCancelButton: true,
-                confirmButtonText: 'ยืนยัน',
-                cancelButtonText: 'ยกเลิก',
-                inputValidator: value => !String(value || '').trim() ? 'กรุณากรอกรหัสนักศึกษา' : undefined
-            });
-
-            if (!result.isConfirmed) return '';
-            studentId = String(result.value || '').trim();
-
-            showLoading('กำลังตรวจสอบข้อมูล...');
-            try {
-                const bio = await fetchData('get-bio-data', {
-                    method: 'POST',
-                    body: JSON.stringify({ studentId })
+            if (!studentId) {
+                await Swal.fire({
+                    icon: 'warning',
+                    title: 'Session หมดอายุ',
+                    text: 'กรุณาเข้าสู่ระบบใหม่จากหน้าหลักด้วยรหัสห้องเรียนและรหัสนักศึกษา',
+                    confirmButtonText: 'ตกลง'
                 });
-                Swal.close();
-
-                if (!bio?.success || !bio?.student) {
-                    await Swal.fire('ไม่พบข้อมูล', 'ไม่พบรหัสนักศึกษานี้ในระบบ', 'warning');
-                    return '';
-                }
-
-                currentSaveMeId = studentId;
-                currentDiaryId = studentId;
-                currentUserImage = bio.student.images || `https://rms.nwvoc.ac.th/files/importpicstd/01/${studentId}.jpg`;
-                localStorage.setItem('studentId', studentId);
-                notificationsLoadedOnce = false;
-
-                const fields = ['savemeStudentIdInput', 'storiesStudentIdInput', 'diaryStudentIdInput'];
-                fields.forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) el.value = studentId;
-                });
-
-                realtimeJoinCurrentStudent();
-                return studentId;
-            } catch (error) {
-                Swal.close();
-                await Swal.fire('เกิดข้อผิดพลาด', 'ไม่สามารถตรวจสอบรหัสนักศึกษาได้', 'error');
                 return '';
             }
+
+            if (!currentSaveMeId) {
+                currentSaveMeId = studentId;
+                currentDiaryId = currentDiaryId || studentId;
+            }
+            realtimeJoinCurrentStudent();
+            return studentId;
         }
 
         async function toggleNotifications() {
@@ -5375,11 +5336,10 @@ function calculateAttendanceQuota(isUserAction = false) {
             Swal.fire('เพิ่มประสบการณ์จาก Diary แล้ว','โปรดตรวจสอบและแก้ไขข้อความก่อนบันทึก Resume','success');
         }
         async function resumeLoadFromSystem(silent=false) {
-            let studentId = localStorage.getItem('studentId') || '';
+            let studentId = String(currentSaveMeId || localStorage.getItem('studentId') || '').trim();
             if (!studentId) {
-                const r = await Swal.fire({title:'ดึงข้อมูลจากระบบ',input:'text',inputLabel:'รหัสนักศึกษา',showCancelButton:true,confirmButtonText:'ดึงข้อมูล'});
-                if (!r.isConfirmed || !r.value) return;
-                studentId = String(r.value).trim();
+                if (!silent) Swal.fire('Session หมดอายุ','กรุณาเข้าสู่ระบบใหม่จากหน้าหลักด้วยรหัสห้องเรียนและรหัสนักศึกษา','warning');
+                return;
             }
             if (!silent) showLoading('กำลังดึงข้อมูล...');
             const [bioResult, students] = await Promise.all([
@@ -6072,7 +6032,7 @@ function calculateAttendanceQuota(isUserAction = false) {
     const button = $('recordingsCommentSubmit');
     const studentId = String(recordingsAccessStudentId || currentSaveMeId || localStorage.getItem('studentId') || '').trim();
     const comment = String(textInput.value || '').trim();
-    if (!studentId) return Swal.fire('กรุณากรอกรหัสนักศึกษา', 'ใช้รหัสนักศึกษาเพื่อระบุผู้แสดงความคิดเห็น', 'warning');
+    if (!studentId) return Swal.fire('Session หมดอายุ', 'กรุณาเข้าสู่ระบบใหม่จากหน้าหลักก่อนแสดงความคิดเห็น', 'warning');
     if (!comment) return Swal.fire('ยังไม่ได้พิมพ์ความคิดเห็น', '', 'warning');
     if (comment.length > 1000) return Swal.fire('ความคิดเห็นยาวเกินไป', 'สูงสุด 1,000 ตัวอักษร', 'warning');
     button.disabled = true;
@@ -6232,7 +6192,7 @@ function calculateAttendanceQuota(isUserAction = false) {
       images: normalizeStudentImage(recordingsAccessStudent.images || recordingsAccessStudent.image, studentId)
     });
 
-    syncRecordingsCommentIdentity();
+    await syncRecordingsCommentIdentity();
     return true;
   }
 
