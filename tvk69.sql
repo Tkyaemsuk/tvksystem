@@ -157,8 +157,7 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`id`, `room_name`, `room_code`) VALUES
-(1, '1/4 สทท', '14tvk'),
-(2, '1/1 สทท', '11tvk');
+(1, 'tvk69', 'tvk69'),
 
 -- --------------------------------------------------------
 
