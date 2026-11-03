@@ -968,10 +968,10 @@
         .login-glass-card::before { content:''; position:absolute; left:14%; right:14%; top:-1px; height:1px; background:linear-gradient(90deg,transparent,#a4b1ff,transparent); }
         .login-greeting { display:flex; gap:8px; align-items:center; color:var(--login-muted); font-size:12px; }
         .login-glass-card h2 { font-size:28px; font-weight:600; margin:18px 0 6px; }.login-card-copy { font-size:13px; color:var(--login-muted); margin-bottom:30px; }
-        .login-floating-field { position:relative; }.login-floating-field input { width:100%; height:62px; border-radius:13px; border:1px solid var(--login-line); background:var(--login-input); color:var(--login-text); padding:23px 48px 8px 44px; outline:0; transition:border-color .2s,box-shadow .2s; }
+        .login-floating-field { position:relative; }.login-floating-field input { width:100%; height:52px; border-radius:12px; border:1px solid var(--login-line); background:var(--login-input); color:var(--login-text); padding:19px 46px 6px 42px; outline:0; transition:border-color .2s,box-shadow .2s; font-size:13px; }
         .login-floating-field input:focus { border-color:#8c96ff; box-shadow:0 0 0 3px #818cf81f; }
-        .login-floating-field label { position:absolute; left:44px; top:20px; font-size:14px; color:var(--login-muted); pointer-events:none; transition:.18s; }
-        .login-floating-field input:focus + label,.login-floating-field input:not(:placeholder-shown) + label { top:8px; font-size:10px; color:#919dff; }
+        .login-floating-field label { position:absolute; left:42px; top:16px; font-size:13px; color:var(--login-muted); pointer-events:none; transition:.18s; }
+        .login-floating-field input:focus + label,.login-floating-field input:not(:placeholder-shown) + label { top:6px; font-size:9px; color:#919dff; }
         .login-field-icon { position:absolute; left:17px; top:23px; color:var(--login-muted); font-size:14px; }
         #loginPasswordToggle { position:absolute; right:7px; top:9px; width:44px; height:44px; color:var(--login-muted); border-radius:9px; }
         .login-caps { font-size:11px; color:#fbbf24; margin-top:8px; }
@@ -1083,14 +1083,18 @@
             #mainApp #studentsContent > div { padding:18px !important; }#mainApp #studentsContent > div > div:first-child { flex-wrap:wrap; gap:10px; }#mainApp #studentsContent h2 { font-size:17px; }
         }
         @media(prefers-reduced-motion:reduce) { #mainApp *,#mainApp *::before,#mainApp *::after { animation:none !important; transition:none !important; scroll-behavior:auto !important; } }
+    
+        /* Single student sign-on: verify student identity only at the main login. */
+        #savemeLogin,#storiesLogin,#diaryLogin,#websiteLoginBox{display:none!important}
+
     </style>
 
 <!-- TVK69 INLINE RECORDINGS -->
 <style>
 /* TVK69 recordings page - player + playlist layout */
 .rec-banner{display:flex;align-items:center;gap:18px;padding:24px;border-radius:20px;border:1px solid #e2e4ff;background:linear-gradient(110deg,#f0efff,#fafaff 70%,#eff8ff);margin-bottom:20px}.rec-banner-icon{width:58px;height:58px;display:grid;place-items:center;flex-shrink:0;border-radius:17px;background:#e2dfff;color:#5b50d8;font-size:24px}.rec-eyebrow{color:#7473bd;font-size:10px;letter-spacing:.13em;font-weight:600}.rec-banner h3{font-size:22px;font-weight:600;color:#222b4b;margin:3px 0}.rec-banner p{color:#73809a;font-size:12px;line-height:1.7}.rec-controls{display:grid;grid-template-columns:minmax(220px,1fr) 180px 140px;gap:10px;margin-bottom:18px}.rec-search{display:flex;align-items:center;gap:10px;background:white;border:1px solid #e5eaf3;border-radius:12px;padding:0 14px;color:#8b92aa}.rec-search input{width:100%;min-height:44px;background:transparent;outline:0!important;border:0!important;box-shadow:none!important;font-size:13px}.rec-controls select{min-height:44px;border:1px solid #e5eaf3;border-radius:12px;background:white;padding:0 12px;color:#4f5870;font-size:12px}.rec-list-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.rec-list-head h3{font-size:16px;font-weight:600;color:#23304a}.rec-list-head span{font-size:12px;color:#8390a5}.rec-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}.rec-card{overflow:hidden;background:#fff;border:1px solid #e8ebf4;border-radius:16px;transition:transform .2s,box-shadow .2s}.rec-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px #23304a12}.rec-thumb{position:relative;width:100%;aspect-ratio:16/9;display:grid;place-items:center;overflow:hidden;background:linear-gradient(125deg,#252c55,#5558a6);color:#ffffff70;font-size:46px}.rec-thumb>img{width:100%;height:100%;object-fit:cover}.rec-play{position:absolute;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#fff;color:#5851d9;font-size:15px;box-shadow:0 5px 18px #0003}.rec-card-body{padding:15px}.rec-subject{display:inline-block;background:#f1efff;color:#695ed0;padding:4px 8px;border-radius:7px;font-size:10px;font-weight:600}.rec-card-body h3{font-size:14px;line-height:1.5;color:#27314c;font-weight:600;margin:8px 0 4px;min-height:42px}.rec-card-body p{font-size:11px;color:#8390a4;line-height:1.55;min-height:34px}.rec-meta{display:flex;flex-wrap:wrap;gap:7px 12px;font-size:10px;color:#8792a3;margin:10px 0}.rec-watch{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:10px;border-radius:10px;background:#eeedff;color:#5b52ce;font-size:11px;font-weight:600}.rec-watch:hover{background:#5b52ce;color:white}.rec-empty{grid-column:1/-1;text-align:center;padding:55px 20px;border:1px dashed #d5d9e9;border-radius:18px;background:#ffffffbb;color:#9ba3b6}.rec-empty>i{font-size:32px;margin-bottom:12px;color:#b1b0dd}.rec-empty h3{font-size:16px;font-weight:600;color:#536079}.rec-empty p{font-size:11px;margin-top:5px}.rec-message{font-size:12px;color:#b45309;margin-bottom:10px}
-.rec-viewer{margin-bottom:20px}.rec-viewer.hidden{display:none!important}.rec-watch-layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:16px;align-items:start}.rec-main{min-width:0}.rec-player-shell{overflow:hidden;background:#fff;border:1px solid #e4e8f1;border-radius:18px;box-shadow:0 10px 30px #26345110}.rec-player-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:14px 16px}.rec-player-head h3{font-size:16px;font-weight:600;color:#22304b;line-height:1.45}.rec-player-head p{font-size:10px;color:#8a93a8;margin-top:3px}.rec-player-head button{border-radius:9px;padding:8px 11px;color:#667085;background:#f3f5fa;font-size:11px;white-space:nowrap}.rec-player{width:100%;aspect-ratio:16/9;max-height:min(64vh,620px);background:#0b1020}.rec-player iframe,.rec-player video{display:block;width:100%;height:100%;border:0;object-fit:contain}.rec-detail{padding:15px 16px;border-top:1px solid #eef1f6}.rec-detail p{font-size:12px;line-height:1.7;color:#667085}.rec-side{position:sticky;top:18px;background:#fff;border:1px solid #e5e9f1;border-radius:18px;padding:14px;max-height:calc(100vh - 36px);overflow:auto}.rec-side-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.rec-side-head h3{font-size:14px;font-weight:600;color:#26324a}.rec-side-head span{font-size:10px;color:#94a0b4}.rec-related{display:grid;gap:9px}.rec-related-item{display:grid;grid-template-columns:112px minmax(0,1fr);gap:10px;width:100%;text-align:left;padding:7px;border-radius:12px;border:1px solid transparent;transition:.18s;background:#fff}.rec-related-item:hover{background:#f8f8ff;border-color:#ecebfd}.rec-related-item.current{background:#efefff;border-color:#dddcff}.rec-related-thumb{aspect-ratio:16/9;border-radius:9px;overflow:hidden;background:linear-gradient(125deg,#252c55,#5558a6);display:grid;place-items:center;color:#fff8;font-size:24px}.rec-related-thumb img{width:100%;height:100%;object-fit:cover}.rec-related-copy{min-width:0}.rec-related-copy strong{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:11px;line-height:1.45;color:#27314c}.rec-related-copy span{display:block;margin-top:4px;font-size:9px;color:#8b96aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rec-comments{margin-top:14px;background:#fff;border:1px solid #e5e9f1;border-radius:18px;padding:16px}.rec-comments-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.rec-comments-head h3{font-size:14px;font-weight:600;color:#26324a}.rec-comments-head span{font-size:10px;color:#8d98ab}.rec-comment-form{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:8px;margin-bottom:14px}.rec-comment-form input,.rec-comment-form textarea{border:1px solid #dfe5ef!important;border-radius:10px!important;padding:9px 10px!important;background:#fbfcff;font-size:11px;outline:0}.rec-comment-form textarea{resize:vertical;min-height:42px;max-height:110px}.rec-comment-form button{align-self:stretch;border:0;border-radius:10px;padding:0 14px;background:#5653d7;color:white;font-size:11px;font-weight:600}.rec-comment-form button:disabled{opacity:.6;cursor:not-allowed}.rec-comment-help{grid-column:1/-1;font-size:9px;color:#9aa4b5;margin-top:-3px}.rec-comment-list{display:grid;gap:4px}.rec-comment{display:flex;gap:12px;padding:14px 0;border-top:1px solid #f0f2f6}.rec-comment:first-child{border-top:0}.rec-comment-avatar{width:40px;height:40px;flex:none;border-radius:50%;object-fit:cover;background:#eef0ff;display:grid;place-items:center;color:#6b67d9;font-size:14px;box-shadow:0 0 0 1px #e5e9f3}.rec-comment-body{min-width:0;flex:1}.rec-comment-top{display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-height:22px}.rec-comment-author{font-size:12px;font-weight:600;color:#202738}.rec-comment-student{font-size:9px;color:#818da2;background:#f3f5f9;border-radius:999px;padding:2px 7px}.rec-comment-time{font-size:9px;color:#9aa4b5}.rec-comment-text{font-size:12px;line-height:1.65;color:#3f485a;margin-top:4px;white-space:pre-wrap;overflow-wrap:anywhere}.rec-comment-delete{margin-left:auto;border:0;background:transparent;color:#c7ccd6;font-size:11px;padding:4px 7px;border-radius:8px}.rec-comment-delete:hover{color:#dc2626;background:#fff1f2}.rec-comments-empty{text-align:center;padding:20px;color:#9aa4b5;font-size:11px}
+.rec-viewer{margin-bottom:20px}.rec-viewer.hidden{display:none!important}.rec-watch-layout{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:16px;align-items:start}.rec-main{min-width:0}.rec-player-shell{overflow:hidden;background:#fff;border:1px solid #e4e8f1;border-radius:18px;box-shadow:0 10px 30px #26345110}.rec-player-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:14px 16px}.rec-player-head h3{font-size:16px;font-weight:600;color:#22304b;line-height:1.45}.rec-player-head p{font-size:10px;color:#8a93a8;margin-top:3px}.rec-player-head button{border-radius:9px;padding:8px 11px;color:#667085;background:#f3f5fa;font-size:11px;white-space:nowrap}.rec-player{width:100%;aspect-ratio:16/9;max-height:min(64vh,620px);background:#0b1020}.rec-player iframe,.rec-player video{display:block;width:100%;height:100%;border:0;object-fit:contain}.rec-detail{padding:15px 16px;border-top:1px solid #eef1f6}.rec-detail p{font-size:12px;line-height:1.7;color:#667085}.rec-uploader{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid #f0f2f6}.rec-uploader-avatar{width:42px;height:42px;border-radius:50%;object-fit:cover;flex:none;background:#f2f3ff;border:2px solid #fff;box-shadow:0 0 0 1px #dfe4ee}.rec-uploader-copy{min-width:0;display:flex;flex-direction:column}.rec-uploader-label{font-size:9px;color:#98a2b3;line-height:1.2}.rec-uploader-name{font-size:12px;font-weight:600;color:#27314c;line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rec-uploader-sub{font-size:9px;color:#8994a8;margin-top:2px}.rec-side{position:sticky;top:18px;background:#fff;border:1px solid #e5e9f1;border-radius:18px;padding:14px;max-height:calc(100vh - 36px);overflow:auto}.rec-side-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}.rec-side-head h3{font-size:14px;font-weight:600;color:#26324a}.rec-side-head span{font-size:10px;color:#94a0b4}.rec-related{display:grid;gap:9px}.rec-related-item{display:grid;grid-template-columns:112px minmax(0,1fr);gap:10px;width:100%;text-align:left;padding:7px;border-radius:12px;border:1px solid transparent;transition:.18s;background:#fff}.rec-related-item:hover{background:#f8f8ff;border-color:#ecebfd}.rec-related-item.current{background:#efefff;border-color:#dddcff}.rec-related-thumb{aspect-ratio:16/9;border-radius:9px;overflow:hidden;background:linear-gradient(125deg,#252c55,#5558a6);display:grid;place-items:center;color:#fff8;font-size:24px}.rec-related-thumb img{width:100%;height:100%;object-fit:cover}.rec-related-copy{min-width:0}.rec-related-copy strong{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:11px;line-height:1.45;color:#27314c}.rec-related-copy span{display:block;margin-top:4px;font-size:9px;color:#8b96aa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rec-comments{margin-top:14px;background:#fff;border:1px solid #e5e9f1;border-radius:18px;padding:18px}.rec-comments-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.rec-comments-head h3{font-size:15px;font-weight:600;color:#26324a}.rec-comments-head span{font-size:10px;color:#8d98ab}.rec-comment-form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;margin-bottom:16px}.rec-comment-identity{grid-column:1/-1;display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #eceffa;border-radius:13px;background:#fafaff}.rec-comment-identity-avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;flex:none;background:#eef0ff;box-shadow:0 0 0 2px #fff,0 0 0 3px #e2e5ef}.rec-comment-identity-copy{display:flex;flex-direction:column;min-width:0}.rec-comment-identity-name{font-size:12px;font-weight:600;color:#25304a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rec-comment-identity-sub{font-size:9px;color:#909aad;margin-top:1px}.rec-comment-form textarea{border:1px solid #dfe5ef!important;border-radius:11px!important;padding:10px 11px!important;background:#fbfcff;font-size:11px;outline:0;transition:border-color .18s,box-shadow .18s;resize:vertical;min-height:44px;max-height:120px}.rec-comment-form textarea:focus{border-color:#8d89ef!important;box-shadow:0 0 0 3px #eeedff}.rec-comment-form button{align-self:stretch;border:0;border-radius:10px;padding:0 15px;background:#5653d7;color:white;font-size:11px;font-weight:600}.rec-comment-form button:hover{background:#4743c5}.rec-comment-form button:disabled{opacity:.6;cursor:not-allowed}.rec-comment-help{grid-column:1/-1;font-size:9px;color:#9aa4b5;margin-top:-3px}.rec-comment-list{display:grid;gap:8px}.rec-comment{display:flex;gap:9px;padding:10px 12px;border:1px solid #edf0f5;border-radius:14px;background:linear-gradient(180deg,#fff,#fcfcfe);transition:box-shadow .18s,border-color .18s}.rec-comment:hover{border-color:#e0e3f5;box-shadow:0 7px 22px #293a5a0b}.rec-comment-avatar{width:42px;height:42px;flex:none;border-radius:50%;object-fit:cover;background:#eef0ff;display:grid;place-items:center;color:#6b67d9;font-size:14px;box-shadow:0 0 0 2px #fff,0 0 0 3px #e5e9f3}.rec-comment-body{min-width:0;flex:1}.rec-comment-top{display:flex;flex-wrap:wrap;align-items:center;gap:4px;min-height:16px;line-height:1.2}.rec-comment-author{font-size:12px;font-weight:600;color:#202738;line-height:1.25}.rec-comment-student{font-size:9px;color:#68758d;background:#f2f4f8;border-radius:999px;padding:2px 7px}.rec-comment-time{font-size:9px;color:#9aa4b5;line-height:1.2}.rec-comment-text{font-size:12px;line-height:1;color:#40495b;margin-top:1px;white-space:pre-wrap;overflow-wrap:anywhere}.rec-comment-delete{margin-left:auto;border:0;background:transparent;color:#c2c8d3;font-size:11px;padding:5px 7px;border-radius:8px}.rec-comment-delete:hover{color:#dc2626;background:#fff1f2}.rec-comments-empty{text-align:center;padding:24px;color:#9aa4b5;font-size:11px;border:1px dashed #e1e5ec;border-radius:14px;background:#fafbfe}.rec-comment-pagination{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px;margin-top:16px;padding-top:14px;border-top:1px solid #eef1f5}.rec-page-btn,.rec-page-arrow{min-width:34px;height:34px;border:1px solid #e3e7ef;border-radius:9px;background:#fff;color:#657188;font-size:11px;display:grid;place-items:center;transition:.18s}.rec-page-btn:hover,.rec-page-arrow:hover{border-color:#cbc9f7;background:#f6f5ff;color:#504bc8}.rec-page-btn.active{border-color:#5653d7;background:#5653d7;color:#fff;font-weight:600}.rec-page-btn:disabled,.rec-page-arrow:disabled{opacity:.4;cursor:not-allowed}.rec-page-ellipsis{height:34px;min-width:26px;display:grid;place-items:center;color:#9aa4b5;font-size:12px}.rec-page-summary{width:100%;text-align:center;margin-top:3px;font-size:9px;color:#98a2b3}
 @media(max-width:1050px){.rec-watch-layout{grid-template-columns:minmax(0,1fr) 285px}.rec-related-item{grid-template-columns:96px minmax(0,1fr)}}@media(max-width:860px){.rec-watch-layout{grid-template-columns:1fr}.rec-side{position:static;max-height:none}.rec-related{grid-template-columns:repeat(2,minmax(0,1fr))}.rec-related-item{grid-template-columns:100px minmax(0,1fr)}}@media(max-width:760px){.rec-banner{padding:18px;gap:12px;align-items:flex-start}.rec-banner-icon{width:46px;height:46px;border-radius:13px;font-size:19px}.rec-banner h3{font-size:18px}.rec-banner p{font-size:11px}.rec-controls{grid-template-columns:1fr 1fr}.rec-search{grid-column:1/-1}.rec-grid{grid-template-columns:1fr}.rec-player-head{padding:12px}.rec-player-head h3{font-size:13px}.rec-player{max-height:none}.rec-comment-form{grid-template-columns:1fr}.rec-comment-form button{min-height:42px}.rec-related{grid-template-columns:1fr}.rec-related-item{grid-template-columns:112px minmax(0,1fr)}}
 
 </style>
@@ -1121,8 +1125,13 @@
             <form id="classroomLoginForm" class="login-glass-card" onsubmit="event.preventDefault(); checkRoomCode()">
                 <span class="login-greeting"><span class="login-live-dot" aria-hidden="true"></span><span id="loginGreeting">ยินดีต้อนรับ</span></span>
                 <h2>เข้าสู่ห้องเรียน</h2>
-                <p class="login-card-copy">กรอกรหัสห้องเรียนเพื่อเริ่มต้นใช้งาน</p>
+                <p class="login-card-copy">กรอกรหัสห้องเรียนและรหัสนักศึกษาเพื่อเข้าใช้งานระบบ</p>
                 <div class="login-floating-field">
+                    <i class="fas fa-id-card login-field-icon" aria-hidden="true"></i>
+                    <input type="text" id="loginStudentId" placeholder=" " inputmode="numeric" autocomplete="username" required aria-describedby="loginError" oninput="clearLoginError()">
+                    <label for="loginStudentId">รหัสนักศึกษา</label>
+                </div>
+                <div class="login-floating-field mt-2">
                     <i class="fas fa-lock login-field-icon" aria-hidden="true"></i>
                     <input type="password" id="roomCode" placeholder=" " autocomplete="current-password" required aria-describedby="loginCapsLock loginError" oninput="clearLoginError()">
                     <label for="roomCode">รหัสเข้าห้องเรียน</label>
@@ -1132,7 +1141,7 @@
                 <div id="loginError" class="login-inline-error hidden" role="alert"></div>
                 <button type="submit" id="loginSubmit" class="login-submit"><span id="loginSubmitText">เข้าสู่ห้องเรียน</span><i id="loginSubmitIcon" class="fas fa-arrow-right" aria-hidden="true"></i></button>
                 <p id="loginProgress" class="login-progress" role="status" aria-live="polite"></p>
-                <div class="login-card-note"><i class="fas fa-circle-info" aria-hidden="true"></i><p>ใช้รหัสห้องเรียนที่ได้รับจากผู้ดูแล<br>หากยังไม่มีรหัส กรุณาติดต่ออาจารย์หรือผู้ดูแลห้อง</p></div>
+                <div class="login-card-note"><i class="fas fa-circle-info" aria-hidden="true"></i><p>เข้าสู่ระบบครั้งเดียวด้วยรหัสห้องเรียนและรหัสนักศึกษา<br>ทุกเมนูจะใช้บัญชีนี้โดยอัตโนมัติ</p></div>
             </form>
         </main>
         <footer class="login-footer">พื้นที่เรียนรู้และแบ่งปันของพวกเรา <span>•</span> ระบบห้องเรียนออนไลน์</footer>
@@ -1231,7 +1240,7 @@
                                     </button>
                                     <button onclick="showTab('website')" id="websiteTab" class="nav-dropdown-item">
                                         <span class="nav-item-icon bg-fuchsia-50 text-fuchsia-600"><i class="fas fa-code"></i></span>
-                                        <span><b>สร้างเว็บไซต์ของตัวเอง</b><small>ยืนยันรหัสนักศึกษาแล้วเข้าสู่ TVK69 Hosting</small></span>
+                                        <span><b>สร้างเว็บไซต์ของตัวเอง</b><small>ใช้บัญชีนักศึกษาที่ล็อกอินอยู่เพื่อเข้าสู่ TVK69 Hosting</small></span>
                                     </button>
 									<button onclick="showTab('quota')" id="quotaTab" class="nav-dropdown-item">
                                         <span class="nav-item-icon bg-amber-50 text-amber-600"><i class="fas fa-calculator"></i></span>
@@ -1515,7 +1524,7 @@
 
             <div id="savemeContent" class="fade-in hidden">
                 <div id="savemeLogin"
-                    class="max-w-md mx-auto bg-white rounded-2xl shadow-xl p-10 text-center mt-10 border border-gray-100">
+                    class="hidden max-w-md mx-auto bg-white rounded-2xl shadow-xl p-10 text-center mt-10 border border-gray-100">
                     <div class="mb-6 inline-flex p-4 bg-indigo-50 rounded-full"><i
                             class="fas fa-cloud-upload-alt text-5xl text-indigo-600"></i></div>
                     <h2 class="text-2xl font-bold text-gray-800 mb-2">SaveMe Cloud</h2>
@@ -1818,7 +1827,7 @@
 
             <div id="diaryContent" class="fade-in hidden">
                 <div id="diaryLogin"
-                    class="max-w-md mx-auto bg-white rounded-2xl shadow-xl p-10 text-center mt-10 border border-green-100">
+                    class="hidden max-w-md mx-auto bg-white rounded-2xl shadow-xl p-10 text-center mt-10 border border-green-100">
                     <div class="mb-6 inline-flex p-4 bg-green-50 rounded-full">
                         <i class="fas fa-book-open text-5xl text-green-500"></i>
                     </div>
@@ -1935,7 +1944,7 @@
 
             <div id="storiesContent" class="fade-in hidden">
                 <div id="storiesLogin"
-                    class="max-w-md mx-auto bg-white rounded-2xl shadow-xl p-10 text-center mt-10 border border-pink-100">
+                    class="hidden max-w-md mx-auto bg-white rounded-2xl shadow-xl p-10 text-center mt-10 border border-pink-100">
                     <div class="mb-6 inline-flex p-4 bg-pink-50 rounded-full">
                         <i class="fas fa-user-secret text-5xl text-pink-500"></i>
                     </div>
@@ -3468,17 +3477,63 @@
             ['savemeLogin', 'storiesLogin', 'diaryLogin'].forEach(id => document.getElementById(id).classList.remove('hidden'));
         }
 
-        async function accessSaveMe() { const id = document.getElementById('savemeStudentIdInput').value.trim(); if (!id) return Swal.fire('แจ้งเตือน', 'กรุณากรอกรหัส', 'warning'); if (await globalStudentLogin(id)) { document.getElementById('savemeLogin').classList.add('hidden'); document.getElementById('savemeDashboard').classList.remove('hidden'); await loadSaveMeData(); } }
-        function logoutSaveMe() { globalLogout(); }
-        async function accessStories() { const id = document.getElementById('storiesStudentIdInput').value.trim(); if (!id) return Swal.fire('แจ้งเตือน', 'กรุณากรอกรหัส', 'warning'); if (await globalStudentLogin(id)) { document.getElementById('storiesLogin').classList.add('hidden'); document.getElementById('storiesMain').classList.remove('hidden'); await loadStories(); startStoriesPolling(); } }
-        function logoutStories() { globalLogout(); }
-        async function accessDiary() { const id = document.getElementById('diaryStudentIdInput').value.trim(); if (!id) return Swal.fire('แจ้งเตือน', 'กรุณากรอกรหัส', 'warning'); if (await globalStudentLogin(id)) { document.getElementById('diaryDate').valueAsDate = new Date(); document.getElementById('diaryLogin').classList.add('hidden'); document.getElementById('diaryMain').classList.remove('hidden'); await loadDiaryEntries(); } }
-        function logoutDiary() { globalLogout(); }
+        async function accessSaveMe() {
+            if (!currentSaveMeId) return Swal.fire('Session หมดอายุ', 'กรุณาเข้าสู่ระบบใหม่จากหน้าหลัก', 'warning');
+            document.getElementById('savemeLogin')?.classList.add('hidden');
+            document.getElementById('savemeDashboard')?.classList.remove('hidden');
+            await loadSaveMeData();
+        }
+        function logoutSaveMe() { showTab('documents'); }
+
+        async function accessStories() {
+            if (!currentSaveMeId) return Swal.fire('Session หมดอายุ', 'กรุณาเข้าสู่ระบบใหม่จากหน้าหลัก', 'warning');
+            document.getElementById('storiesLogin')?.classList.add('hidden');
+            document.getElementById('storiesMain')?.classList.remove('hidden');
+            await loadStories();
+            startStoriesPolling();
+        }
+        function logoutStories() { showTab('documents'); }
+
+        async function accessDiary() {
+            if (!currentDiaryId) return Swal.fire('Session หมดอายุ', 'กรุณาเข้าสู่ระบบใหม่จากหน้าหลัก', 'warning');
+            if (!document.getElementById('diaryDate').value) document.getElementById('diaryDate').valueAsDate = new Date();
+            document.getElementById('diaryLogin')?.classList.add('hidden');
+            document.getElementById('diaryMain')?.classList.remove('hidden');
+            await loadDiaryEntries();
+        }
+        function logoutDiary() { showTab('documents'); }
+
+        let currentLoggedStudent = null;
+
+        function applyStudentSession(studentId, student) {
+            studentId = String(studentId || '').trim();
+            if (!studentId || !student) return false;
+
+            currentLoggedStudent = student;
+            currentSaveMeId = studentId;
+            currentDiaryId = studentId;
+            currentUserImage = student.images || student.image || `https://rms.nwvoc.ac.th/files/importpicstd/01/${studentId}.jpg`;
+            localStorage.setItem('studentId', studentId);
+
+            ['savemeStudentIdInput','storiesStudentIdInput','diaryStudentIdInput','websiteStudentId'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = studentId;
+            });
+
+            document.getElementById('savemeLogin')?.classList.add('hidden');
+            document.getElementById('storiesLogin')?.classList.add('hidden');
+            document.getElementById('diaryLogin')?.classList.add('hidden');
+
+            realtimeJoinCurrentStudent();
+            refreshNotificationBadge();
+            return true;
+        }
 
         let classroomLoginBusy = false;
         function clearLoginError() {
             document.getElementById('loginError').classList.add('hidden');
-            document.getElementById('roomCode').removeAttribute('aria-invalid');
+            document.getElementById('roomCode')?.removeAttribute('aria-invalid');
+            document.getElementById('loginStudentId')?.removeAttribute('aria-invalid');
         }
         function setLoginBusy(busy) {
             const button = document.getElementById('loginSubmit');
@@ -3489,63 +3544,111 @@
         }
         async function checkRoomCode() {
             if (classroomLoginBusy) return;
-            const field = document.getElementById('roomCode');
-            const c = field.value;
+
+            const roomField = document.getElementById('roomCode');
+            const studentField = document.getElementById('loginStudentId');
+            const roomCode = String(roomField?.value || '').trim();
+            const studentId = String(studentField?.value || '').trim();
+
             clearLoginError();
-            if (!c.trim()) { field.reportValidity(); field.focus(); return; }
-            classroomLoginBusy = true; setLoginBusy(true);
-            let admitted = false;
+            if (!roomCode) { roomField?.reportValidity(); roomField?.focus(); return; }
+            if (!studentId) { studentField?.reportValidity(); studentField?.focus(); return; }
+
+            classroomLoginBusy = true;
+            setLoginBusy(true);
+
             try {
-                const r = await fetchData('login', {method:'POST',body:JSON.stringify({roomCode:c})});
-                if (!r?.success) throw new Error('login-failed');
-                admitted = true;
-                try {
-                    localStorage.setItem('loginTime', new Date().getTime());
-                    localStorage.setItem('roomCode', c); localStorage.setItem('isLoggedIn', 'true');
-                } catch (e) { /* Login still works when storage is unavailable. */ }
+                const [roomResult, studentResult] = await Promise.all([
+                    fetchData('login', {method:'POST', body:JSON.stringify({roomCode})}),
+                    fetchData('get-bio-data', {method:'POST', body:JSON.stringify({studentId})})
+                ]);
+
+                if (!roomResult?.success) {
+                    const err = document.getElementById('loginError');
+                    err.textContent = 'รหัสห้องเรียนไม่ถูกต้อง หรือไม่สามารถเชื่อมต่อห้องเรียนได้';
+                    err.classList.remove('hidden');
+                    roomField?.setAttribute('aria-invalid', 'true');
+                    roomField?.focus();
+                    throw new Error('room-login-failed');
+                }
+
+                if (!studentResult?.success || !studentResult?.student) {
+                    const err = document.getElementById('loginError');
+                    err.textContent = 'ไม่พบรหัสนักศึกษานี้ในระบบ TVK69';
+                    err.classList.remove('hidden');
+                    studentField?.setAttribute('aria-invalid', 'true');
+                    studentField?.focus();
+                    throw new Error('student-login-failed');
+                }
+
+                applyStudentSession(studentId, studentResult.student);
+                localStorage.setItem('loginTime', String(Date.now()));
+                localStorage.setItem('roomCode', roomCode);
+                localStorage.setItem('isLoggedIn', 'true');
+
                 document.getElementById('loginSubmitText').textContent = 'ยินดีต้อนรับ';
                 document.getElementById('loginSubmitIcon').className = 'fas fa-check';
-                document.getElementById('loginProgress').textContent = 'กำลังเปิดห้องเรียน...';
-                const screen = document.getElementById('loginScreen'); screen.classList.add('login-success');
-                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) await new Promise(resolve => setTimeout(resolve, 480));
-                screen.classList.add('hidden'); screen.classList.remove('login-success');
-                document.getElementById('mainApp')?.classList.remove('hidden');
-                const roomLabel = document.getElementById('roomNameNav');
-                if (roomLabel) roomLabel.textContent = `ห้องเรียน ${r.room_name || 'TVK68'}`;
-                showTab('documents');
-                try { playSound('success'); } catch (e) {}
-            } catch (e) {
-                if (!admitted) {
-                    const error = document.getElementById('loginError');
-                    error.textContent = 'เข้าสู่ห้องเรียนไม่สำเร็จ กรุณาตรวจสอบรหัสและการเชื่อมต่อ แล้วลองอีกครั้ง';
-                    error.classList.remove('hidden'); field.setAttribute('aria-invalid', 'true'); field.focus();
-                    const screen = document.getElementById('loginScreen'); screen.classList.add('login-error-shake');
-                    setTimeout(() => screen.classList.remove('login-error-shake'), 350);
-                    try { playSound('error'); } catch (e) {}
+                document.getElementById('loginProgress').textContent = `กำลังเปิดห้องเรียนสำหรับ ${studentResult.student.student_name || studentId}...`;
+
+                const screen = document.getElementById('loginScreen');
+                screen.classList.add('login-success');
+                if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    await new Promise(resolve => setTimeout(resolve, 480));
                 }
-            } finally { classroomLoginBusy = false; setLoginBusy(false); }
+                screen.classList.add('hidden');
+                screen.classList.remove('login-success');
+                document.getElementById('mainApp')?.classList.remove('hidden');
+
+                const roomLabel = document.getElementById('roomNameNav');
+                if (roomLabel) roomLabel.textContent = `ห้องเรียน ${roomResult.room_name || 'TVK69'}`;
+
+                showTab('documents');
+                try { playSound('success'); } catch (_) {}
+            } catch (error) {
+                if (!['room-login-failed','student-login-failed'].includes(error?.message)) {
+                    const err = document.getElementById('loginError');
+                    err.textContent = 'เข้าสู่ระบบไม่สำเร็จ กรุณาตรวจสอบข้อมูลและการเชื่อมต่อ แล้วลองอีกครั้ง';
+                    err.classList.remove('hidden');
+                }
+                const screen = document.getElementById('loginScreen');
+                screen.classList.add('login-error-shake');
+                setTimeout(() => screen.classList.remove('login-error-shake'), 350);
+                try { playSound('error'); } catch (_) {}
+            } finally {
+                classroomLoginBusy = false;
+                setLoginBusy(false);
+            }
         }
 
         async function restoreSession() {
-            const isLoggedIn = localStorage.getItem('isLoggedIn'); const roomCode = localStorage.getItem('roomCode');
-            if (isLoggedIn === 'true' && roomCode) {
-                showLoading('กำลังกู้ session...');
-                const r = await fetchData('login', { method: 'POST', body: JSON.stringify({ roomCode }) }); Swal.close();
-                if (r.success) {
-                    document.getElementById('loginScreen').classList.add('hidden'); document.getElementById('mainApp').classList.remove('hidden');
-                    const roomLabel = document.getElementById('roomNameNav'); if (roomLabel) roomLabel.textContent = `ห้องเรียน ${r.room_name || 'TVK68'}`;
-                    const savedStudentId = localStorage.getItem('studentId');
-                    if (savedStudentId) {
-                        const bio = await fetchData('get-bio-data', { method: 'POST', body: JSON.stringify({ studentId: savedStudentId }) });
-                        if (bio.success && bio.student) {
-                            currentSaveMeId = savedStudentId; currentDiaryId = savedStudentId; currentUserImage = bio.student.images ? bio.student.images : 'https://rms.nwvoc.ac.th/files/importpicstd/01/' + savedStudentId + '.jpg';
-                            document.getElementById('savemeStudentIdInput').value = savedStudentId; document.getElementById('storiesStudentIdInput').value = savedStudentId; document.getElementById('diaryStudentIdInput').value = savedStudentId;
-                            realtimeJoinCurrentStudent();
-                            refreshNotificationBadge();
-                        } else localStorage.removeItem('studentId');
-                    }
-                    showTab('documents');
-                } else logout();
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const roomCode = String(localStorage.getItem('roomCode') || '').trim();
+            const studentId = String(localStorage.getItem('studentId') || '').trim();
+
+            if (isLoggedIn !== 'true' || !roomCode || !studentId) return;
+
+            showLoading('กำลังกู้ session...');
+            try {
+                const [roomResult, studentResult] = await Promise.all([
+                    fetchData('login', {method:'POST', body:JSON.stringify({roomCode})}),
+                    fetchData('get-bio-data', {method:'POST', body:JSON.stringify({studentId})})
+                ]);
+
+                if (!roomResult?.success || !studentResult?.success || !studentResult?.student) {
+                    logout();
+                    return;
+                }
+
+                applyStudentSession(studentId, studentResult.student);
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('mainApp').classList.remove('hidden');
+
+                const roomLabel = document.getElementById('roomNameNav');
+                if (roomLabel) roomLabel.textContent = `ห้องเรียน ${roomResult.room_name || 'TVK69'}`;
+
+                showTab('documents');
+            } finally {
+                Swal.close();
             }
         }
 
@@ -3788,9 +3891,22 @@
             if (name === 'ranking') { if (rankingRealtimeCache.length) renderRankingFromRealtime({ success:true, ranking:rankingRealtimeCache }); else loadRanking(); }
             if (name === 'contact') { if (teachersRealtimeCache.length) renderTeachersRealtime(teachersRealtimeCache); else loadTeachers(); }
             if (name === 'admin') { if (isAdmin) { document.getElementById('adminLogin').classList.add('hidden'); document.getElementById('adminDashboard').classList.remove('hidden'); adminShowSubTab('overview'); } else { document.getElementById('adminLogin').classList.remove('hidden'); document.getElementById('adminDashboard').classList.add('hidden'); } }
-            if (name === 'saveme') { if (currentSaveMeId) { document.getElementById('savemeLogin').classList.add('hidden'); document.getElementById('savemeDashboard').classList.remove('hidden'); loadSaveMeData(); } else { document.getElementById('savemeLogin').classList.remove('hidden'); document.getElementById('savemeDashboard').classList.add('hidden'); } }
-            if (name === 'stories') { if (currentSaveMeId) { document.getElementById('storiesLogin').classList.add('hidden'); document.getElementById('storiesMain').classList.remove('hidden'); loadStories(); startStoriesPolling(); } else { document.getElementById('storiesLogin').classList.remove('hidden'); document.getElementById('storiesMain').classList.add('hidden'); } }
-            if (name === 'diary') { if (currentDiaryId) { document.getElementById('diaryLogin').classList.add('hidden'); document.getElementById('diaryMain').classList.remove('hidden'); if (!document.getElementById('diaryDate').value) document.getElementById('diaryDate').valueAsDate = new Date(); loadDiaryEntries(); } else { document.getElementById('diaryLogin').classList.remove('hidden'); document.getElementById('diaryMain').classList.add('hidden'); } }
+            if (name === 'saveme') {
+                document.getElementById('savemeLogin')?.classList.add('hidden');
+                document.getElementById('savemeDashboard')?.classList.remove('hidden');
+                if (currentSaveMeId) loadSaveMeData();
+            }
+            if (name === 'stories') {
+                document.getElementById('storiesLogin')?.classList.add('hidden');
+                document.getElementById('storiesMain')?.classList.remove('hidden');
+                if (currentSaveMeId) { loadStories(); startStoriesPolling(); }
+            }
+            if (name === 'diary') {
+                document.getElementById('diaryLogin')?.classList.add('hidden');
+                document.getElementById('diaryMain')?.classList.remove('hidden');
+                if (!document.getElementById('diaryDate').value) document.getElementById('diaryDate').valueAsDate = new Date();
+                if (currentDiaryId) loadDiaryEntries();
+            }
             if (name === 'website') {
                 resetWebsiteAccessGate();
             }
@@ -5368,17 +5484,23 @@ function calculateAttendanceQuota(isUserAction = false) {
         let websiteVerifiedStudentId = '';
 
         function resetWebsiteAccessGate() {
-            websiteVerifiedStudentId = '';
-            const loginBox = document.getElementById('websiteLoginBox');
-            const accessBox = document.getElementById('websiteAccessBox');
-            if (loginBox) loginBox.classList.remove('hidden');
-            if (accessBox) accessBox.classList.add('hidden');
+            const studentId = String(currentSaveMeId || localStorage.getItem('studentId') || '').trim();
             const input = document.getElementById('websiteStudentId');
-            const saved = currentSaveMeId || localStorage.getItem('studentId') || '';
-            if (input) {
-                input.value = saved;
-                setTimeout(() => input.focus(), 50);
+
+            if (input) input.value = studentId;
+            document.getElementById('websiteLoginBox')?.classList.add('hidden');
+
+            if (!studentId) {
+                document.getElementById('websiteAccessBox')?.classList.add('hidden');
+                return;
             }
+
+            if (websiteVerifiedStudentId === studentId) {
+                document.getElementById('websiteAccessBox')?.classList.remove('hidden');
+                return;
+            }
+
+            websiteStudentLogin();
         }
 
         async function websiteStudentLogin() {
@@ -5444,14 +5566,7 @@ function calculateAttendanceQuota(isUserAction = false) {
         }
 
         function websiteLogout() {
-            websiteVerifiedStudentId = '';
-            document.getElementById('websiteAccessBox')?.classList.add('hidden');
-            document.getElementById('websiteLoginBox')?.classList.remove('hidden');
-            const input = document.getElementById('websiteStudentId');
-            if (input) {
-                input.value = '';
-                input.focus();
-            }
+            showTab('documents');
         }
 
         function updateWorkspaceHeading(name) {
@@ -5463,7 +5578,7 @@ function calculateAttendanceQuota(isUserAction = false) {
                 diary:['สมุดบันทึกฝึกงาน','บันทึกงานที่ทำและติดตามความก้าวหน้าของคุณ'],
                 quota:['คำนวณชั่วโมงฝึกงาน','วางแผนเวลาและตรวจสอบชั่วโมงสะสม'],
                 resume:['สร้างเรซูเม่','จัดเตรียมประวัติและผลงานสำหรับโอกาสใหม่'],
-                website:['สร้างเว็บไซต์ของตัวเอง','ยืนยันรหัสนักศึกษาเพื่อเข้าสู่ TVK69 Hosting และดูเว็บไซต์ของคุณ'],
+                website:['สร้างเว็บไซต์ของตัวเอง','ใช้บัญชีนักศึกษาที่เข้าสู่ระบบจากหน้าหลักเพื่อเปิด TVK69 Hosting'],
                 stories:['เรื่องราวของห้อง','แบ่งปันประสบการณ์และพูดคุยกับเพื่อน'],
                 ranking:['ความเคลื่อนไหวในห้อง','ติดตามการมีส่วนร่วมของเพื่อนร่วมห้อง'],
                 contact:['คณะครูผู้สอน','รายวิชาและช่องทางติดต่ออาจารย์'],
@@ -5489,8 +5604,12 @@ function calculateAttendanceQuota(isUserAction = false) {
 /* TVK69 - Online recorded lessons. Data source: authenticated TVK69 API */
 (() => {
   'use strict';
-  const state = { videos: [], subject: '', query: '', sort: 'newest', current: null, comments: [] };
+  const state = { videos: [], teachers: [], subject: '', query: '', sort: 'newest', current: null, comments: [], commentPage: 1, commentsPerPage: 10, commentsApiMode: true };
   const studentProfileCache = new Map();
+
+  let recordingsAccessStudentId = '';
+  let recordingsAccessStudent = null;
+  let recordingsAccessPending = false;
   const $ = id => document.getElementById(id);
   const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const dateStr = v => { if (!v) return 'ไม่ระบุวันที่'; const d = new Date(v); return isNaN(d) ? 'ไม่ระบุวันที่' : d.toLocaleDateString('th-TH', {year:'numeric',month:'short',day:'numeric'}); };
@@ -5519,10 +5638,65 @@ function calculateAttendanceQuota(isUserAction = false) {
     return null;
   }
 
+
+  function recordingTeacherSubjects(raw) {
+    return String(raw || '')
+      .split(/[,\/\r\n|]+/)
+      .map(s => s.trim())
+      .filter(Boolean);
+  }
+
+  async function loadRecordingTeachers() {
+    let rows = [];
+    try {
+      const response = typeof fetchData === 'function' ? await fetchData('teachers') : [];
+      if (Array.isArray(response)) rows = response;
+    } catch (_) {}
+
+    if (!rows.length) {
+      const cached = (typeof teachersRealtimeCache !== 'undefined' && Array.isArray(teachersRealtimeCache))
+        ? teachersRealtimeCache
+        : (Array.isArray(window.adminTeachersList) ? window.adminTeachersList : []);
+      rows = cached;
+    }
+
+    state.teachers = rows.filter(t => t && String(t.name || '').trim());
+  }
+
+  function recordingTeacherProfile(v) {
+    const teacherName = String(v?.teacher || '').trim();
+    const subject = String(v?.subject || '').trim();
+
+    let teacher = null;
+
+    if (teacherName) {
+      teacher = state.teachers.find(t =>
+        String(t.name || '').trim() === teacherName &&
+        (!subject || recordingTeacherSubjects(t.subject).includes(subject))
+      ) || state.teachers.find(t => String(t.name || '').trim() === teacherName);
+    }
+
+    if (!teacher && subject) {
+      teacher = state.teachers.find(t => recordingTeacherSubjects(t.subject).includes(subject));
+    }
+
+    const name = String(teacher?.name || teacherName || 'ไม่ระบุผู้สอน').trim();
+    const image = String(teacher?.image || '').trim();
+
+    return {
+      name,
+      subject: subject || String(teacher?.subject || '').trim(),
+      image: image || 'https://cdn.tvk69.site/tvk69.png'
+    };
+  }
+
   async function load() {
     const area = $('recordingsGrid'); if (!area) return;
     $('recordingsMessage').textContent = 'กำลังโหลดวิดีโอจากเซิร์ฟเวอร์...';
-    const response = typeof fetchData === 'function' ? await fetchData('recordings') : {success:false,message:'ไม่พบตัวเชื่อม API'};
+    const [response] = await Promise.all([
+      typeof fetchData === 'function' ? fetchData('recordings') : Promise.resolve({success:false,message:'ไม่พบตัวเชื่อม API'}),
+      loadRecordingTeachers()
+    ]);
     if (!response?.success || !Array.isArray(response.videos)) {
       state.videos = [];
       $('recordingsMessage').textContent = response?.message || 'ไม่สามารถดึงข้อมูลวิดีโอจากเซิร์ฟเวอร์ได้';
@@ -5592,30 +5766,48 @@ function calculateAttendanceQuota(isUserAction = false) {
     } catch (_) {}
     if (!apiMode) rows = readLocalComments(state.current);
     state.comments = rows;
+    state.commentPage = 1;
     await refreshCommentProfiles(apiMode);
   }
 
-  async function getStudentProfile(studentId) {
+
+
+  function normalizeStudentImage(value, studentId = '') {
+    const raw = String(value || '').trim();
+    if (raw) return raw;
+
+    const sid = String(studentId || '').trim();
+    return sid
+      ? `https://rms.nwvoc.ac.th/files/importpicstd/01/${encodeURIComponent(sid)}.jpg`
+      : 'https://cdn.tvk69.site/tvk69.png';
+  }
+
+  async function getStudentProfile(studentId, force = false) {
     const sid = String(studentId || '').trim();
     if (!sid) return null;
-    if (studentProfileCache.has(sid)) return studentProfileCache.get(sid);
+
+    if (!force && studentProfileCache.has(sid) && studentProfileCache.get(sid)) {
+      return studentProfileCache.get(sid);
+    }
 
     try {
       const r = await fetchData('get-bio-data', {
         method:'POST',
         body:JSON.stringify({studentId:sid})
       });
+
       if (r?.success && r?.student) {
         const profile = {
           student_id: sid,
           student_name: r.student.student_name || r.student.name || sid,
-          images: r.student.images || r.student.image || ''
+          images: normalizeStudentImage(r.student.images || r.student.image, sid)
         };
         studentProfileCache.set(sid, profile);
         return profile;
       }
     } catch (_) {}
-    studentProfileCache.set(sid, null);
+
+    studentProfileCache.delete(sid);
     return null;
   }
 
@@ -5629,25 +5821,83 @@ function calculateAttendanceQuota(isUserAction = false) {
     await Promise.all(missing.map(getStudentProfile));
   }
 
-  function renderComments(apiMode = true) {
-    const list = $('recordingsCommentsList'); if (!list) return;
-    $('recordingsCommentsCount').textContent = `${state.comments.length} ความคิดเห็น${apiMode ? '' : ' · ในเครื่องนี้'}`;
+  function commentPaginationModel(current, total) {
+    if (total <= 7) return Array.from({length:total}, (_,i)=>i+1);
 
-    const own = String(localStorage.getItem('studentId') || '');
+    const pages = [1];
+    const left = Math.max(2, current - 1);
+    const right = Math.min(total - 1, current + 1);
 
-    if (!state.comments.length) {
-      list.innerHTML = '<div class="rec-comments-empty"><i class="far fa-comment-dots"></i><br>ยังไม่มีความคิดเห็น เป็นคนแรกที่แสดงความคิดเห็นได้เลย</div>';
+    if (left > 2) pages.push('...');
+    for (let i = left; i <= right; i++) pages.push(i);
+    if (right < total - 1) pages.push('...');
+    pages.push(total);
+
+    return pages;
+  }
+
+  function renderCommentPagination(totalComments) {
+    const pager = $('recordingsCommentsPagination');
+    if (!pager) return;
+
+    const perPage = state.commentsPerPage;
+    const totalPages = Math.max(1, Math.ceil(totalComments / perPage));
+
+    if (state.commentPage > totalPages) state.commentPage = totalPages;
+    if (state.commentPage < 1) state.commentPage = 1;
+
+    if (totalPages <= 1) {
+      pager.innerHTML = '';
+      pager.classList.add('hidden');
       return;
     }
 
-    list.innerHTML = state.comments.map(c => {
+    pager.classList.remove('hidden');
+    const model = commentPaginationModel(state.commentPage, totalPages);
+
+    const pageButtons = model.map(item => {
+      if (item === '...') return '<span class="rec-page-ellipsis">…</span>';
+      return `<button type="button" class="rec-page-btn${item === state.commentPage ? ' active' : ''}" data-comment-page="${item}" aria-label="หน้าที่ ${item}">${item}</button>`;
+    }).join('');
+
+    pager.innerHTML = `
+      <button type="button" class="rec-page-arrow" data-comment-page="${Math.max(1,state.commentPage-1)}" ${state.commentPage===1?'disabled':''} aria-label="หน้าก่อนหน้า"><i class="fas fa-chevron-left"></i></button>
+      ${pageButtons}
+      <button type="button" class="rec-page-arrow" data-comment-page="${Math.min(totalPages,state.commentPage+1)}" ${state.commentPage===totalPages?'disabled':''} aria-label="หน้าถัดไป"><i class="fas fa-chevron-right"></i></button>
+      <div class="rec-page-summary">หน้า ${state.commentPage} จาก ${totalPages} · แสดงสูงสุด ${perPage} ความคิดเห็นต่อหน้า</div>
+    `;
+  }
+
+  function renderComments(apiMode = true) {
+    const list = $('recordingsCommentsList'); if (!list) return;
+    state.commentsApiMode = apiMode;
+
+    const totalComments = state.comments.length;
+    $('recordingsCommentsCount').textContent = `${totalComments} ความคิดเห็น${apiMode ? '' : ' · ในเครื่องนี้'}`;
+
+    const own = String(recordingsAccessStudentId || localStorage.getItem('studentId') || '');
+
+    if (!totalComments) {
+      list.innerHTML = '<div class="rec-comments-empty"><i class="far fa-comment-dots"></i><br>ยังไม่มีความคิดเห็น เป็นคนแรกที่แสดงความคิดเห็นได้เลย</div>';
+      renderCommentPagination(0);
+      return;
+    }
+
+    const totalPages = Math.max(1, Math.ceil(totalComments / state.commentsPerPage));
+    if (state.commentPage > totalPages) state.commentPage = totalPages;
+
+    const start = (state.commentPage - 1) * state.commentsPerPage;
+    const pageRows = state.comments.slice(start, start + state.commentsPerPage);
+
+    list.innerHTML = pageRows.map(c => {
       const sid = String(c.student_id || c.studentId || '');
       const cached = studentProfileCache.get(sid);
-      const name = c.student_name || c.studentName || cached?.student_name || sid || 'นักศึกษา';
-      const image = c.images || c.image || cached?.images || '';
-      const avatar = image && /^https?:\/\//i.test(image)
-        ? `<img class="rec-comment-avatar" src="${esc(image)}" alt="${esc(name)}" loading="lazy" onerror="this.outerHTML='<div class=&quot;rec-comment-avatar&quot;><i class=&quot;fas fa-user&quot;></i></div>'">`
-        : `<div class="rec-comment-avatar"><i class="fas fa-user"></i></div>`;
+      const name = cached?.student_name || c.student_name || c.studentName || sid || 'นักศึกษา';
+      const image = normalizeStudentImage(cached?.images || c.images || c.image, sid);
+      const rmsFallback = sid ? `https://rms.nwvoc.ac.th/files/importpicstd/01/${encodeURIComponent(sid)}.jpg` : 'https://cdn.tvk69.site/tvk69.png';
+      const avatar = `<img class="rec-comment-avatar" src="${esc(image)}" alt="${esc(name)}" loading="lazy"
+        data-rms-fallback="${esc(rmsFallback)}"
+        onerror="if(this.dataset.fallbackDone!=='1'){this.dataset.fallbackDone='1';this.src=this.dataset.rmsFallback}else{this.onerror=null;this.src='https://cdn.tvk69.site/tvk69.png'}">`;
       const canDelete = own && sid === own;
 
       return `<article class="rec-comment" data-comment-id="${esc(c.id || '')}">
@@ -5655,7 +5905,7 @@ function calculateAttendanceQuota(isUserAction = false) {
         <div class="rec-comment-body">
           <div class="rec-comment-top">
             <span class="rec-comment-author">${esc(name)}</span>
-            ${sid ? `<span class="rec-comment-student">${esc(sid)}</span>` : ''}
+            ${sid ? `<span class="rec-comment-student"><i class="fas fa-id-card"></i> ${esc(sid)}</span>` : ''}
             <span class="rec-comment-time">${esc(commentDate(c.created_at || c.createdAt || Date.now()))}</span>
             ${canDelete ? `<button type="button" class="rec-comment-delete" data-delete-comment="${esc(c.id || '')}" title="ลบความคิดเห็น"><i class="fas fa-trash"></i></button>` : ''}
           </div>
@@ -5663,6 +5913,8 @@ function calculateAttendanceQuota(isUserAction = false) {
         </div>
       </article>`;
     }).join('');
+
+    renderCommentPagination(totalComments);
   }
 
   async function refreshCommentProfiles(apiMode = true) {
@@ -5673,10 +5925,9 @@ function calculateAttendanceQuota(isUserAction = false) {
   async function submitComment(event) {
     event.preventDefault();
     if (!state.current) return;
-    const sidInput = $('recordingsCommentStudentId');
     const textInput = $('recordingsCommentText');
     const button = $('recordingsCommentSubmit');
-    const studentId = String(sidInput.value || localStorage.getItem('studentId') || '').trim();
+    const studentId = String(recordingsAccessStudentId || currentSaveMeId || localStorage.getItem('studentId') || '').trim();
     const comment = String(textInput.value || '').trim();
     if (!studentId) return Swal.fire('กรุณากรอกรหัสนักศึกษา', 'ใช้รหัสนักศึกษาเพื่อระบุผู้แสดงความคิดเห็น', 'warning');
     if (!comment) return Swal.fire('ยังไม่ได้พิมพ์ความคิดเห็น', '', 'warning');
@@ -5686,12 +5937,8 @@ function calculateAttendanceQuota(isUserAction = false) {
       const verify = await fetchData('get-bio-data', {method:'POST',body:JSON.stringify({studentId})});
       if (!verify?.success || !verify?.student) throw new Error('ไม่พบรหัสนักศึกษานี้ในระบบ');
       localStorage.setItem('studentId', studentId);
-      sidInput.value = studentId;
-      studentProfileCache.set(studentId, {
-        student_id: studentId,
-        student_name: verify.student.student_name || verify.student.name || studentId,
-        images: verify.student.images || verify.student.image || ''
-      });
+      const verifiedProfile = await getStudentProfile(studentId, true);
+      if (verifiedProfile) studentProfileCache.set(studentId, verifiedProfile);
       let saved = null;
       try {
         const r = await fetchData('recording-comment-add', {method:'POST',body:JSON.stringify({recordingId:Number(state.current),studentId,comment})});
@@ -5700,12 +5947,15 @@ function calculateAttendanceQuota(isUserAction = false) {
       if (saved) {
         textInput.value = '';
         await loadComments();
+        state.commentPage = Math.max(1, Math.ceil(state.comments.length / state.commentsPerPage));
+        renderComments(state.commentsApiMode);
       } else {
         const rows = readLocalComments(state.current);
-        rows.push({id:'local-'+Date.now(),student_id:studentId,student_name:verify.student.student_name || verify.student.name || studentId,images:verify.student.images || '',comment_text:comment,created_at:new Date().toISOString()});
+        rows.push({id:'local-'+Date.now(),student_id:studentId,student_name:verify.student.student_name || verify.student.name || studentId,images:normalizeStudentImage(verify.student.images || verify.student.image, studentId),comment_text:comment,created_at:new Date().toISOString()});
         writeLocalComments(state.current, rows);
         textInput.value = '';
         state.comments = rows;
+        state.commentPage = Math.max(1, Math.ceil(state.comments.length / state.commentsPerPage));
         renderComments(false);
       }
     } catch (e) {
@@ -5731,15 +5981,34 @@ function calculateAttendanceQuota(isUserAction = false) {
 
   function stop() {
     const player = $('recordingsPlayer'); if (player) player.replaceChildren();
-    state.current = null; state.comments = [];
+    state.current = null; state.comments = []; state.commentPage = 1;
   }
+
 
   function play(id) {
     const v = state.videos.find(v => v._id === String(id)); if (!v) return;
     const media = parseVideo(v.url); if (!media) return;
     const player = $('recordingsPlayer'); player.replaceChildren(); state.current = v._id;
     $('recordingsPlayerTitle').textContent = v.title;
-    $('recordingsPlayerInfo').textContent = [v.subject, v.teacher, dateStr(v.date)].filter(Boolean).join(' • ');
+    $('recordingsPlayerInfo').textContent = [v.subject, dateStr(v.date)].filter(Boolean).join(' • ');
+
+    const teacherProfile = recordingTeacherProfile(v);
+    const uploaderAvatar = $('recordingsUploaderAvatar');
+    if (uploaderAvatar) {
+      uploaderAvatar.src = teacherProfile.image;
+      uploaderAvatar.alt = teacherProfile.name;
+      uploaderAvatar.onerror = () => {
+        uploaderAvatar.onerror = null;
+        uploaderAvatar.src = 'https://cdn.tvk69.site/tvk69.png';
+      };
+    }
+    if ($('recordingsUploaderName')) $('recordingsUploaderName').textContent = teacherProfile.name;
+    if ($('recordingsUploaderSub')) {
+      $('recordingsUploaderSub').textContent = teacherProfile.subject
+        ? `ผู้สอนรายวิชา ${teacherProfile.subject}`
+        : 'ผู้สอนประจำคลิป';
+    }
+
     $('recordingsPlayerDescription').textContent = v.description || 'วิดีโอบันทึกการเรียนย้อนหลัง';
     if (media.kind === 'file') {
       const video = document.createElement('video'); video.controls = true; video.playsInline = true; video.preload = 'metadata'; video.src = media.src; player.append(video);
@@ -5748,9 +6017,86 @@ function calculateAttendanceQuota(isUserAction = false) {
     }
     renderRelated();
     $('recordingsViewer').classList.remove('hidden');
-    const savedStudent = localStorage.getItem('studentId'); if (savedStudent) $('recordingsCommentStudentId').value = savedStudent;
+    syncRecordingsCommentIdentity();
     loadComments();
     $('recordingsViewer').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+
+
+
+  async function syncRecordingsCommentIdentity() {
+    const sid = String(recordingsAccessStudentId || '').trim();
+    if (!sid) return;
+
+    const profile = await getStudentProfile(sid, true);
+    const student = profile || recordingsAccessStudent || {};
+    const name = student.student_name || student.name || sid || 'นักศึกษา TVK69';
+    const image = normalizeStudentImage(student.images || student.image, sid);
+
+    const avatar = $('recordingsCommentIdentityAvatar');
+    const nameEl = $('recordingsCommentIdentityName');
+    const subEl = $('recordingsCommentIdentitySub');
+
+    if (avatar) {
+      avatar.src = image;
+      avatar.alt = name;
+      avatar.onerror = () => {
+        const rms = `https://rms.nwvoc.ac.th/files/importpicstd/01/${encodeURIComponent(sid)}.jpg`;
+        if (avatar.src !== rms) {
+          avatar.onerror = () => {
+            avatar.onerror = null;
+            avatar.src = 'https://cdn.tvk69.site/tvk69.png';
+          };
+          avatar.src = rms;
+        } else {
+          avatar.onerror = null;
+          avatar.src = 'https://cdn.tvk69.site/tvk69.png';
+        }
+      };
+    }
+    if (nameEl) nameEl.textContent = name;
+    if (subEl) subEl.textContent = `รหัสนักศึกษา ${sid} · ยืนยันตัวตนแล้ว`;
+  }
+
+  async function requestRecordingsAccess() {
+    const studentId = String(currentSaveMeId || localStorage.getItem('studentId') || '').trim();
+    if (!studentId) {
+      Swal.fire('Session หมดอายุ', 'กรุณาเข้าสู่ระบบใหม่จากหน้าหลัก', 'warning');
+      return false;
+    }
+
+    recordingsAccessStudentId = studentId;
+
+    if (currentLoggedStudent) {
+      recordingsAccessStudent = currentLoggedStudent;
+    } else if (studentProfileCache.has(studentId)) {
+      recordingsAccessStudent = studentProfileCache.get(studentId);
+    } else {
+      const verify = await fetchData('get-bio-data', {
+        method:'POST',
+        body:JSON.stringify({studentId})
+      });
+      if (!verify?.success || !verify?.student) {
+        Swal.fire('Session ไม่ถูกต้อง', 'ไม่พบข้อมูลนักศึกษาที่เข้าสู่ระบบ กรุณาเข้าสู่ระบบใหม่', 'warning');
+        return false;
+      }
+      recordingsAccessStudent = verify.student;
+    }
+
+    studentProfileCache.set(studentId, {
+      student_id: studentId,
+      student_name: recordingsAccessStudent.student_name || recordingsAccessStudent.name || studentId,
+      images: normalizeStudentImage(recordingsAccessStudent.images || recordingsAccessStudent.image, studentId)
+    });
+
+    syncRecordingsCommentIdentity();
+    return true;
+  }
+
+  async function openRecordingsWithAccess() {
+    const allowed = await requestRecordingsAccess();
+    if (!allowed) return;
+    showTab('recordings');
   }
 
   function init() {
@@ -5758,12 +6104,12 @@ function calculateAttendanceQuota(isUserAction = false) {
     if (!list || $('recordingsContent')) return;
     const button = document.createElement('button'); button.type = 'button'; button.id = 'recordingsTab'; button.className = 'nav-dropdown-item';
     button.innerHTML = '<span class="nav-item-icon bg-rose-50 text-rose-600"><i class="fas fa-video"></i></span><span><b>บันทึกออนไลน์</b><small>รับชมวิดีโอการเรียนย้อนหลัง</small></span>';
-    button.addEventListener('click', () => showTab('recordings'));
+    button.addEventListener('click', () => openRecordingsWithAccess());
     list.insertBefore(button, list.children[1] || null);
 
     const content = document.createElement('section'); content.id = 'recordingsContent'; content.className = 'fade-in hidden';
     content.innerHTML = `<div class="rec-banner"><div class="rec-banner-icon"><i class="fas fa-clapperboard"></i></div><div><div class="rec-eyebrow">TVK CLASSROOM · VIDEO LIBRARY</div><h3>เรียนย้อนหลังได้ทุกเวลา</h3><p>ทบทวนบทเรียนด้วยคลิปวิดีโอย้อนหลัง ค้นหาตามชื่อคลิปหรือรายวิชาได้ทันที</p></div></div>
-      <div id="recordingsViewer" class="rec-viewer hidden"><div class="rec-watch-layout"><div class="rec-main"><div class="rec-player-shell"><div class="rec-player-head"><div><h3 id="recordingsPlayerTitle"></h3><p id="recordingsPlayerInfo"></p></div><button id="recordingsClose" type="button"><i class="fas fa-times"></i> ปิด</button></div><div id="recordingsPlayer" class="rec-player"></div><div class="rec-detail"><p id="recordingsPlayerDescription"></p></div></div><section class="rec-comments"><div class="rec-comments-head"><h3><i class="far fa-comments"></i> ความคิดเห็น</h3><span id="recordingsCommentsCount">0 ความคิดเห็น</span></div><form id="recordingsCommentForm" class="rec-comment-form"><input id="recordingsCommentStudentId" inputmode="numeric" autocomplete="off" placeholder="รหัสนักศึกษา" aria-label="รหัสนักศึกษา"><textarea id="recordingsCommentText" maxlength="1000" placeholder="แสดงความคิดเห็นเกี่ยวกับบทเรียน..." aria-label="ความคิดเห็น"></textarea><button id="recordingsCommentSubmit" type="submit"><i class="fas fa-paper-plane"></i> ส่ง</button><p class="rec-comment-help">ใช้รหัสนักศึกษาที่มีอยู่ใน TVK69 เพื่อแสดงความคิดเห็น</p></form><div id="recordingsCommentsList" class="rec-comment-list"></div></section></div><aside class="rec-side"><div class="rec-side-head"><h3>คลิปอื่น ๆ</h3><span id="recordingsRelatedCount">0 คลิป</span></div><div id="recordingsRelated" class="rec-related"></div></aside></div></div>
+      <div id="recordingsViewer" class="rec-viewer hidden"><div class="rec-watch-layout"><div class="rec-main"><div class="rec-player-shell"><div class="rec-player-head"><div><h3 id="recordingsPlayerTitle"></h3><p id="recordingsPlayerInfo"></p></div><button id="recordingsClose" type="button"><i class="fas fa-times"></i> ปิด</button></div><div id="recordingsPlayer" class="rec-player"></div><div class="rec-detail"><div class="rec-uploader"><img id="recordingsUploaderAvatar" class="rec-uploader-avatar" src="https://cdn.tvk69.site/tvk69.png" alt="ผู้ลงคลิป"><div class="rec-uploader-copy"><span class="rec-uploader-label">ผู้สอนรายวิชา</span><span id="recordingsUploaderName" class="rec-uploader-name">TVK69</span><span id="recordingsUploaderSub" class="rec-uploader-sub"></span></div></div><p id="recordingsPlayerDescription"></p></div></div><section class="rec-comments"><div class="rec-comments-head"><h3><i class="far fa-comments"></i> ความคิดเห็น</h3><span id="recordingsCommentsCount">0 ความคิดเห็น</span></div><form id="recordingsCommentForm" class="rec-comment-form"><div class="rec-comment-identity"><img id="recordingsCommentIdentityAvatar" class="rec-comment-identity-avatar" src="https://cdn.tvk69.site/tvk69.png" alt="โปรไฟล์นักศึกษา"><div class="rec-comment-identity-copy"><span id="recordingsCommentIdentityName" class="rec-comment-identity-name">นักศึกษา TVK69</span><span id="recordingsCommentIdentitySub" class="rec-comment-identity-sub">ยืนยันตัวตนแล้ว</span></div></div><textarea id="recordingsCommentText" maxlength="1000" placeholder="แสดงความคิดเห็นเกี่ยวกับบทเรียน..." aria-label="ความคิดเห็น"></textarea><button id="recordingsCommentSubmit" type="submit"><i class="fas fa-paper-plane"></i> ส่ง</button><p class="rec-comment-help">ความคิดเห็นนี้จะแสดงด้วยชื่อและรูปโปรไฟล์ของนักศึกษาที่เข้าสู่บันทึกออนไลน์</p></form><div id="recordingsCommentsList" class="rec-comment-list"></div><nav id="recordingsCommentsPagination" class="rec-comment-pagination hidden" aria-label="หน้าความคิดเห็น"></nav></section></div><aside class="rec-side"><div class="rec-side-head"><h3>คลิปอื่น ๆ</h3><span id="recordingsRelatedCount">0 คลิป</span></div><div id="recordingsRelated" class="rec-related"></div></aside></div></div>
       <div class="rec-controls"><label class="rec-search"><i class="fas fa-search"></i><input id="recordingsSearch" type="search" placeholder="ค้นหาชื่อบทเรียน วิชา หรือครูผู้สอน"></label><select id="recordingsSubject"><option value="">ทุกรายวิชา</option></select><select id="recordingsSort"><option value="newest">ใหม่ล่าสุด</option><option value="az">ชื่อ ก-ฮ</option></select></div>
       <div class="rec-list-head"><h3>คลิปวิดีโอทั้งหมด</h3><span id="recordingsCount">0 วิดีโอ</span></div><p id="recordingsMessage" role="status" class="rec-message"></p><div id="recordingsGrid" class="rec-grid"></div>`;
     const shell = $('documentsContent')?.parentElement; if (!shell) return; shell.append(content);
@@ -5776,10 +6122,23 @@ function calculateAttendanceQuota(isUserAction = false) {
     $('recordingsRelated').addEventListener('click', e => {const btn=e.target.closest('[data-video]');if(btn)play(btn.dataset.video);});
     $('recordingsCommentForm').addEventListener('submit', submitComment);
     $('recordingsCommentsList').addEventListener('click', e => {const b=e.target.closest('[data-delete-comment]');if(b)deleteComment(b.dataset.deleteComment);});
+    $('recordingsCommentsPagination').addEventListener('click', e => {
+      const btn = e.target.closest('[data-comment-page]');
+      if (!btn || btn.disabled) return;
+      const page = Number(btn.dataset.commentPage);
+      if (!Number.isFinite(page) || page < 1) return;
+      state.commentPage = page;
+      renderComments(state.commentsApiMode);
+      $('recordingsCommentsList')?.scrollIntoView({behavior:'smooth',block:'nearest'});
+    });
 
     const priorShowTab = window.showTab;
     window.showTab = function(name) {
       if (name === 'recordings') {
+        if (!recordingsAccessStudentId || !recordingsAccessStudent) {
+          openRecordingsWithAccess();
+          return;
+        }
         if (typeof window.closeNavDropdowns === 'function') window.closeNavDropdowns();
         document.querySelectorAll('#documentsContent,#testingContent,#studentsContent,#resumeContent,#websiteContent,#rankingContent,#contactContent,#adminContent,#savemeContent,#storiesContent,#diaryContent,#quotaContent,#recordingsContent').forEach(el=>el.classList.add('hidden'));
         document.querySelectorAll('.nav-dropdown-item').forEach(el=>{el.classList.remove('nav-active');el.removeAttribute('data-active');});
@@ -5787,6 +6146,7 @@ function calculateAttendanceQuota(isUserAction = false) {
         if ($('workspacePageTitle')) $('workspacePageTitle').textContent='บันทึกออนไลน์';
         if ($('workspacePageSubtitle')) $('workspacePageSubtitle').textContent='คลังวิดีโอการเรียนย้อนหลัง พร้อมความคิดเห็นของนักศึกษา';
         document.querySelectorAll('.nav-dropdown').forEach(drop => drop.querySelector('.nav-category-btn')?.setAttribute('data-current',String(drop.contains(button))));
+        syncRecordingsCommentIdentity();
         load();
       } else {
         stop(); $('recordingsViewer').classList.add('hidden'); content.classList.add('hidden');
