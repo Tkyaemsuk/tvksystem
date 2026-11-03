@@ -91,7 +91,7 @@ function checkToken() {
    PHP API -> https://livev1.tvk69.site/event
    ========================================================= */
 define('REALTIME_URL', 'https://livev1.tvk69.site/event');
-define('REALTIME_SECRET', getenv('REALTIME_SECRET') ?: '');
+define('REALTIME_SECRET', getenv('REALTIME_SECRET') ?: 'AYIfwhwEIjt9CXZkoEJ_xAUdBgF4TrfoZhnc8xBcHjw');
 
 function realtimeEmit($event, $data = [], $studentId = null) {
     if (!$event || !function_exists('curl_init')) return false;
@@ -317,7 +317,7 @@ function sendGmailNotification($to, $studentName, $title, $message, $actionUrl =
 }
 
 function sendLineBroadcastNotification($message) {
-    $channelToken = getenv('LINE_CHANNEL_ACCESS_TOKEN') ?: '';
+    $channelToken = 'RGUGzoEuvQbivUxBtgr8RARjEmgWKqwSQWX0l8xtqjoyX4JBE9WK07OkFkFdwl1DCRgPw6nRHfWZJ3KSOnqhUa3Xj9ULvXYOJOXoCuyTKDWwaRw+7ZlpALI1dQA0YOlRaFpm/Bkw7g1VWgm2i8Js/wdB04t89/1O/w1cDnyilFU=';
     if (!$channelToken) return false;
 
     $payload = [
@@ -372,9 +372,8 @@ if (count($path_parts) >= 2) {
 }
 
 
-
-/* ===== TVK69 Recorded Lessons API ===== */
-function tvkEnsureRecordedLessonsTable($db) {
+/* ===== TVK69 RECORDED LESSONS + COMMENTS API v2 ===== */
+function tvkEnsureRecordingTables($db) {
     $db->query("CREATE TABLE IF NOT EXISTS recorded_lessons (
         id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
         title VARCHAR(180) NOT NULL,
@@ -390,25 +389,44 @@ function tvkEnsureRecordedLessonsTable($db) {
         KEY idx_recording_date (recording_date),
         KEY idx_teacher_subject (teacher(64), subject(64))
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
+
+    $db->query("CREATE TABLE IF NOT EXISTS recorded_lesson_comments (
+        id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+        recording_id BIGINT UNSIGNED NOT NULL,
+        student_id VARCHAR(100) NOT NULL,
+        comment_text TEXT NOT NULL,
+        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        PRIMARY KEY (id),
+        KEY idx_rec_comments_recording (recording_id, created_at),
+        KEY idx_rec_comments_student (student_id),
+        CONSTRAINT fk_rec_comments_recording
+            FOREIGN KEY (recording_id) REFERENCES recorded_lessons(id)
+            ON DELETE CASCADE ON UPDATE CASCADE
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
 }
-function tvkRecordingJsonInput() {
+
+function tvkRecordingInput() {
     $raw = file_get_contents('php://input');
     if ($raw === false || strlen($raw) > 32768) return null;
     $data = json_decode($raw, true);
     return is_array($data) ? $data : null;
 }
+
 function tvkRecordingAdminAllowed() {
     if (empty($_SESSION['tvk_admin'])) return false;
     $expected = (string)($_SESSION['tvk_admin_csrf'] ?? '');
     $sent = (string)($_SERVER['HTTP_X_ADMIN_CSRF'] ?? '');
     return $expected !== '' && $sent !== '' && hash_equals($expected, $sent);
 }
+
 function tvkRecordingSubjects($raw) {
     $items = preg_split('/[,\/\r\n]+/u', (string)$raw) ?: [];
     $items = array_map('trim', $items);
-    $items = array_filter($items, function($v) { return $v !== '' && $v !== 'ไม่ได้ระบุรายวิชา'; });
+    $items = array_filter($items, fn($v) => $v !== '' && $v !== 'ไม่ได้ระบุรายวิชา');
     return array_values(array_unique($items));
 }
+
 function tvkRecordingValidUrl($value, $video = false) {
     $value = trim((string)$value);
     if ($value === '' || strlen($value) > 2048 || !filter_var($value, FILTER_VALIDATE_URL)) return false;
@@ -417,10 +435,18 @@ function tvkRecordingValidUrl($value, $video = false) {
     if (!$video) return true;
     $host = strtolower((string)$parts['host']);
     if (in_array($host, ['youtube.com','www.youtube.com','m.youtube.com','youtu.be','www.youtube-nocookie.com','vimeo.com','www.vimeo.com','player.vimeo.com'], true)) return true;
-    return preg_match('~\.(?:mp4|webm|ogg)(?:$|\?)~i', (string)($parts['path'] ?? '')) === 1;
+    return preg_match('~\.(?:mp4|webm|ogg)$~i', (string)($parts['path'] ?? '')) === 1;
 }
+
 function tvkRecordingRow($db, $id) {
     return $db->query("SELECT id,title,teacher,subject,DATE_FORMAT(recording_date,'%Y-%m-%d') AS date,url,thumbnail,description,created_at,updated_at FROM recorded_lessons WHERE id=? LIMIT 1", [(int)$id])->fetch(PDO::FETCH_ASSOC);
+}
+
+function tvkRecordingCommentRow($db, $id) {
+    return $db->query("SELECT c.id,c.recording_id,c.student_id,c.comment_text,c.created_at,c.updated_at,s.student_name,s.images
+        FROM recorded_lesson_comments c
+        LEFT JOIN students s ON s.student_id COLLATE utf8mb4_unicode_ci = c.student_id COLLATE utf8mb4_unicode_ci
+        WHERE c.id=? LIMIT 1", [(int)$id])->fetch(PDO::FETCH_ASSOC);
 }
 
 switch ($endpoint) {
@@ -428,11 +454,11 @@ switch ($endpoint) {
     case 'recordings':
         if ($method === 'GET') {
             try {
-                tvkEnsureRecordedLessonsTable($db);
+                tvkEnsureRecordingTables($db);
                 $videos = $db->query("SELECT id,title,teacher,subject,DATE_FORMAT(recording_date,'%Y-%m-%d') AS date,url,thumbnail,description,created_at,updated_at FROM recorded_lessons ORDER BY recording_date DESC,id DESC")->fetchAll(PDO::FETCH_ASSOC);
-                echo json_encode(['success'=>true,'videos'=>$videos], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+                echo json_encode(['success'=>true,'videos'=>$videos], JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
             } catch (Throwable $e) {
-                error_log('TVK69 recordings GET: '.$e->getMessage());
+                error_log('recordings: '.$e->getMessage());
                 http_response_code(500);
                 echo json_encode(['success'=>false,'message'=>'ไม่สามารถโหลดวิดีโอได้'], JSON_UNESCAPED_UNICODE);
             }
@@ -443,126 +469,142 @@ switch ($endpoint) {
         break;
 
     case 'recording-save':
-        if ($method !== 'POST') {
-            http_response_code(405);
-            echo json_encode(['success'=>false,'message'=>'Method not allowed'], JSON_UNESCAPED_UNICODE);
-            break;
-        }
-        if (!tvkRecordingAdminAllowed()) {
-            http_response_code(403);
-            echo json_encode(['success'=>false,'message'=>'กรุณาเข้าสู่ระบบ Admin ใหม่ หรือ CSRF token ไม่ถูกต้อง'], JSON_UNESCAPED_UNICODE);
-            break;
-        }
+        if ($method !== 'POST') { http_response_code(405); echo json_encode(['success'=>false,'message'=>'Method not allowed']); break; }
+        if (!tvkRecordingAdminAllowed()) { http_response_code(403); echo json_encode(['success'=>false,'message'=>'Admin/CSRF ไม่ถูกต้อง'], JSON_UNESCAPED_UNICODE); break; }
+
         try {
-            tvkEnsureRecordedLessonsTable($db);
-            $in = tvkRecordingJsonInput();
-            if (!$in) {
-                http_response_code(400);
-                echo json_encode(['success'=>false,'message'=>'รูปแบบ JSON ไม่ถูกต้อง'], JSON_UNESCAPED_UNICODE);
-                break;
-            }
+            tvkEnsureRecordingTables($db);
+            $in = tvkRecordingInput();
+            if (!$in) { http_response_code(400); echo json_encode(['success'=>false,'message'=>'JSON ไม่ถูกต้อง'], JSON_UNESCAPED_UNICODE); break; }
 
-            $id = max(0, (int)($in['id'] ?? 0));
-            $title = trim((string)($in['title'] ?? ''));
-            $teacher = trim((string)($in['teacher'] ?? ''));
-            $subject = trim((string)($in['subject'] ?? ''));
-            $date = trim((string)($in['date'] ?? ''));
-            $url = trim((string)($in['url'] ?? ''));
-            $thumbnail = trim((string)($in['thumbnail'] ?? ''));
-            $description = trim((string)($in['description'] ?? ''));
+            $id=(int)($in['id']??0);
+            $title=trim((string)($in['title']??''));
+            $teacher=trim((string)($in['teacher']??''));
+            $subject=trim((string)($in['subject']??''));
+            $date=trim((string)($in['date']??''));
+            $url=trim((string)($in['url']??''));
+            $thumbnail=trim((string)($in['thumbnail']??''));
+            $description=trim((string)($in['description']??''));
 
-            if ($title === '' || mb_strlen($title) > 180 || $teacher === '' || mb_strlen($teacher) > 255 || $subject === '' || mb_strlen($subject) > 255 || mb_strlen($description) > 1000) {
+            $dateObj=DateTimeImmutable::createFromFormat('!Y-m-d',$date);
+            if ($title==='' || $teacher==='' || $subject==='' || !$dateObj || $dateObj->format('Y-m-d')!==$date || !tvkRecordingValidUrl($url,true) || ($thumbnail!=='' && !tvkRecordingValidUrl($thumbnail,false))) {
                 http_response_code(422);
-                echo json_encode(['success'=>false,'message'=>'กรุณาระบุชื่อวิดีโอ อาจารย์ และรายวิชาให้ถูกต้อง'], JSON_UNESCAPED_UNICODE);
+                echo json_encode(['success'=>false,'message'=>'ข้อมูลวิดีโอไม่ถูกต้อง'], JSON_UNESCAPED_UNICODE);
                 break;
             }
 
-            $dateObj = DateTimeImmutable::createFromFormat('!Y-m-d', $date);
-            if (!$dateObj || $dateObj->format('Y-m-d') !== $date) {
-                http_response_code(422);
-                echo json_encode(['success'=>false,'message'=>'วันที่บันทึกไม่ถูกต้อง'], JSON_UNESCAPED_UNICODE);
-                break;
-            }
+            $rows=$db->query("SELECT subject FROM teachers WHERE name=?",[$teacher])->fetchAll(PDO::FETCH_ASSOC);
+            $ok=false;
+            foreach($rows as $row){ if(in_array($subject,tvkRecordingSubjects($row['subject']??''),true)){ $ok=true; break; } }
+            if(!$ok){ http_response_code(422); echo json_encode(['success'=>false,'message'=>'รายวิชาไม่ตรงกับอาจารย์'],JSON_UNESCAPED_UNICODE); break; }
 
-            if (!tvkRecordingValidUrl($url, true) || ($thumbnail !== '' && !tvkRecordingValidUrl($thumbnail, false))) {
-                http_response_code(422);
-                echo json_encode(['success'=>false,'message'=>'URL ต้องเป็น HTTPS และวิดีโอต้องเป็น YouTube, Vimeo, MP4, WebM หรือ OGG'], JSON_UNESCAPED_UNICODE);
-                break;
-            }
-
-            $teacherRows = $db->query("SELECT subject FROM teachers WHERE name=?", [$teacher])->fetchAll(PDO::FETCH_ASSOC);
-            $validPair = false;
-            foreach ($teacherRows as $teacherRow) {
-                if (in_array($subject, tvkRecordingSubjects($teacherRow['subject'] ?? ''), true)) {
-                    $validPair = true;
-                    break;
-                }
-            }
-            if (!$validPair) {
-                http_response_code(422);
-                echo json_encode(['success'=>false,'message'=>'รายวิชาไม่ตรงกับอาจารย์ผู้สอนในระบบ'], JSON_UNESCAPED_UNICODE);
-                break;
-            }
-
-            if ($id > 0) {
-                if (!tvkRecordingRow($db, $id)) {
-                    http_response_code(404);
-                    echo json_encode(['success'=>false,'message'=>'ไม่พบวิดีโอที่ต้องการแก้ไข'], JSON_UNESCAPED_UNICODE);
-                    break;
-                }
-                $db->query("UPDATE recorded_lessons SET title=?,teacher=?,subject=?,recording_date=?,url=?,thumbnail=?,description=? WHERE id=?", [$title,$teacher,$subject,$date,$url,$thumbnail,$description,$id]);
-                $action = 'updated';
+            if($id>0){
+                if(!tvkRecordingRow($db,$id)){ http_response_code(404); echo json_encode(['success'=>false,'message'=>'ไม่พบวิดีโอ'],JSON_UNESCAPED_UNICODE); break; }
+                $db->query("UPDATE recorded_lessons SET title=?,teacher=?,subject=?,recording_date=?,url=?,thumbnail=?,description=? WHERE id=?",[$title,$teacher,$subject,$date,$url,$thumbnail,$description,$id]);
+                $action='updated';
             } else {
-                $db->query("INSERT INTO recorded_lessons (title,teacher,subject,recording_date,url,thumbnail,description) VALUES (?,?,?,?,?,?,?)", [$title,$teacher,$subject,$date,$url,$thumbnail,$description]);
-                $id = (int)$db->query("SELECT LAST_INSERT_ID()")->fetchColumn();
-                $action = 'created';
+                $db->query("INSERT INTO recorded_lessons (title,teacher,subject,recording_date,url,thumbnail,description) VALUES (?,?,?,?,?,?,?)",[$title,$teacher,$subject,$date,$url,$thumbnail,$description]);
+                $id=(int)$db->query("SELECT LAST_INSERT_ID()")->fetchColumn();
+                $action='created';
             }
 
-            $record = tvkRecordingRow($db, $id);
-            realtimeBroadcastUpdate('recordings', $action, ['record'=>$record]);
-            echo json_encode(['success'=>true,'message'=>'บันทึกวิดีโอสำเร็จ','video'=>$record], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-        } catch (Throwable $e) {
-            error_log('TVK69 recording-save: '.$e->getMessage());
+            $record=tvkRecordingRow($db,$id);
+            if(function_exists('realtimeBroadcastUpdate')) realtimeBroadcastUpdate('recordings',$action,['record'=>$record]);
+            echo json_encode(['success'=>true,'video'=>$record],JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+        } catch(Throwable $e){
+            error_log('recording-save: '.$e->getMessage());
             http_response_code(500);
-            echo json_encode(['success'=>false,'message'=>'บันทึกวิดีโอไม่สำเร็จ'], JSON_UNESCAPED_UNICODE);
+            echo json_encode(['success'=>false,'message'=>'บันทึกวิดีโอไม่สำเร็จ'],JSON_UNESCAPED_UNICODE);
         }
         break;
 
     case 'recording-delete':
-        if ($method !== 'DELETE') {
-            http_response_code(405);
-            echo json_encode(['success'=>false,'message'=>'Method not allowed'], JSON_UNESCAPED_UNICODE);
-            break;
-        }
-        if (!tvkRecordingAdminAllowed()) {
-            http_response_code(403);
-            echo json_encode(['success'=>false,'message'=>'กรุณาเข้าสู่ระบบ Admin ใหม่ หรือ CSRF token ไม่ถูกต้อง'], JSON_UNESCAPED_UNICODE);
-            break;
-        }
+        if ($method !== 'DELETE') { http_response_code(405); echo json_encode(['success'=>false,'message'=>'Method not allowed']); break; }
+        if (!tvkRecordingAdminAllowed()) { http_response_code(403); echo json_encode(['success'=>false,'message'=>'Admin/CSRF ไม่ถูกต้อง'],JSON_UNESCAPED_UNICODE); break; }
         try {
-            tvkEnsureRecordedLessonsTable($db);
-            $in = tvkRecordingJsonInput();
-            $id = (int)($in['id'] ?? 0);
-            if ($id <= 0) {
-                http_response_code(422);
-                echo json_encode(['success'=>false,'message'=>'รหัสวิดีโอไม่ถูกต้อง'], JSON_UNESCAPED_UNICODE);
-                break;
-            }
-            if (!tvkRecordingRow($db, $id)) {
-                http_response_code(404);
-                echo json_encode(['success'=>false,'message'=>'ไม่พบวิดีโอ'], JSON_UNESCAPED_UNICODE);
-                break;
-            }
-            $db->query("DELETE FROM recorded_lessons WHERE id=?", [$id]);
-            realtimeBroadcastUpdate('recordings', 'deleted', ['id'=>$id]);
-            echo json_encode(['success'=>true,'message'=>'ลบวิดีโอแล้ว','id'=>$id], JSON_UNESCAPED_UNICODE);
-        } catch (Throwable $e) {
-            error_log('TVK69 recording-delete: '.$e->getMessage());
+            tvkEnsureRecordingTables($db);
+            $in=tvkRecordingInput(); $id=(int)($in['id']??0);
+            if($id<=0 || !tvkRecordingRow($db,$id)){ http_response_code(404); echo json_encode(['success'=>false,'message'=>'ไม่พบวิดีโอ'],JSON_UNESCAPED_UNICODE); break; }
+            $db->query("DELETE FROM recorded_lessons WHERE id=?",[$id]);
+            if(function_exists('realtimeBroadcastUpdate')) realtimeBroadcastUpdate('recordings','deleted',['id'=>$id]);
+            echo json_encode(['success'=>true,'id'=>$id],JSON_UNESCAPED_UNICODE);
+        } catch(Throwable $e){
+            error_log('recording-delete: '.$e->getMessage());
             http_response_code(500);
-            echo json_encode(['success'=>false,'message'=>'ลบวิดีโอไม่สำเร็จ'], JSON_UNESCAPED_UNICODE);
+            echo json_encode(['success'=>false,'message'=>'ลบวิดีโอไม่สำเร็จ'],JSON_UNESCAPED_UNICODE);
         }
         break;
 
+    case 'recording-comments':
+        if ($method !== 'GET') { http_response_code(405); echo json_encode(['success'=>false,'message'=>'Method not allowed']); break; }
+        try {
+            tvkEnsureRecordingTables($db);
+            $rid=(int)($_GET['recordingId']??$_GET['recording_id']??0);
+            if($rid<=0){ http_response_code(422); echo json_encode(['success'=>false,'message'=>'recordingId ไม่ถูกต้อง'],JSON_UNESCAPED_UNICODE); break; }
+            $comments=$db->query("SELECT c.id,c.recording_id,c.student_id,c.comment_text,c.created_at,c.updated_at,s.student_name,s.images
+                FROM recorded_lesson_comments c
+                LEFT JOIN students s ON s.student_id COLLATE utf8mb4_unicode_ci = c.student_id COLLATE utf8mb4_unicode_ci
+                WHERE c.recording_id=? ORDER BY c.created_at ASC,c.id ASC",[$rid])->fetchAll(PDO::FETCH_ASSOC);
+            echo json_encode(['success'=>true,'comments'=>$comments],JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+        } catch(Throwable $e){
+            error_log('recording-comments: '.$e->getMessage());
+            http_response_code(500);
+            echo json_encode(['success'=>false,'message'=>'โหลดความคิดเห็นไม่สำเร็จ'],JSON_UNESCAPED_UNICODE);
+        }
+        break;
+
+    case 'recording-comment-add':
+        if ($method !== 'POST') { http_response_code(405); echo json_encode(['success'=>false,'message'=>'Method not allowed']); break; }
+        try {
+            tvkEnsureRecordingTables($db);
+            $in=tvkRecordingInput();
+            $rid=(int)($in['recordingId']??$in['recording_id']??0);
+            $sid=trim((string)($in['studentId']??$in['student_id']??''));
+            $comment=trim((string)($in['comment']??$in['text']??$in['comment_text']??''));
+
+            if($rid<=0 || $sid==='' || $comment===''){ http_response_code(422); echo json_encode(['success'=>false,'message'=>'ข้อมูลไม่ครบ'],JSON_UNESCAPED_UNICODE); break; }
+            if(mb_strlen($comment)>2000){ http_response_code(422); echo json_encode(['success'=>false,'message'=>'ความคิดเห็นยาวเกิน 2,000 ตัวอักษร'],JSON_UNESCAPED_UNICODE); break; }
+            if(!tvkRecordingRow($db,$rid)){ http_response_code(404); echo json_encode(['success'=>false,'message'=>'ไม่พบวิดีโอ'],JSON_UNESCAPED_UNICODE); break; }
+
+            $student=$db->query("SELECT student_id,student_name,images FROM students WHERE student_id=? LIMIT 1",[$sid])->fetch(PDO::FETCH_ASSOC);
+            if(!$student){ http_response_code(403); echo json_encode(['success'=>false,'message'=>'ไม่พบรหัสนักศึกษา'],JSON_UNESCAPED_UNICODE); break; }
+
+            $db->query("INSERT INTO recorded_lesson_comments (recording_id,student_id,comment_text) VALUES (?,?,?)",[$rid,$sid,$comment]);
+            $cid=(int)$db->query("SELECT LAST_INSERT_ID()")->fetchColumn();
+            $row=tvkRecordingCommentRow($db,$cid);
+            if(function_exists('realtimeEmit')) realtimeEmit('recording:comment-created',['recordingId'=>$rid,'comment'=>$row]);
+            echo json_encode(['success'=>true,'comment'=>$row],JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);
+        } catch(Throwable $e){
+            error_log('recording-comment-add: '.$e->getMessage());
+            http_response_code(500);
+            echo json_encode(['success'=>false,'message'=>'เพิ่มความคิดเห็นไม่สำเร็จ'],JSON_UNESCAPED_UNICODE);
+        }
+        break;
+
+    case 'recording-comment-delete':
+        if ($method !== 'DELETE') { http_response_code(405); echo json_encode(['success'=>false,'message'=>'Method not allowed']); break; }
+        try {
+            tvkEnsureRecordingTables($db);
+            $in=tvkRecordingInput();
+            $id=(int)($in['id']??$in['commentId']??0);
+            $sid=trim((string)($in['studentId']??$in['student_id']??''));
+
+            $old=tvkRecordingCommentRow($db,$id);
+            if(!$old){ http_response_code(404); echo json_encode(['success'=>false,'message'=>'ไม่พบความคิดเห็น'],JSON_UNESCAPED_UNICODE); break; }
+
+            $isOwner=$sid!=='' && hash_equals((string)$old['student_id'],$sid);
+            $isAdmin=!empty($_SESSION['tvk_admin']);
+            if(!$isOwner && !$isAdmin){ http_response_code(403); echo json_encode(['success'=>false,'message'=>'ไม่มีสิทธิ์ลบความคิดเห็นนี้'],JSON_UNESCAPED_UNICODE); break; }
+
+            $db->query("DELETE FROM recorded_lesson_comments WHERE id=?",[$id]);
+            if(function_exists('realtimeEmit')) realtimeEmit('recording:comment-deleted',['recordingId'=>(int)$old['recording_id'],'commentId'=>$id]);
+            echo json_encode(['success'=>true,'id'=>$id],JSON_UNESCAPED_UNICODE);
+        } catch(Throwable $e){
+            error_log('recording-comment-delete: '.$e->getMessage());
+            http_response_code(500);
+            echo json_encode(['success'=>false,'message'=>'ลบความคิดเห็นไม่สำเร็จ'],JSON_UNESCAPED_UNICODE);
+        }
+        break;
 
     case 'login':
         if ($method === 'POST') {
@@ -722,7 +764,7 @@ switch ($endpoint) {
                 }
                 
                 // Send Line Broadcast
-                $channelToken = getenv('LINE_CHANNEL_ACCESS_TOKEN') ?: ''; 
+                $channelToken = "RGUGzoEuvQbivUxBtgr8RARjEmgWKqwSQWX0l8xtqjoyX4JBE9WK07OkFkFdwl1DCRgPw6nRHfWZJ3KSOnqhUa3Xj9ULvXYOJOXoCuyTKDWwaRw+7ZlpALI1dQA0YOlRaFpm/Bkw7g1VWgm2i8Js/wdB04t89/1O/w1cDnyilFU="; 
                 $url = 'https://api.line.me/v2/bot/message/broadcast';
                 $payload = [
                     'messages' => [
