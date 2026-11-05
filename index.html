@@ -3073,6 +3073,9 @@
             if (Array.isArray(studentsRealtimeCache) && studentsRealtimeCache.length) {
                 renderStudentsRealtime(studentsRealtimeCache);
             }
+            if (Array.isArray(storyRealtimeCache) && storyRealtimeCache.length && isContentVisible('storiesContent')) {
+                renderStoriesFromRealtime(storyRealtimeCache, true);
+            }
         }
 
         function applyPresenceUpdate(payload = {}) {
@@ -3095,6 +3098,11 @@
             if (isContentVisible('studentsContent') &&
                 Array.isArray(studentsRealtimeCache)) {
                 renderStudentsRealtime(studentsRealtimeCache);
+            }
+
+            if (isContentVisible('storiesContent') &&
+                Array.isArray(storyRealtimeCache)) {
+                renderStoriesFromRealtime(storyRealtimeCache, true);
             }
         }
 
@@ -4660,6 +4668,7 @@
                     const name = isAnon ? 'เพื่อนร่วมชะตากรรม' : s.student_name;
                     const img = isAnon ? 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png' : (s.images || 'https://i.pinimg.com/originals/4e/7b/c5/4e7bc52619d5c84f189f002cbb97f78a.gif');
                     const time = new Date(s.created_at).toLocaleString('th-TH');
+                    const storyAuthorOnline = !isAnon && onlineStudentIds.has(String(s.student_id || ''));
                     const canDeleteStory = (currentSaveMeId === s.student_id) || isAdmin;
 
                     // จัดการการแสดงผลรูปภาพหลายรูป (Grid)
@@ -4740,9 +4749,17 @@
                         <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 fade-in mb-6">
                             <div class="flex justify-between items-start mb-3">
                                 <div class="flex items-center gap-3">
-                                    <img src="${img}" class="w-10 h-10 rounded-full object-cover border border-gray-100 ${isAnon ? 'p-1 bg-pink-50' : ''}">
-                                    <div>
-                                        <h4 class="font-bold text-gray-800 text-sm">${name}</h4>
+                                    <div class="relative shrink-0">
+                                        <img src="${img}" class="w-10 h-10 rounded-full object-cover border border-gray-100 ${isAnon ? 'p-1 bg-pink-50' : ''}">
+                                        ${!isAnon ? `<span class="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${storyAuthorOnline ? 'bg-green-500' : 'bg-gray-300'}" title="${storyAuthorOnline ? 'ออนไลน์' : 'ออฟไลน์'}"></span>` : ''}
+                                    </div>
+                                    <div class="min-w-0">
+                                        <div class="flex items-center gap-2 flex-wrap">
+                                            <h4 class="font-bold text-gray-800 text-sm">${name}</h4>
+                                            ${!isAnon ? (storyAuthorOnline
+                                                ? '<span class="inline-flex items-center gap-1 text-[10px] font-semibold text-green-600 bg-green-50 px-2 py-0.5 rounded-full border border-green-100"><span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>ออนไลน์</span>'
+                                                : '<span class="inline-flex items-center gap-1 text-[10px] font-semibold text-gray-500 bg-gray-50 px-2 py-0.5 rounded-full border border-gray-200"><span class="w-1.5 h-1.5 bg-gray-300 rounded-full"></span>ออฟไลน์</span>') : ''}
+                                        </div>
                                         <span class="text-xs text-gray-400"><i class="far fa-clock mr-1"></i>${time}</span>
                                     </div>
                                 </div>
