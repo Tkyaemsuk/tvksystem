@@ -1,0 +1,63 @@
+name: Release TVK69 v2026.11.06.1
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/release-v2026.11.06.1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify release source
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f index.html
+          test -f api/enp4.php
+          test -f tvk69.sql
+          test -f database/tvk69_2026_11_realtime_story.sql
+          grep -q "session-login" index.html
+          grep -q "TVK69 Login UI ready:" index.html
+          grep -q "case 'session-login':" api/enp4.php
+          grep -q "case 'health':" api/enp4.php
+          grep -q 'intern_story_moments' tvk69.sql
+          grep -q 'story_music_library' tvk69.sql
+          grep -q 'realtime_presence_last_seen' tvk69.sql
+          grep -q 'intern_story_moments' database/tvk69_2026_11_realtime_story.sql
+
+      - name: Build ZIP package
+        shell: bash
+        run: |
+          set -euo pipefail
+          ZIP_NAME="TVK69-v2026.11.06.1.zip"
+          rm -f "$ZIP_NAME" "$ZIP_NAME.sha256"
+          zip -r -9 "$ZIP_NAME" .             -x '.git/*'             -x '.github/workflows/release-v2026.11.06.1.yml'
+          sha256sum "$ZIP_NAME" | tee "$ZIP_NAME.sha256"
+          unzip -t "$ZIP_NAME"
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TAG="v2026.11.06.1"
+          ZIP_NAME="TVK69-v2026.11.06.1.zip"
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$ZIP_NAME" "$ZIP_NAME.sha256" --clobber
+          else
+            gh release create "$TAG" "$ZIP_NAME" "$ZIP_NAME.sha256"               --target "${GITHUB_SHA}"               --title "TVK69 v2026.11.06.1"               --notes-file RELEASE_NOTES_v2026.11.06.md
+          fi
