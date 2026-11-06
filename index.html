@@ -1087,7 +1087,342 @@
         /* Single student sign-on: verify student identity only at the main login. */
         #savemeLogin,#storiesLogin,#diaryLogin,#websiteLoginBox{display:none!important}
 
-    </style>
+    
+        @keyframes tvkChatTypingDot {
+            0%, 60%, 100% { transform: translateY(0); opacity: .35; }
+            30% { transform: translateY(-4px); opacity: 1; }
+        }
+        .tvk-chat-typing-dot {
+            width: 5px; height: 5px; border-radius: 9999px;
+            background: currentColor; display: inline-block;
+            animation: tvkChatTypingDot 1.05s infinite ease-in-out;
+        }
+        .tvk-chat-typing-dot:nth-child(2) { animation-delay: .14s; }
+        .tvk-chat-typing-dot:nth-child(3) { animation-delay: .28s; }
+        @keyframes tvkChatToastIn {
+            from { opacity: 0; transform: translateY(-10px) scale(.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .tvk-chat-toast { animation: tvkChatToastIn .2s ease-out both; }
+
+
+        
+        .tvk-ai-code-shell {
+            background: #111827;
+            border: 1px solid #243244;
+            box-shadow: 0 8px 24px rgba(15,23,42,.14);
+        }
+
+        .tvk-ai-code-toolbar {
+            background: #182235;
+            border-bottom: 1px solid #2b3a4f;
+        }
+
+        .tvk-ai-code-body {
+            background: #111827;
+        }
+
+        .tvk-ai-code-lines {
+            counter-reset: tvkline;
+            color: #e5edf7;
+        }
+
+        .tvk-ai-code-line {
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr);
+            min-height: 1.55rem;
+        }
+
+        .tvk-ai-code-line::before {
+            counter-increment: tvkline;
+            content: counter(tvkline);
+            user-select: none;
+            text-align: right;
+            color: #6b7b91;
+            padding-right: .9rem;
+            margin-right: .9rem;
+            min-width: 2.25rem;
+            border-right: 1px solid #263346;
+        }
+
+        .tvk-ai-code-line > span {
+            white-space: pre;
+            min-width: 0;
+            color: #e5edf7;
+        }
+
+        .tvk-token-php-tag {
+            color: #f472b6;
+            font-weight: 700;
+        }
+
+        .tvk-token-keyword,
+        .tvk-token-tag {
+            color: #c4b5fd;
+            font-weight: 600;
+        }
+
+        .tvk-token-string,
+        .tvk-token-attr-value {
+            color: #86efac;
+        }
+
+        .tvk-token-number {
+            color: #fbbf24;
+        }
+
+        .tvk-token-comment {
+            color: #8fa1b8;
+            font-style: italic;
+        }
+
+        .tvk-token-function,
+        .tvk-token-class {
+            color: #7dd3fc;
+        }
+
+        .tvk-token-variable {
+            color: #93c5fd;
+        }
+
+        .tvk-token-property {
+            color: #f0abfc;
+        }
+
+        .tvk-token-operator {
+            color: #cbd5e1;
+        }
+
+        .tvk-token-attr-name {
+            color: #f9a8d4;
+        }
+
+        .tvk-token-punctuation {
+            color: #cbd5e1;
+        }
+
+        .tvk-token-constant {
+            color: #fdba74;
+        }
+
+        .tvk-ai-code-action {
+            color: #d7e0ec;
+        }
+
+        .tvk-ai-code-action:hover {
+            background: #263346;
+            color: #fff;
+        }
+
+        @media (max-width: 640px) {
+            .tvk-ai-code-line::before {
+                min-width: 1.8rem;
+                padding-right: .65rem;
+                margin-right: .65rem;
+            }
+        }
+
+
+        @media (max-width: 1023px) {
+            #chatConversation,
+            #chatSidebar {
+                min-height: 66vh;
+                height: 66vh;
+                max-height: 720px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            #chatConversation,
+            #chatSidebar {
+                min-height: 68vh;
+                height: 68vh;
+                max-height: none;
+            }
+
+            #chatMessages {
+                padding-left: .65rem;
+                padding-right: .65rem;
+            }
+
+            #chatInput {
+                font-size: 16px;
+            }
+        }
+
+
+        #chatHeaderPresence,
+        .chat-presence-dot {
+            z-index: 3;
+        }
+
+
+        #chatHeaderPresence,
+        .chat-presence-dot {
+            z-index: 4;
+        }
+
+
+        #chatImageViewer img {
+            -webkit-user-drag: none;
+        }
+
+
+        /* TVK69 Chat responsive/compact layout */
+        #chatShell {
+            height: clamp(560px, 72dvh, 780px);
+            min-height: 560px;
+        }
+
+        #chatLayout,
+        #chatSidebar,
+        #chatConversation,
+        #chatPane {
+            min-height: 0;
+        }
+
+        #chatRoomList,
+        #chatMessages {
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+        }
+
+        #chatRoomList > button {
+            padding: .7rem .75rem !important;
+            gap: .65rem !important;
+        }
+
+        #chatRoomList > button img {
+            width: 2.65rem !important;
+            height: 2.65rem !important;
+        }
+
+        #chatMessages [data-chat-message-id] {
+            scroll-margin-bottom: 5rem;
+        }
+
+        #chatComposer {
+            padding-bottom: max(.625rem, env(safe-area-inset-bottom));
+        }
+
+        #chatInput {
+            transition: height .12s ease, border-color .12s ease, box-shadow .12s ease;
+        }
+
+        #chatSend:disabled {
+            opacity: .55;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 1023px) {
+            #chatContent {
+                width: 100%;
+            }
+
+            #chatShell {
+                height: min(76dvh, 720px);
+                min-height: 520px;
+                max-height: none;
+                border-radius: 1.25rem;
+            }
+
+            #chatLayout {
+                display: block;
+                height: 100%;
+                position: relative;
+            }
+
+            #chatSidebar,
+            #chatConversation {
+                width: 100%;
+                height: 100%;
+                min-height: 0;
+            }
+
+            #chatSidebar {
+                border-right: 0;
+            }
+
+            #chatConversation.chat-mobile-hidden,
+            #chatSidebar.chat-mobile-hidden {
+                display: none !important;
+            }
+
+            #chatEmpty {
+                display: none;
+            }
+
+            #chatMessages {
+                padding-bottom: .75rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            #chatShell {
+                height: calc(100dvh - 116px);
+                min-height: 500px;
+                border-radius: 1rem;
+            }
+
+            #chatContent {
+                margin-left: -.15rem;
+                margin-right: -.15rem;
+            }
+
+            #chatSidebar > div:first-child {
+                padding: .7rem .75rem !important;
+            }
+
+            #chatRoomList > button {
+                padding: .6rem .65rem !important;
+            }
+
+            #chatRoomList > button img {
+                width: 2.5rem !important;
+                height: 2.5rem !important;
+            }
+
+            #chatMessages {
+                padding-left: .55rem !important;
+                padding-right: .55rem !important;
+                padding-top: .65rem !important;
+                gap: .45rem;
+            }
+
+            #chatMessages [data-chat-message-id] > div.max-w-\[78\%\] {
+                max-width: 82% !important;
+            }
+
+            #chatTyping > span:first-child {
+                display: none;
+            }
+
+            #chatComposerHint {
+                display: none;
+            }
+
+            #chatInput {
+                font-size: 16px;
+                min-height: 38px;
+                max-height: 96px;
+                padding: .5rem .7rem;
+            }
+
+            #chatComposer button {
+                width: 38px !important;
+                height: 38px !important;
+            }
+        }
+
+        @media (max-height: 680px) and (max-width: 1023px) {
+            #chatShell {
+                height: calc(100dvh - 88px);
+                min-height: 430px;
+            }
+        }
+
+</style>
 
 <!-- TVK69 INLINE RECORDINGS -->
 <style>
@@ -1281,6 +1616,14 @@
                                     <button onclick="showTab('stories')" id="storiesTab" class="nav-dropdown-item">
                                         <span class="nav-item-icon bg-pink-50 text-pink-600"><i class="fas fa-comment-dots"></i></span>
                                         <span><b>Intern Stories</b><small>โพสต์ พูดคุย และแชร์ประสบการณ์</small></span>
+                                    </button>
+                                    <button onclick="showTab('chat')" id="chatTab" class="nav-dropdown-item">
+                                        <span class="nav-item-icon bg-emerald-50 text-emerald-600"><i class="fas fa-comments"></i></span>
+                                        <span><b class="flex items-center gap-2">Chat <span id="chatUnreadBadge" class="hidden min-w-5 h-5 px-1.5 rounded-full bg-red-500 text-white text-[10px] leading-5 text-center">0</span></b><small>แชทส่วนตัวและกลุ่มแบบเรียลไทม์</small></span>
+                                    </button>
+                                    <button onclick="showTab('ai')" id="aiTab" class="nav-dropdown-item">
+                                        <span class="nav-item-icon bg-violet-50 text-violet-600"><i class="fas fa-wand-magic-sparkles"></i></span>
+                                        <span><b class="flex items-center gap-2">TVK69 AI <span class="px-1.5 py-0.5 rounded-full bg-violet-100 text-violet-600 text-[9px] font-black">BETA</span></b><small>ผู้ช่วย AI สำหรับนักศึกษา TVK69</small></span>
                                     </button>
                                 </div>
                             </div>
@@ -1939,6 +2282,189 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+
+            <div id="chatToastHost" class="fixed top-4 right-4 z-[190] w-[calc(100%-2rem)] max-w-sm pointer-events-none space-y-2"></div>
+
+            
+            <div id="aiContent" class="fade-in hidden">
+                <div class="max-w-5xl mx-auto">
+                    <div class="bg-white border border-gray-200 rounded-3xl shadow-sm overflow-hidden min-h-[70vh] flex flex-col">
+                        <header class="px-4 sm:px-6 py-4 border-b border-gray-100 bg-white/95 backdrop-blur flex items-center gap-3">
+                            <div class="relative shrink-0">
+                                <img src="https://cdn.tvk69.site/tvk69.png" alt="TVK69 AI"
+                                    class="w-12 h-12 rounded-2xl object-cover border border-violet-100 shadow-lg shadow-violet-100">
+                                <span class="absolute -right-1 -bottom-1 w-4 h-4 rounded-full bg-emerald-500 border-[3px] border-white"
+                                    title="ออนไลน์" aria-label="TVK69 AI ออนไลน์"></span>
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                                    <h2 class="text-lg sm:text-xl font-black text-gray-900">TVK69 AI</h2>
+                                    <span class="inline-flex items-center justify-center w-4 h-4 rounded-full bg-blue-500 text-white text-[8px]" title="ยืนยันแล้ว">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                    <span class="px-2 py-0.5 rounded-full bg-violet-100 text-violet-600 text-[10px] font-black">BETA</span>
+                                </div>
+                                <p class="text-xs text-gray-400 flex items-center gap-1.5">
+                                    <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
+                                    <span class="font-semibold text-emerald-600">ออนไลน์</span>
+                                    <span class="text-gray-300">•</span>
+                                    <span>ผู้ช่วย AI สำหรับการเรียน งาน และคำถามทั่วไป</span>
+                                </p>
+                                <p id="tvkAiCurrentConversationTitle" class="hidden text-[10px] text-violet-500 mt-0.5 truncate max-w-[34rem]"></p>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <button id="tvkAiWebsiteModeBtn" type="button" onclick="tvkAiToggleWebsiteMode()"
+                                    class="px-3 py-2 rounded-xl bg-violet-50 hover:bg-violet-100 text-violet-700 text-xs font-bold transition"
+                                    title="Website Builder Mode">
+                                    <i class="fas fa-code mr-1"></i>สร้างเว็บไซต์
+                                </button>
+                                <button type="button" onclick="tvkAiOpenHistory()"
+                                    class="px-3 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-bold transition"
+                                    title="ประวัติการสนทนา">
+                                    <i class="fas fa-clock-rotate-left mr-1"></i>ประวัติ
+                                </button>
+                                <button type="button" onclick="tvkAiNewChat()" class="px-3 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-bold transition">
+                                    <i class="fas fa-plus mr-1"></i>แชทใหม่
+                                </button>
+                            </div>
+                        </header>
+
+                        <div id="tvkAiWebsiteModeBar" class="hidden px-4 sm:px-6 py-2.5 border-b border-violet-100 bg-violet-50/80">
+                            <div class="flex items-center gap-2 text-xs text-violet-700">
+                                <span class="w-7 h-7 rounded-lg bg-violet-600 text-white flex items-center justify-center shrink-0">
+                                    <i class="fas fa-code"></i>
+                                </span>
+                                <div class="min-w-0 flex-1">
+                                    <b>Website Builder Mode</b>
+                                    <span class="ml-1 text-violet-500">ล็อก AI ให้โฟกัสงานสร้างเว็บไซต์และส่งไฟล์พร้อมดาวน์โหลด</span>
+                                </div>
+                                <button type="button" onclick="tvkAiToggleWebsiteMode(false)"
+                                    class="px-2.5 py-1.5 rounded-lg bg-white border border-violet-200 hover:bg-violet-100 font-bold">
+                                    ปิดโหมด
+                                </button>
+                            </div>
+                        </div>
+
+
+                        <div id="tvkAiProjectToolbar" class="hidden px-4 sm:px-6 py-3 border-b border-gray-100 bg-white">
+                            <div class="flex flex-wrap items-center gap-2">
+                                <div class="min-w-0 flex-1">
+                                    <div class="flex items-center gap-2">
+                                        <span class="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center">
+                                            <i class="fas fa-folder-tree text-xs"></i>
+                                        </span>
+                                        <div>
+                                            <b class="text-xs text-gray-800">Project Workspace</b>
+                                            <p id="tvkAiProjectSummary" class="text-[10px] text-gray-400">ยังไม่มีไฟล์ในโปรเจกต์</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button id="tvkAiContinueBtn" type="button" onclick="tvkAiContinueProject()"
+                                    class="hidden px-3 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-700 text-xs font-bold transition">
+                                    <i class="fas fa-forward-step mr-1"></i>สร้างต่อ
+                                </button>
+                                <button type="button" onclick="tvkAiDownloadProjectZip()"
+                                    class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-black text-white text-xs font-bold transition">
+                                    <i class="fas fa-file-zipper mr-1"></i>Download ZIP
+                                </button>
+                                <button type="button" onclick="tvkAiShowProjectFiles()"
+                                    class="px-3 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-bold transition">
+                                    <i class="fas fa-folder-open mr-1"></i>ไฟล์ทั้งหมด
+                                </button>
+                            </div>
+                            <div id="tvkAiProjectFileChips" class="mt-2 flex gap-1.5 overflow-x-auto pb-1"></div>
+                        </div>
+
+                        <div id="tvkAiMessages" class="flex-1 overflow-y-auto px-3 sm:px-6 py-5 space-y-4 min-h-[50vh] max-h-[66vh] bg-gradient-to-b from-slate-50/70 to-white"></div>
+
+                        <div class="border-t border-gray-100 bg-white px-3 sm:px-5 py-3">
+                            <div class="max-w-4xl mx-auto">
+                                <div class="flex items-end gap-2">
+                                    <div class="flex-1 border border-gray-200 rounded-2xl px-3 py-2 bg-gray-50 focus-within:bg-white focus-within:ring-2 focus-within:ring-violet-100 focus-within:border-violet-400 transition">
+                                        <textarea id="tvkAiInput" rows="1" maxlength="8000" placeholder="ถาม TVK69 AI..." class="w-full bg-transparent outline-none resize-none text-sm max-h-40 min-h-[30px]"></textarea>
+                                    </div>
+                                    <button id="tvkAiSendBtn" type="button" onclick="tvkAiSend()" class="w-11 h-11 rounded-2xl bg-violet-600 hover:bg-violet-700 text-white shadow-lg shadow-violet-100 transition shrink-0"><i class="fas fa-paper-plane"></i></button>
+                                </div>
+                                <div class="mt-2 px-1 flex items-center justify-between text-[10px] text-gray-400">
+                                    <span style="color: blue;"><i class="fas fa-shield-halved mr-1"></i>TVK69 AI V.1.0</span>
+                                    <span style="color: red;">AI อาจตอบผิดได้ ควรตรวจสอบข้อมูลสำคัญ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+<div id="chatContent" class="fade-in hidden">
+                <div id="chatShell" class="bg-white border border-gray-200 rounded-3xl shadow-sm overflow-hidden">
+                    <div id="chatLayout" class="grid grid-cols-1 lg:grid-cols-[300px_minmax(0,1fr)] h-full">
+                        <aside id="chatSidebar" class="border-r border-gray-100 bg-white h-full min-h-0 flex flex-col">
+                            <div class="p-3 sm:p-3.5 border-b border-gray-100 shrink-0">
+                                <div class="flex items-center justify-between gap-3">
+                                    <div class="min-w-0"><h2 class="text-lg font-black text-gray-900"><i class="fas fa-comments text-emerald-500 mr-2"></i>Chat</h2><p class="text-[11px] text-gray-400 mt-0.5 truncate">คุยส่วนตัวหรือสร้างกลุ่มกับเพื่อน</p></div>
+                                    <button onclick="chatOpenModal('direct')" class="w-9 h-9 rounded-xl bg-emerald-500 text-white shrink-0"><i class="fas fa-pen-to-square text-sm"></i></button>
+                                </div>
+                                <label class="mt-3 flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2"><i class="fas fa-search text-gray-400 text-xs"></i><input id="chatRoomSearch" class="w-full bg-transparent outline-none text-sm min-w-0" placeholder="ค้นหาแชท..."></label>
+                            </div>
+                            <div id="chatRoomList" class="overflow-y-auto flex-1 min-h-0"><div class="p-8 text-center text-gray-400"><i class="fas fa-spinner fa-spin"></i></div></div>
+                        </aside>
+                        <section id="chatConversation" class="relative bg-slate-50 h-full min-h-0">
+                            <div id="chatEmpty" class="absolute inset-0 flex items-center justify-center p-8"><div class="text-center"><div class="w-24 h-24 mx-auto rounded-[32px] bg-emerald-100 text-emerald-600 flex items-center justify-center mb-5"><i class="fas fa-message text-4xl"></i></div><h3 class="text-xl font-black text-gray-800">เริ่มพูดคุยกันเลย</h3><p class="text-sm text-gray-400 mt-2">เลือกห้องแชทหรือสร้างแชทใหม่</p></div></div>
+                            <div id="chatPane" class="hidden h-full min-h-0 flex flex-col">
+                                <header class="h-[62px] px-2.5 sm:px-3.5 border-b bg-white flex items-center gap-2.5 shrink-0">
+                                    <button id="chatBackBtn" onclick="chatBack()" class="lg:hidden w-9 h-9 rounded-xl hover:bg-gray-100 shrink-0"><i class="fas fa-arrow-left"></i></button>
+                                    <div class="relative shrink-0">
+                                        <img id="chatAvatar" src="https://cdn.tvk69.site/tvk69.png" class="w-10 h-10 rounded-full object-cover border">
+                                        <span id="chatHeaderPresence"
+                                            class="absolute -right-0.5 -bottom-0.5 w-3.5 h-3.5 rounded-full bg-gray-300 border-2 border-white shadow-sm"
+                                            title="ออฟไลน์"></span>
+                                        <span id="chatHeaderVerified" class="hidden absolute right-3 -bottom-0.5 w-4 h-4 rounded-full bg-white text-blue-500 text-[12px] items-center justify-center" title="ยืนยันอีเมลแล้ว"><i class="fas fa-circle-check"></i></span>
+                                    </div>
+                                    <div class="min-w-0 flex-1">
+                                        <div class="flex items-center gap-1 min-w-0">
+                                            <h3 id="chatTitle" class="font-black text-sm sm:text-base truncate">Chat</h3>
+                                            <span id="chatTitleVerified" class="hidden text-blue-500 text-xs shrink-0" title="ยืนยันอีเมลแล้ว"><i class="fas fa-circle-check"></i></span>
+                                        </div>
+                                        <p id="chatSubtitle" class="text-[10px] sm:text-xs text-gray-400 truncate"></p>
+                                    </div>
+                                    <div id="chatTyping" class="hidden items-center gap-1.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-100 px-2 py-1 text-[10px] font-bold shrink-0">
+                                        <span>กำลังพิมพ์</span>
+                                        <span class="inline-flex gap-1 items-center">
+                                            <i class="tvk-chat-typing-dot"></i>
+                                            <i class="tvk-chat-typing-dot"></i>
+                                            <i class="tvk-chat-typing-dot"></i>
+                                        </span>
+                                    </div>
+                                    <button id="chatAddMember" onclick="chatOpenAddMembers()" class="hidden w-9 h-9 rounded-xl hover:bg-gray-100 shrink-0"><i class="fas fa-user-plus text-sm"></i></button>
+                                </header>
+                                <div id="chatMessages" class="flex-1 min-h-0 overflow-y-auto px-2.5 sm:px-3.5 py-3 space-y-2.5"></div>
+                                <div id="chatPendingWrap" class="hidden px-2.5 sm:px-3 pt-2 bg-white border-t"><div id="chatPending" class="flex gap-2 overflow-x-auto pb-2"></div></div>
+                                <div id="chatComposer" class="px-2.5 sm:px-3 py-2.5 bg-white border-t shrink-0">
+                                    <div class="flex items-end gap-1.5 sm:gap-2">
+                                        <input id="chatFile" type="file" multiple class="hidden">
+                                        <button onclick="document.getElementById('chatFile').click()" class="w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 shrink-0"><i class="fas fa-paperclip text-sm"></i></button>
+                                        <textarea id="chatInput" maxlength="5000" rows="1" placeholder="พิมพ์ข้อความ..." class="flex-1 min-w-0 resize-none bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 outline-none max-h-28 min-h-[40px] text-sm leading-5 focus:ring-2 focus:ring-emerald-100 focus:border-emerald-400"></textarea>
+                                        <button id="chatSend" onclick="chatSend()" class="w-10 h-10 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white shrink-0"><i class="fas fa-paper-plane text-sm"></i></button>
+                                    </div>
+                                    <div id="chatComposerHint" class="mt-1.5 flex justify-between gap-2 text-[9px] sm:text-[10px] text-gray-400"><span>ไฟล์หมดอายุใน 10 วัน</span><span>สูงสุด 10 MB/ไฟล์</span></div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <div id="chatModal" class="fixed inset-0 z-[130] hidden items-center justify-center bg-black/50 p-4">
+                <div class="bg-white w-full max-w-xl rounded-3xl shadow-2xl overflow-hidden">
+                    <div class="p-5 border-b flex items-center justify-between"><div><h3 id="chatModalTitle" class="text-xl font-black">เริ่มแชทใหม่</h3><p id="chatModalSub" class="text-xs text-gray-400 mt-1">เลือกเพื่อน</p></div><button onclick="chatCloseModal()" class="w-10 h-10 rounded-xl hover:bg-gray-100"><i class="fas fa-times"></i></button></div>
+                    <div id="chatModeTabs" class="p-4 pb-0 flex gap-2"><button id="chatModeDirect" onclick="chatSetMode('direct')" class="px-4 py-2 rounded-xl text-sm font-bold bg-emerald-500 text-white">ส่วนตัว</button><button id="chatModeGroup" onclick="chatSetMode('group')" class="px-4 py-2 rounded-xl text-sm font-bold bg-gray-100">กลุ่ม</button></div>
+                    <div id="chatGroupNameWrap" class="hidden px-4 pt-4"><input id="chatGroupName" maxlength="80" placeholder="ชื่อกลุ่ม" class="w-full border rounded-2xl px-4 py-3 outline-none"></div>
+                    <div class="p-4"><input id="chatContactSearch" placeholder="ค้นหาชื่อหรือรหัสนักศึกษา..." class="w-full bg-gray-50 border rounded-2xl px-4 py-3 outline-none mb-3"><div id="chatContacts" class="max-h-[46vh] overflow-y-auto"></div></div>
+                    <div id="chatGroupFooter" class="hidden p-4 pt-0"><button onclick="chatCreateGroup()" class="w-full bg-emerald-500 text-white rounded-2xl py-3 font-bold">สร้างกลุ่ม</button></div>
+                    <div id="chatAddFooter" class="hidden p-4 pt-0"><button onclick="chatAddMembers()" class="w-full bg-emerald-500 text-white rounded-2xl py-3 font-bold">เพิ่มสมาชิก</button></div>
                 </div>
             </div>
 
@@ -3198,14 +3724,19 @@
             const joined = await realtimeJoinCurrentStudent();
 
             if (!joined) {
-                // Token อาจหมดอายุ ลองออก token ใหม่หนึ่งครั้ง
-                if (roomCode) {
+                // Retry บน token เดิมก่อน เพราะ ACK timeout/transport สะดุดไม่ได้แปลว่า token หมดอายุ
+                const sameTokenRetry = await realtimeJoinCurrentStudent({ force: true });
+                if (sameTokenRetry) return true;
+
+                // ขอ token ใหม่เฉพาะเมื่อ token ถูกลบหลัง Server reject ว่า invalid/expired
+                if (!localStorage.getItem('realtimeToken') && roomCode) {
                     token = await requestRealtimeToken(roomCode, studentId);
-                    const retryJoined = await realtimeJoinCurrentStudent();
+                    const retryJoined = await realtimeJoinCurrentStudent({ force: true });
                     if (retryJoined) return true;
                 }
 
-                throw new Error('Realtime authentication failed');
+                // อย่าทำลาย session หลัก: ให้ module ที่ต้อง realtime fallback/retry ภายหลัง
+                throw new Error('Realtime authentication temporarily unavailable');
             }
 
             return true;
@@ -3272,29 +3803,108 @@
             return result.token;
         }
 
-        async function realtimeJoinCurrentStudent() {
-            if (!realtimeSocket || !realtimeSocket.connected || !currentSaveMeId) return false;
+        async function realtimeJoinCurrentStudent({ force = false } = {}) {
+            if (!realtimeSocket?.connected) return false;
 
-            const token = localStorage.getItem('realtimeToken') || '';
-            if (!token) return false;
+            const studentId = String(
+                currentSaveMeId ||
+                localStorage.getItem('studentId') ||
+                ''
+            ).trim();
 
-            try {
-                const result = await rawSocketRequest(
-                    'join-student-auth',
-                    { token },
-                    8000
-                );
+            const token = String(
+                localStorage.getItem('realtimeToken') ||
+                ''
+            ).trim();
 
-                if (!result?.success) {
-                    console.warn('Realtime auth rejected:', result?.message);
-                    localStorage.removeItem('realtimeToken');
-                    return false;
+            if (!studentId || !token) return false;
+
+            const socketId = String(
+                realtimeSocket.id ||
+                ''
+            );
+
+            // Auth สำเร็จแล้วบน Socket connection เดิม ไม่ต้อง join ซ้ำทุก module/request
+            if (
+                !force &&
+                socketId &&
+                realtimeAuthSocketId === socketId &&
+                realtimeAuthStudentId === studentId &&
+                realtimeAuthToken === token
+            ) {
+                return true;
+            }
+
+            // Single-flight: ถ้าหลาย module เรียก auth พร้อมกัน ให้รอ Promise เดียวกัน
+            if (realtimeAuthPromise) {
+                return realtimeAuthPromise;
+            }
+
+            realtimeAuthPromise = (async () => {
+                const retryDelays = [0, 700, 1600];
+                let lastError = null;
+
+                for (let attempt = 0; attempt < retryDelays.length; attempt++) {
+                    if (retryDelays[attempt]) {
+                        await new Promise(resolve =>
+                            setTimeout(resolve, retryDelays[attempt])
+                        );
+                    }
+
+                    if (!realtimeSocket?.connected) {
+                        lastError = new Error('Realtime server disconnected during authentication');
+                        continue;
+                    }
+
+                    // ถ้า reconnect ระหว่าง retry ให้ใช้ Socket ID ใหม่
+                    const activeSocketId = String(realtimeSocket.id || '');
+
+                    try {
+                        const result = await rawSocketRequest(
+                            'join-student-auth',
+                            { token },
+                            15000
+                        );
+
+                        if (result?.success) {
+                            realtimeAuthSocketId = activeSocketId;
+                            realtimeAuthStudentId = studentId;
+                            realtimeAuthToken = token;
+                            realtimeAuthAt = Date.now();
+                            return true;
+                        }
+
+                        const message = String(result?.message || 'Realtime authentication rejected');
+                        lastError = new Error(message);
+
+                        // ลบ token เฉพาะเมื่อ Server ยืนยันว่า token ใช้ไม่ได้จริง
+                        // ห้ามลบเพียงเพราะ timeout / transport สะดุด
+                        if (/invalid|expired|token/i.test(message)) {
+                            localStorage.removeItem('realtimeToken');
+                            realtimeAuthToken = '';
+                            return false;
+                        }
+
+                    } catch (error) {
+                        lastError = error;
+
+                        // Timeout จาก ACK ไม่ได้แปลว่า token เสีย
+                        // Socket.IO อาจ reconnect สำเร็จใน retry ถัดไป
+                        console.warn(
+                            `Realtime auth attempt ${attempt + 1}/${retryDelays.length} failed:`,
+                            error?.message || error
+                        );
+                    }
                 }
 
-                return true;
-            } catch (error) {
-                console.warn('Realtime auth error:', error);
+                console.warn('Realtime auth unavailable after retries:', lastError?.message || lastError);
                 return false;
+            })();
+
+            try {
+                return await realtimeAuthPromise;
+            } finally {
+                realtimeAuthPromise = null;
             }
         }
 
@@ -3436,6 +4046,10 @@
             }
         }
         let realtimeAuthPromise = null;
+        let realtimeAuthSocketId = '';
+        let realtimeAuthStudentId = '';
+        let realtimeAuthToken = '';
+        let realtimeAuthAt = 0;
         let lastSeenStudentMap = new Map();
 
 
@@ -3804,9 +4418,9 @@
 
                 reconnection: true,
                 reconnectionAttempts: Infinity,
-                reconnectionDelay: 700,
-                reconnectionDelayMax: 4000,
-                randomizationFactor: 0.25,
+                reconnectionDelay: 1200,
+                reconnectionDelayMax: 8000,
+                randomizationFactor: 0.4,
 
                 timeout: 20000
             });
@@ -3816,7 +4430,21 @@
                 stopRealtimeFallback();
                 const savedRealtimeStudentId = currentSaveMeId || localStorage.getItem('studentId') || '';
                 if (savedRealtimeStudentId && !currentSaveMeId) currentSaveMeId = savedRealtimeStudentId;
-                await realtimeJoinCurrentStudent();
+                // Reset auth cache เพราะ Socket.IO connection นี้มี Socket ID ใหม่
+                realtimeAuthSocketId = '';
+                realtimeAuthStudentId = '';
+                realtimeAuthAt = 0;
+
+                realtimeJoinCurrentStudent({ force: true })
+                    .then(joined => {
+                        if (!joined) {
+                            console.warn('Realtime connected but authentication is pending; will retry on demand.');
+                        }
+                    })
+                    .catch(error => {
+                        console.warn('Realtime auth after connect:', error?.message || error);
+                    });
+
                 if (savedRealtimeStudentId) refreshNotificationBadge(true).catch(console.warn);
                 document.getElementById('liveIndicator')?.classList.remove('hidden');
 
@@ -3834,6 +4462,9 @@
 
             realtimeSocket.on('disconnect', (reason, details) => {
                 realtimeConnected = false;
+                realtimeAuthSocketId = '';
+                realtimeAuthStudentId = '';
+                realtimeAuthAt = 0;
 
                 console.warn(
                     'TVK69 Realtime disconnected:',
@@ -3876,6 +4507,108 @@
 
 
 
+            if (typeof window.refreshChatPresenceDots !== 'function') {
+                window.refreshChatPresenceDots = function() {
+                    try {
+                        document
+                            .querySelectorAll(
+                                '[data-chat-avatar-student]'
+                            )
+                            .forEach(el => {
+                                const sid =
+                                    String(
+                                        el.dataset
+                                            .chatAvatarStudent ||
+                                        ''
+                                    );
+
+                                const online =
+                                    typeof onlineStudentIds !==
+                                        'undefined' &&
+                                    onlineStudentIds?.has(
+                                        sid
+                                    );
+
+                                const dot =
+                                    el.querySelector(
+                                        '.chat-presence-dot'
+                                    );
+
+                                if (!dot) return;
+
+                                dot.classList.toggle(
+                                    'bg-green-500',
+                                    Boolean(online)
+                                );
+
+                                dot.classList.toggle(
+                                    'bg-gray-300',
+                                    !online
+                                );
+
+                                dot.title =
+                                    online
+                                        ? 'ออนไลน์'
+                                        : 'ออฟไลน์';
+                            });
+
+                        const headerDot =
+                            document.getElementById(
+                                'chatHeaderPresence'
+                            );
+
+                        if (headerDot) {
+                            const room =
+                                window.chatCurrentRoom ||
+                                null;
+
+                            const isDirect =
+                                room?.room_type ===
+                                'direct';
+
+                            const sid =
+                                String(
+                                    room?.peer_student_id ||
+                                    ''
+                                );
+
+                            const online =
+                                isDirect &&
+                                typeof onlineStudentIds !==
+                                    'undefined' &&
+                                onlineStudentIds?.has(
+                                    sid
+                                );
+
+                            headerDot.classList.toggle(
+                                'hidden',
+                                !isDirect
+                            );
+
+                            headerDot.classList.toggle(
+                                'bg-green-500',
+                                Boolean(online)
+                            );
+
+                            headerDot.classList.toggle(
+                                'bg-gray-300',
+                                !online
+                            );
+
+                            headerDot.title =
+                                online
+                                    ? 'ออนไลน์'
+                                    : 'ออฟไลน์';
+                        }
+                    } catch (error) {
+                        console.debug(
+                            'refreshChatPresenceDots skipped:',
+                            error
+                        );
+                    }
+                };
+            }
+
             realtimeSocket.on('presence:snapshot', (payload = {}) => {
                 applyPresenceSnapshot(
                     payload.onlineStudents || [],
@@ -3885,7 +4618,8 @@
 
             realtimeSocket.on('presence:update', (payload = {}) => {
                 applyPresenceUpdate(payload);
-            });
+                window.refreshChatPresenceDots?.();
+});
 
             // ---------------- DIRECT DATA EVENTS ----------------
             realtimeSocket.on('story:typing', (payload = {}) => {
@@ -4084,6 +4818,47 @@
                 const text = document.getElementById('bioText');
                 if (username) username.value = bio.username || '';
                 if (text) text.value = bio.bio_text || '';
+            });
+
+            realtimeSocket.on('chat:message', ({ roomId, message } = {}) => {
+                if (!message) return;
+                const rid = Number(roomId || message.room_id || 0);
+                const list = window.chatMessagesByRoom?.get(rid) || [];
+                if (!list.some(x => Number(x.id) === Number(message.id))) {
+                    list.push(message);
+                    window.chatMessagesByRoom?.set(rid, list);
+                }
+
+                const mine = String(message.sender_id || '') === String(currentSaveMeId || '');
+                const activeRoom = Number(window.chatCurrentRoomId || 0) === rid;
+
+                if (activeRoom) {
+                    window.chatAppend?.(message, true); window.refreshChatPresenceDots?.();
+                    window.chatMarkRead?.(rid, Number(message.id));
+                }
+
+                if (!mine) {
+                    window.chatNotifyNewMessage?.(rid, message, activeRoom);
+                }
+
+                window.chatLoadRooms?.(true).catch(()=>{});
+            });
+            realtimeSocket.on('chat:rooms-changed', () => window.chatLoadRooms?.(true).catch(()=>{}));
+            realtimeSocket.on('chat:typing', ({ roomId, fromStudentId, typing } = {}) => {
+                if (Number(roomId) !== Number(window.chatCurrentRoomId || 0) || String(fromStudentId) === String(currentSaveMeId || '')) return;
+                const el = document.getElementById('chatTyping');
+                if (!el) return;
+
+                el.classList.toggle('hidden', !typing);
+                el.classList.toggle('flex', Boolean(typing));
+
+                clearTimeout(window.chatTypingHideTimer);
+                if (typing) {
+                    window.chatTypingHideTimer = setTimeout(() => {
+                        el.classList.add('hidden');
+                        el.classList.remove('flex');
+                    }, 2500);
+                }
             });
 
             realtimeSocket.on('entity:changed', (payload = {}) => {
@@ -5237,7 +6012,7 @@
                 btn.setAttribute('data-current', 'false');
             });
 
-            ['documents', 'testingTab', 'students', 'resume', 'website', 'ranking', 'contact', 'admin', 'saveme', 'stories', 'diary', 'quota', 'recordings'].forEach(t => {
+            ['documents', 'testingTab', 'students', 'resume', 'website', 'ranking', 'contact', 'admin', 'saveme', 'stories', 'chat', 'ai', 'diary', 'quota', 'recordings'].forEach(t => {
                 const btn = document.getElementById(t.includes('Tab') ? t : t + 'Tab');
                 const content = document.getElementById(t.replace('Tab', '') + 'Content');
                 if (btn) {
@@ -5271,6 +6046,8 @@
                 document.getElementById('storiesMain')?.classList.remove('hidden');
                 if (currentSaveMeId) { loadStories(); startStoriesPolling(); }
             }
+            if (name === 'chat') initChat();
+            if (name === 'ai') initTvkAi();
             if (name === 'diary') {
                 document.getElementById('diaryLogin')?.classList.add('hidden');
                 document.getElementById('diaryMain')?.classList.remove('hidden');
@@ -10320,7 +11097,7 @@ function calculateAttendanceQuota(isUserAction = false) {
           return;
         }
         if (typeof window.closeNavDropdowns === 'function') window.closeNavDropdowns();
-        document.querySelectorAll('#documentsContent,#testingContent,#studentsContent,#resumeContent,#websiteContent,#rankingContent,#contactContent,#adminContent,#savemeContent,#storiesContent,#diaryContent,#quotaContent,#recordingsContent').forEach(el=>el.classList.add('hidden'));
+        document.querySelectorAll('#documentsContent,#testingContent,#studentsContent,#resumeContent,#websiteContent,#rankingContent,#contactContent,#adminContent,#savemeContent,#storiesContent,#chatContent,#aiContent,#diaryContent,#quotaContent,#recordingsContent').forEach(el=>el.classList.add('hidden'));
         document.querySelectorAll('.nav-dropdown-item').forEach(el=>{el.classList.remove('nav-active');el.removeAttribute('data-active');});
         content.classList.remove('hidden'); button.classList.add('nav-active'); button.setAttribute('data-active','true');
         if ($('workspacePageTitle')) $('workspacePageTitle').textContent='บันทึกออนไลน์';
@@ -10729,6 +11506,3120 @@ function calculateAttendanceQuota(isUserAction = false) {
             </div>
         </div>
     </div>
+
+
+
+<script id="tvk69-ai-script">
+(() => {
+    'use strict';
+
+    const AI_ENDPOINT = 'https://livev1.tvk69.site/ai/chat';
+    const AI_HISTORY_BASE = 'https://livev1.tvk69.site/ai';
+    const AI_STORAGE_KEY = 'tvk69:ai:history:v1';
+    const AI_MODE_STORAGE_KEY = 'tvk69:ai:mode:v1';
+    const AI_PROJECT_STORAGE_KEY = 'tvk69:ai:project-files:v2';
+
+    let aiBusy = false;
+    let aiMessages = [];
+    let aiMode = 'general';
+    let aiProjectFiles = {};
+    let aiLastResponseIncomplete = false;
+    let aiConversationId = null;
+    let aiConversationTitle = '';
+    let aiConversationList = [];
+
+    const $ai = id => document.getElementById(id);
+    const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[ch]));
+
+    function aiDetectFileName(code = '') {
+        const firstLines =
+            String(code || '')
+                .split('\n')
+                .slice(0, 4)
+                .join('\n');
+
+        const patterns = [
+            /<!--\s*filename\s*:\s*([^\s>]+)\s*-->/i,
+            /\/\/\s*filename\s*:\s*([^\s]+)/i,
+            /#\s*filename\s*:\s*([^\s]+)/i,
+            /\/\*\s*filename\s*:\s*([^\s*]+)\s*\*\//i,
+            /--\s*filename\s*:\s*([^\s]+)/i
+        ];
+
+        for (const pattern of patterns) {
+            const match =
+                firstLines.match(pattern);
+
+            if (match?.[1]) {
+                return String(match[1])
+                    .trim()
+                    .replace(/[\\/:*?"<>|]/g, '_')
+                    .slice(0, 120);
+            }
+        }
+
+        return '';
+    }
+
+    function aiStripFileNameMarker(code = '') {
+        return String(code || '')
+            .replace(/^\s*<!--\s*filename\s*:\s*[^\s>]+\s*-->\s*\n?/i, '')
+            .replace(/^\s*\/\/\s*filename\s*:\s*[^\s]+\s*\n?/i, '')
+            .replace(/^\s*#\s*filename\s*:\s*[^\s]+\s*\n?/i, '')
+            .replace(/^\s*\/\*\s*filename\s*:\s*[^\s*]+\s*\*\/\s*\n?/i, '')
+            .replace(/^\s*--\s*filename\s*:\s*[^\s]+\s*\n?/i, '');
+    }
+
+    function aiCodeExtension(language = '') {
+        const lang = String(language || '').trim().toLowerCase();
+
+        const map = {
+            js: 'js',
+            javascript: 'js',
+            jsx: 'jsx',
+            ts: 'ts',
+            typescript: 'ts',
+            tsx: 'tsx',
+            php: 'php',
+            python: 'py',
+            py: 'py',
+            sql: 'sql',
+            mysql: 'sql',
+            html: 'html',
+            htm: 'html',
+            css: 'css',
+            scss: 'scss',
+            sass: 'sass',
+            json: 'json',
+            xml: 'xml',
+            yaml: 'yml',
+            yml: 'yml',
+            bash: 'sh',
+            shell: 'sh',
+            sh: 'sh',
+            powershell: 'ps1',
+            ps1: 'ps1',
+            java: 'java',
+            c: 'c',
+            cpp: 'cpp',
+            'c++': 'cpp',
+            cs: 'cs',
+            csharp: 'cs',
+            go: 'go',
+            rust: 'rs',
+            rs: 'rs',
+            swift: 'swift',
+            kotlin: 'kt',
+            kt: 'kt',
+            dart: 'dart',
+            vue: 'vue',
+            markdown: 'md',
+            md: 'md',
+            text: 'txt',
+            txt: 'txt'
+        };
+
+        return map[lang] || 'txt';
+    }
+
+    function aiCodeLanguageLabel(language = '') {
+        const lang = String(language || '').trim();
+        return lang || 'code';
+    }
+
+    window.tvkAiCopyCode = async function(button) {
+        const block =
+            button?.closest('[data-ai-code-block]');
+
+        const code =
+            block?.querySelector('code')
+                ?.textContent || '';
+
+        if (!code) return;
+
+        try {
+            await navigator.clipboard.writeText(code);
+
+            const old =
+                button.innerHTML;
+
+            button.innerHTML =
+                '<i class="fas fa-check"></i><span>Copied</span>';
+
+            button.classList.add(
+                'text-emerald-400'
+            );
+
+            setTimeout(() => {
+                button.innerHTML = old;
+                button.classList.remove(
+                    'text-emerald-400'
+                );
+            }, 1500);
+
+        } catch (_) {
+            const area =
+                document.createElement(
+                    'textarea'
+                );
+
+            area.value = code;
+            area.style.position =
+                'fixed';
+
+            area.style.opacity =
+                '0';
+
+            document.body.appendChild(
+                area
+            );
+
+            area.select();
+
+            document.execCommand(
+                'copy'
+            );
+
+            area.remove();
+        }
+    };
+
+    window.tvkAiDownloadCode = function(button) {
+        const block =
+            button?.closest('[data-ai-code-block]');
+
+        const code =
+            block?.querySelector('code')
+                ?.textContent || '';
+
+        if (!code) return;
+
+        const language =
+            String(
+                block?.dataset
+                    ?.language || ''
+            );
+
+        const ext =
+            aiCodeExtension(
+                language
+            );
+
+        const explicitFileName =
+            String(
+                block?.dataset
+                    ?.filename || ''
+            )
+            .trim();
+
+        const blob =
+            new Blob(
+                [code],
+                {
+                    type:
+                        'text/plain;charset=utf-8'
+                }
+            );
+
+        const url =
+            URL.createObjectURL(
+                blob
+            );
+
+        const a =
+            document.createElement(
+                'a'
+            );
+
+        const stamp =
+            new Date()
+                .toISOString()
+                .replace(
+                    /[:.]/g,
+                    '-'
+                )
+                .slice(
+                    0,
+                    19
+                );
+
+        a.href =
+            url;
+
+        a.download =
+            explicitFileName ||
+            `tvk69-ai-${stamp}.${ext}`;
+
+        document.body.appendChild(
+            a
+        );
+
+        a.click();
+        a.remove();
+
+        setTimeout(
+            () =>
+                URL.revokeObjectURL(
+                    url
+                ),
+            1000
+        );
+    };
+
+    function aiNormalizeCodeFences(text = '') {
+        let source = String(text || '');
+
+        // Normalize common full-width / smart variants first.
+        source = source
+            .replace(/｀｀｀/g, '```')
+            .replace(/`{3,}\s*([a-zA-Z0-9_+#.-]+)\s*\r?\n/g, '```$1\n');
+
+        const fenceMatches =
+            source.match(/```/g) || [];
+
+        // Odd number of fences = last code block has no closing fence.
+        // Close it virtually so the UI can still render/download the code.
+        if (fenceMatches.length % 2 === 1) {
+            source =
+                source.replace(/\s+$/, '') +
+                '\n```';
+        }
+
+        return source;
+    }
+
+    function aiHighlightCode(code = '', language = '') {
+        const lang =
+            String(language || '')
+                .trim()
+                .toLowerCase();
+
+        const source =
+            String(code || '');
+
+        const keywords = {
+            php: new Set([
+                'abstract','and','array','as','break','callable','case','catch','class','clone','const','continue',
+                'declare','default','do','echo','else','elseif','empty','extends','final','finally','fn','for',
+                'foreach','function','global','if','implements','include','include_once','instanceof','interface',
+                'isset','list','match','namespace','new','or','print','private','protected','public','readonly',
+                'require','require_once','return','static','switch','throw','trait','try','unset','use','var',
+                'while','xor','yield','true','false','null'
+            ]),
+            javascript: new Set([
+                'async','await','break','case','catch','class','const','continue','default','delete','do','else',
+                'export','extends','finally','for','from','function','get','if','import','in','instanceof','let',
+                'new','of','return','set','static','super','switch','throw','try','typeof','var','void','while','yield',
+                'true','false','null','undefined'
+            ]),
+            js: null,
+            typescript: new Set([
+                'abstract','any','as','async','await','boolean','break','case','catch','class','const','continue',
+                'declare','default','delete','do','else','enum','export','extends','finally','for','from','function',
+                'get','if','implements','import','in','infer','instanceof','interface','keyof','let','namespace',
+                'never','new','number','object','of','private','protected','public','readonly','return','set',
+                'static','string','super','switch','symbol','throw','try','type','typeof','undefined','unknown',
+                'var','void','while','yield','true','false','null'
+            ]),
+            ts: null,
+            python: new Set([
+                'and','as','assert','async','await','break','class','continue','def','del','elif','else','except',
+                'False','finally','for','from','global','if','import','in','is','lambda','None','nonlocal','not',
+                'or','pass','raise','return','True','try','while','with','yield'
+            ]),
+            py: null,
+            sql: new Set([
+                'add','all','alter','and','as','asc','begin','between','by','case','check','column','commit',
+                'constraint','create','database','default','delete','desc','distinct','drop','else','end','exists',
+                'foreign','from','group','having','in','index','insert','into','is','join','key','left','like',
+                'limit','not','null','on','or','order','primary','references','right','rollback','select','set',
+                'table','then','union','unique','update','values','view','when','where'
+            ])
+        };
+
+        keywords.js = keywords.javascript;
+        keywords.ts = keywords.typescript;
+        keywords.py = keywords.python;
+
+        const kw =
+            keywords[lang] ||
+            new Set();
+
+        const isWordStart = ch =>
+            /[A-Za-z_$]/.test(ch || '');
+
+        const isWord = ch =>
+            /[A-Za-z0-9_$]/.test(ch || '');
+
+        let i = 0;
+        let out = '';
+
+        const span = (cls, text) =>
+            `<span class="${cls}">${esc(text)}</span>`;
+
+        while (i < source.length) {
+            const ch = source[i];
+            const next = source[i + 1] || '';
+
+            // PHP tags
+            if (
+                lang === 'php' &&
+                source.startsWith('<?php', i)
+            ) {
+                out += span(
+                    'tvk-token-php-tag',
+                    '<?php'
+                );
+                i += 5;
+                continue;
+            }
+
+            if (
+                lang === 'php' &&
+                source.startsWith('?>', i)
+            ) {
+                out += span(
+                    'tvk-token-php-tag',
+                    '?>'
+                );
+                i += 2;
+                continue;
+            }
+
+            // HTML comments
+            if (
+                source.startsWith('<!--', i)
+            ) {
+                const end =
+                    source.indexOf(
+                        '-->',
+                        i + 4
+                    );
+
+                const finish =
+                    end >= 0
+                        ? end + 3
+                        : source.length;
+
+                out += span(
+                    'tvk-token-comment',
+                    source.slice(i, finish)
+                );
+
+                i = finish;
+                continue;
+            }
+
+            // block comments
+            if (
+                ch === '/' &&
+                next === '*'
+            ) {
+                const end =
+                    source.indexOf(
+                        '*/',
+                        i + 2
+                    );
+
+                const finish =
+                    end >= 0
+                        ? end + 2
+                        : source.length;
+
+                out += span(
+                    'tvk-token-comment',
+                    source.slice(i, finish)
+                );
+
+                i = finish;
+                continue;
+            }
+
+            // single line comments
+            const hashComment =
+                (lang === 'python' ||
+                 lang === 'py') &&
+                ch === '#';
+
+            const slashComment =
+                ['php','javascript','js','typescript','ts','css'].includes(lang) &&
+                ch === '/' &&
+                next === '/';
+
+            const sqlComment =
+                lang === 'sql' &&
+                ch === '-' &&
+                next === '-';
+
+            if (
+                hashComment ||
+                slashComment ||
+                sqlComment
+            ) {
+                let j = i;
+
+                while (
+                    j < source.length &&
+                    source[j] !== '\n'
+                ) {
+                    j++;
+                }
+
+                out += span(
+                    'tvk-token-comment',
+                    source.slice(i, j)
+                );
+
+                i = j;
+                continue;
+            }
+
+            // strings
+            if (
+                ch === '"' ||
+                ch === "'" ||
+                ch === '`'
+            ) {
+                const quote = ch;
+                let j = i + 1;
+                let escaped = false;
+
+                while (j < source.length) {
+                    const cj = source[j];
+
+                    if (escaped) {
+                        escaped = false;
+                        j++;
+                        continue;
+                    }
+
+                    if (cj === '\\') {
+                        escaped = true;
+                        j++;
+                        continue;
+                    }
+
+                    if (cj === quote) {
+                        j++;
+                        break;
+                    }
+
+                    j++;
+                }
+
+                out += span(
+                    'tvk-token-string',
+                    source.slice(i, j)
+                );
+
+                i = j;
+                continue;
+            }
+
+            // HTML/XML tags
+            if (
+                ['html','htm','xml','vue'].includes(lang) &&
+                ch === '<'
+            ) {
+                let j =
+                    source.indexOf(
+                        '>',
+                        i + 1
+                    );
+
+                if (j < 0) j = source.length - 1;
+
+                const raw =
+                    source.slice(
+                        i,
+                        j + 1
+                    );
+
+                const highlighted =
+                    esc(raw)
+                        .replace(
+                            /^(&lt;\/?)([A-Za-z][\w:-]*)/,
+                            '$1<span class="tvk-token-tag">$2</span>'
+                        )
+                        .replace(
+                            /([A-Za-z_:][\w:.-]*)(=)(&quot;.*?&quot;|'[^']*')/g,
+                            '<span class="tvk-token-attr-name">$1</span><span class="tvk-token-operator">$2</span><span class="tvk-token-string">$3</span>'
+                        );
+
+                out += highlighted;
+                i = j + 1;
+                continue;
+            }
+
+            // numbers
+            if (/\d/.test(ch)) {
+                let j = i + 1;
+
+                while (
+                    j < source.length &&
+                    /[0-9._xXa-fA-F]/.test(
+                        source[j]
+                    )
+                ) {
+                    j++;
+                }
+
+                out += span(
+                    'tvk-token-number',
+                    source.slice(i, j)
+                );
+
+                i = j;
+                continue;
+            }
+
+            // words / variables
+            if (isWordStart(ch)) {
+                let j = i + 1;
+
+                while (
+                    j < source.length &&
+                    isWord(source[j])
+                ) {
+                    j++;
+                }
+
+                const word =
+                    source.slice(i, j);
+
+                const lower =
+                    word.toLowerCase();
+
+                let cls = '';
+
+                if (
+                    kw.has(word) ||
+                    kw.has(lower)
+                ) {
+                    cls =
+                        'tvk-token-keyword';
+                } else {
+                    // look ahead for function call
+                    let k = j;
+                    while (
+                        k < source.length &&
+                        /\s/.test(source[k])
+                    ) {
+                        k++;
+                    }
+
+                    if (
+                        source[k] === '('
+                    ) {
+                        cls =
+                            'tvk-token-function';
+                    } else if (
+                        lang === 'php' &&
+                        word.startsWith('$')
+                    ) {
+                        cls =
+                            'tvk-token-variable';
+                    }
+                }
+
+                out += cls
+                    ? span(cls, word)
+                    : esc(word);
+
+                i = j;
+                continue;
+            }
+
+            // PHP variable beginning with $
+            if (
+                lang === 'php' &&
+                ch === '$'
+            ) {
+                let j = i + 1;
+
+                while (
+                    j < source.length &&
+                    /[A-Za-z0-9_]/.test(
+                        source[j]
+                    )
+                ) {
+                    j++;
+                }
+
+                out += span(
+                    'tvk-token-variable',
+                    source.slice(i, j)
+                );
+
+                i = j;
+                continue;
+            }
+
+            // operators / punctuation
+            if (
+                /[=+\-*\/%<>!&|?:]/.test(ch)
+            ) {
+                out += span(
+                    'tvk-token-operator',
+                    ch
+                );
+                i++;
+                continue;
+            }
+
+            if (
+                /[()[\]{},.;]/.test(ch)
+            ) {
+                out += span(
+                    'tvk-token-punctuation',
+                    ch
+                );
+                i++;
+                continue;
+            }
+
+            out += esc(ch);
+            i++;
+        }
+
+        return out;
+    }
+
+    function aiCodeLinesHtml(code = '', language = '') {
+        const highlighted =
+            aiHighlightCode(
+                code,
+                language
+            );
+
+        const lines =
+            highlighted.split('\n');
+
+        return `
+            <div class="tvk-ai-code-lines font-mono text-[12px] sm:text-[13px] leading-6">
+                ${lines.map(line => `
+                    <div class="tvk-ai-code-line">
+                        <span>${line || '&nbsp;'}</span>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    function formatAi(text) {
+        let source =
+            aiNormalizeCodeFences(
+                text
+            );
+
+        const originalText =
+            String(text || '');
+
+        const originalFenceCount =
+            (originalText.match(/```/g) || []).length;
+
+        const recoveredFence =
+            originalFenceCount % 2 === 1;
+
+        const codeBlocks = [];
+
+        source = source.replace(
+            /```[ \t]*([a-zA-Z0-9_+#.-]*)[ \t]*\r?\n?([\s\S]*?)```/g,
+            (_match, language, code) => {
+                const index =
+                    codeBlocks.length;
+
+                const lang =
+                    String(language || '')
+                        .trim();
+
+                const rawCode =
+                    String(code || '')
+                        .replace(
+                            /^\n/,
+                            ''
+                        )
+                        .replace(
+                            /\n$/,
+                            ''
+                        );
+
+                const fileName =
+                    aiDetectFileName(
+                        rawCode
+                    );
+
+                const cleanCode =
+                    aiStripFileNameMarker(
+                        rawCode
+                    );
+
+                const escapedCode =
+                    esc(cleanCode);
+
+                const escapedLang =
+                    esc(lang);
+
+                if (
+                    aiMode === 'website' &&
+                    fileName
+                ) {
+                    aiProjectFiles[fileName] = {
+                        name: fileName,
+                        language: lang,
+                        content: cleanCode,
+                        updatedAt: Date.now()
+                    };
+                    saveAiProject();
+
+                    if (recoveredFence) {
+                        aiLastResponseIncomplete = true;
+                        setTimeout(
+                            () => renderAiProjectToolbar(),
+                            0
+                        );
+                    }
+                }
+
+                const escapedFileName =
+                    esc(fileName);
+
+                const label =
+                    esc(
+                        fileName ||
+                        aiCodeLanguageLabel(
+                            lang
+                        )
+                    );
+
+                const highlightedLines =
+                    aiCodeLinesHtml(
+                        cleanCode,
+                        lang
+                    );
+
+                codeBlocks.push(`
+                    <div data-ai-code-block data-language="${escapedLang}" data-filename="${escapedFileName}"
+                        class="tvk-ai-code-shell my-4 overflow-hidden rounded-2xl">
+                        <div class="tvk-ai-code-toolbar flex items-center justify-between gap-3 px-3 py-2.5">
+                            <span class="min-w-0 text-[10px] font-bold tracking-wide text-slate-300 flex items-center gap-2">
+                                ${fileName ? '<i class="fas fa-file-code text-violet-400"></i>' : '<i class="fas fa-code text-slate-500"></i>'}
+                                <span class="truncate">${label}</span>
+                                ${recoveredFence ? '<span class="ml-1 shrink-0 rounded-md bg-amber-500/15 px-1.5 py-0.5 text-[9px] text-amber-300">คำตอบถูกตัด • recovered</span>' : ''}
+                            </span>
+                            <div class="flex items-center gap-1 shrink-0">
+                                <button type="button"
+                                    onclick="tvkAiCopyCode(this)"
+                                    class="tvk-ai-code-action inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-[10px] font-bold transition"
+                                    title="คัดลอกโค้ด">
+                                    <i class="fas fa-copy"></i>
+                                    <span class="hidden sm:inline">Copy</span>
+                                </button>
+                                <button type="button"
+                                    onclick="tvkAiDownloadCode(this)"
+                                    class="tvk-ai-code-action inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-[10px] font-bold transition"
+                                    title="ดาวน์โหลดโค้ด">
+                                    <i class="fas fa-download"></i>
+                                    <span class="hidden sm:inline">${fileName ? 'Download file' : 'Download'}</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="tvk-ai-code-body overflow-x-auto p-3 sm:p-4">
+                            <code class="hidden">${escapedCode}</code>
+                            ${highlightedLines}
+                        </div>
+                    </div>
+                `);
+
+                return `@@TVK69_CODE_${index}@@`;
+            }
+        );
+
+        let out =
+            esc(source);
+
+        out = out.replace(
+            /`([^`\n]+)`/g,
+            '<code class="px-1.5 py-0.5 rounded-md bg-gray-100 text-violet-700 text-xs">$1</code>'
+        );
+
+        out = out.replace(
+            /\*\*([^*]+)\*\*/g,
+            '<strong>$1</strong>'
+        );
+
+        out =
+            out.replace(
+                /\n/g,
+                '<br>'
+            );
+
+        codeBlocks.forEach(
+            (block, index) => {
+                out =
+                    out.replace(
+                        `@@TVK69_CODE_${index}@@`,
+                        block
+                    );
+            }
+        );
+
+        return out;
+    }
+
+    function saveAiProject() {
+        try {
+            localStorage.setItem(
+                AI_PROJECT_STORAGE_KEY,
+                JSON.stringify(aiProjectFiles)
+            );
+        } catch (_) {}
+    }
+
+    function loadAiProject() {
+        try {
+            const saved =
+                JSON.parse(
+                    localStorage.getItem(
+                        AI_PROJECT_STORAGE_KEY
+                    ) || '{}'
+                );
+
+            aiProjectFiles =
+                saved &&
+                typeof saved === 'object' &&
+                !Array.isArray(saved)
+                    ? saved
+                    : {};
+        } catch (_) {
+            aiProjectFiles = {};
+        }
+    }
+
+    function aiSafeProjectFileName(name = '') {
+        return String(name || '')
+            .replace(/\\/g, '/')
+            .replace(/^\/+/, '')
+            .split('/')
+            .filter(part =>
+                part &&
+                part !== '.' &&
+                part !== '..'
+            )
+            .join('/')
+            .replace(/[<>:"|?*]/g, '_')
+            .slice(0, 180);
+    }
+
+    function aiExtractProjectFiles(text = '') {
+        const source =
+            aiNormalizeCodeFences(
+                text
+            );
+
+        const files = [];
+
+        const re =
+            /```[ \t]*([a-zA-Z0-9_+#.-]*)[ \t]*\r?\n?([\s\S]*?)```/g;
+
+        let match;
+
+        while (
+            (match = re.exec(source)) !== null
+        ) {
+            const language =
+                String(match[1] || '')
+                    .trim();
+
+            const raw =
+                String(match[2] || '')
+                    .replace(/^\n/, '')
+                    .replace(/\n$/, '');
+
+            const detected =
+                aiSafeProjectFileName(
+                    aiDetectFileName(raw)
+                );
+
+            if (!detected) continue;
+
+            files.push({
+                name: detected,
+                language,
+                content:
+                    aiStripFileNameMarker(raw)
+            });
+        }
+
+        return files;
+    }
+
+    function aiMergeProjectFilesFromText(text = '') {
+        const files =
+            aiExtractProjectFiles(text);
+
+        for (const file of files) {
+            aiProjectFiles[file.name] = {
+                name: file.name,
+                language: file.language,
+                content: file.content,
+                updatedAt:
+                    Date.now()
+            };
+        }
+
+        if (files.length) {
+            saveAiProject();
+            renderAiProjectToolbar();
+        }
+
+        return files;
+    }
+
+    function renderAiProjectToolbar() {
+        const website =
+            aiMode === 'website';
+
+        const toolbar =
+            $ai('tvkAiProjectToolbar');
+
+        toolbar?.classList.toggle(
+            'hidden',
+            !website
+        );
+
+        if (!website) return;
+
+        const files =
+            Object.values(aiProjectFiles);
+
+        const summary =
+            $ai('tvkAiProjectSummary');
+
+        if (summary) {
+            summary.textContent =
+                files.length
+                    ? `${files.length} ไฟล์พร้อมดาวน์โหลด`
+                    : 'ยังไม่มีไฟล์ในโปรเจกต์';
+        }
+
+        const chips =
+            $ai('tvkAiProjectFileChips');
+
+        if (chips) {
+            chips.innerHTML =
+                files
+                    .sort((a, b) =>
+                        a.name.localeCompare(b.name)
+                    )
+                    .slice(0, 12)
+                    .map(file => `
+                        <span class="shrink-0 inline-flex items-center gap-1.5 rounded-lg bg-gray-50 border border-gray-200 px-2.5 py-1.5 text-[10px] text-gray-600">
+                            <i class="fas fa-file-code text-violet-500"></i>
+                            ${esc(file.name)}
+                        </span>
+                    `)
+                    .join('');
+        }
+
+        $ai('tvkAiContinueBtn')
+            ?.classList.toggle(
+                'hidden',
+                !aiLastResponseIncomplete
+            );
+    }
+
+    window.tvkAiShowProjectFiles = function() {
+        const modal =
+            $ai('tvkAiProjectModal');
+
+        const host =
+            $ai('tvkAiProjectFileList');
+
+        const files =
+            Object.values(
+                aiProjectFiles
+            )
+            .sort((a, b) =>
+                a.name.localeCompare(b.name)
+            );
+
+        if (host) {
+            host.innerHTML =
+                files.length
+                    ? files.map(file => `
+                        <div class="flex items-center gap-3 p-3 rounded-2xl border border-gray-200">
+                            <span class="w-10 h-10 rounded-xl bg-violet-50 text-violet-600 flex items-center justify-center shrink-0">
+                                <i class="fas fa-file-code"></i>
+                            </span>
+                            <div class="min-w-0 flex-1">
+                                <b class="block text-sm text-gray-800 truncate">${esc(file.name)}</b>
+                                <small class="text-[10px] text-gray-400">${esc(file.language || 'text')} • ${file.content.length.toLocaleString()} chars</small>
+                            </div>
+                            <button type="button" onclick="tvkAiDownloadProjectFile('${file.name.replace(/'/g, "\\'")}')" class="px-2.5 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-xs font-bold">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    `).join('')
+                    : '<div class="py-12 text-center text-gray-400 text-sm">ยังไม่มีไฟล์ในโปรเจกต์</div>';
+        }
+
+        modal?.classList.remove(
+            'hidden'
+        );
+        modal?.classList.add(
+            'flex'
+        );
+    };
+
+    window.tvkAiDownloadProjectFile = function(name) {
+        const file =
+            aiProjectFiles[
+                String(name || '')
+            ];
+
+        if (!file) return;
+
+        const blob =
+            new Blob(
+                [file.content],
+                {
+                    type:
+                        'text/plain;charset=utf-8'
+                }
+            );
+
+        const url =
+            URL.createObjectURL(blob);
+
+        const a =
+            document.createElement('a');
+
+        a.href = url;
+        a.download = file.name;
+
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        setTimeout(
+            () =>
+                URL.revokeObjectURL(url),
+            1000
+        );
+    };
+
+    window.tvkAiDownloadProjectZip = async function() {
+        const files =
+            Object.values(
+                aiProjectFiles
+            );
+
+        if (!files.length) {
+            window.Swal?.fire(
+                'ยังไม่มีไฟล์',
+                'ให้ TVK69 AI สร้างไฟล์ใน Website Builder Mode ก่อน',
+                'info'
+            );
+            return;
+        }
+
+        const token =
+            String(
+                localStorage.getItem(
+                    'realtimeToken'
+                ) || ''
+            );
+
+        if (!token) {
+            window.Swal?.fire(
+                'กรุณาเข้าสู่ระบบใหม่',
+                'ไม่พบ Realtime Token',
+                'warning'
+            );
+            return;
+        }
+
+        try {
+            const response =
+                await fetch(
+                    'https://livev1.tvk69.site/ai/project/zip',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Authorization':
+                                `Bearer ${token}`,
+                            'Content-Type':
+                                'application/json'
+                        },
+                        body:
+                            JSON.stringify({
+                                projectName:
+                                    'tvk69-ai-project',
+                                files:
+                                    files.map(file => ({
+                                        name:
+                                            file.name,
+                                        content:
+                                            file.content
+                                    }))
+                            })
+                    }
+                );
+
+            if (!response.ok) {
+                const error =
+                    await response.json()
+                        .catch(() => null);
+
+                throw new Error(
+                    error?.message ||
+                    `ZIP HTTP ${response.status}`
+                );
+            }
+
+            const blob =
+                await response.blob();
+
+            const url =
+                URL.createObjectURL(blob);
+
+            const a =
+                document.createElement('a');
+
+            a.href = url;
+            a.download =
+                'tvk69-ai-project.zip';
+
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            setTimeout(
+                () =>
+                    URL.revokeObjectURL(url),
+                1500
+            );
+
+        } catch (error) {
+            window.Swal?.fire(
+                'สร้าง ZIP ไม่สำเร็จ',
+                error?.message ||
+                'เกิดข้อผิดพลาด',
+                'error'
+            );
+        }
+    };
+
+    window.tvkAiContinueProject = function() {
+        const names =
+            Object.keys(
+                aiProjectFiles
+            );
+
+        const input =
+            $ai('tvkAiInput');
+
+        if (!input) return;
+
+        input.value =
+            names.length
+                ? `สร้างต่อจากงานเดิมที่ค้างอยู่ ให้ส่งเฉพาะไฟล์ที่ยังไม่ครบหรือไฟล์ที่ถูกตัดกลางคัน โดยคงโครงสร้างโปรเจกต์เดิมไว้ ไฟล์ที่มีแล้ว: ${names.join(', ')}`
+                : 'สร้างต่อจากคำตอบก่อนหน้าที่ถูกตัดกลางคัน และส่งไฟล์ที่เหลือให้ครบ';
+
+        input.focus();
+    };
+
+    function saveAiMode() {
+        try {
+            localStorage.setItem(
+                AI_MODE_STORAGE_KEY,
+                aiMode
+            );
+        } catch (_) {}
+    }
+
+    function loadAiMode() {
+        try {
+            const saved = String(
+                localStorage.getItem(
+                    AI_MODE_STORAGE_KEY
+                ) || 'general'
+            );
+
+            aiMode =
+                saved === 'website'
+                    ? 'website'
+                    : 'general';
+        } catch (_) {
+            aiMode = 'general';
+        }
+    }
+
+    function renderAiMode() {
+        const active =
+            aiMode === 'website';
+
+        const bar =
+            $ai('tvkAiWebsiteModeBar');
+
+        const btn =
+            $ai('tvkAiWebsiteModeBtn');
+
+        bar?.classList.toggle(
+            'hidden',
+            !active
+        );
+
+        renderAiProjectToolbar();
+
+        if (btn) {
+            btn.className =
+                active
+                    ? 'px-3 py-2 rounded-xl bg-violet-600 text-white text-xs font-bold transition'
+                    : 'px-3 py-2 rounded-xl bg-violet-50 hover:bg-violet-100 text-violet-700 text-xs font-bold transition';
+
+            btn.innerHTML =
+                active
+                    ? '<i class="fas fa-lock mr-1"></i>Website Mode'
+                    : '<i class="fas fa-code mr-1"></i>สร้างเว็บไซต์';
+        }
+    }
+
+    window.tvkAiToggleWebsiteMode = function(forceValue) {
+        const enable =
+            typeof forceValue === 'boolean'
+                ? forceValue
+                : aiMode !== 'website';
+
+        aiMode =
+            enable
+                ? 'website'
+                : 'general';
+
+        saveAiMode();
+        renderAiMode();
+
+        const input =
+            $ai('tvkAiInput');
+
+        if (
+            enable &&
+            input &&
+            !String(input.value || '').trim()
+        ) {
+            input.value =
+                'ต่อไปนี้คุณคือ ai ที่เก่งเรื่องการสร้างเว็บไซต์ แอพพลิเคชั่น เว็บแอพและ google scripts เป็นอย่างมาก มีผลงานที่ประจักษ์มากมายโดยมีดีไซน์การออกแบบชั้นเลิศ โดยเมื่อมีผู้ใช้งานอยากให้เว็บให้คุณถามรายละเอียดดังนี้ 1.เว็บไซต์เกี่ยวกับอะไร 2.มีผู้ใช้งานกี่ระดับของเว็บไซต์นี้ 3.ฐานข้อมูลเป็นแบบไหนเช่น mysql, mssql เป็นต้น 4.ต้องการไฟล์ zip พร้อมเปิดเลยไหม หรือ ส่งแยกกันแต่ละ step เมื่อได้ข้อมูลครบทั้งหมดแล้ว ให้เริ่มสร้างตามลำดับที่ผู้ใช้งานแจ้ง โดยเว็บไซต์ หรือ แอพพลิเคชั่น Google Script คุณสามารถใช้ Twilandcss, bootstrap, icons8, faicons ในการตกแต่งได้โดยมีข้อแม้คือต้องรองรับขนาดหน้าจอทุกอุปกรณ์ และ ระบบต้องครบถ้วนสมบรูณ์ crud ได้และอธิบายการทำงานได้ใน readme.md';
+        }
+
+        input?.focus();
+    };
+
+    window.tvkAiEnableWebsiteMode = function() {
+        tvkAiToggleWebsiteMode(true);
+
+        const input =
+            $ai('tvkAiInput');
+
+        if (input) {
+            input.value =
+                'ต่อไปนี้คุณคือ ai ที่เก่งเรื่องการสร้างเว็บไซต์ แอพพลิเคชั่น เว็บแอพและ google scripts เป็นอย่างมาก มีผลงานที่ประจักษ์มากมายโดยมีดีไซน์การออกแบบชั้นเลิศ โดยเมื่อมีผู้ใช้งานอยากให้เว็บให้คุณถามรายละเอียดดังนี้ 1.เว็บไซต์เกี่ยวกับอะไร 2.มีผู้ใช้งานกี่ระดับของเว็บไซต์นี้ 3.ฐานข้อมูลเป็นแบบไหนเช่น mysql, mssql เป็นต้น 4.ต้องการไฟล์ zip พร้อมเปิดเลยไหม หรือ ส่งแยกกันแต่ละ step เมื่อได้ข้อมูลครบทั้งหมดแล้ว ให้เริ่มสร้างตามลำดับที่ผู้ใช้งานแจ้ง โดยเว็บไซต์ หรือ แอพพลิเคชั่น Google Script คุณสามารถใช้ Twilandcss, bootstrap, icons8, faicons ในการตกแต่งได้โดยมีข้อแม้คือต้องรองรับขนาดหน้าจอทุกอุปกรณ์ และ ระบบต้องครบถ้วนสมบรูณ์ crud ได้และอธิบายการทำงานได้ใน readme.md';
+            input.focus();
+        }
+    };
+
+    function aiAuthToken() {
+        return String(
+            localStorage.getItem(
+                'realtimeToken'
+            ) || ''
+        );
+    }
+
+    async function aiHistoryRequest(path, options = {}) {
+        const token =
+            aiAuthToken();
+
+        if (!token) {
+            throw new Error(
+                'ไม่พบ Realtime Token กรุณาเข้าสู่ระบบใหม่'
+            );
+        }
+
+        const response =
+            await fetch(
+                `${AI_HISTORY_BASE}${path}`,
+                {
+                    ...options,
+                    headers: {
+                        'Authorization':
+                            `Bearer ${token}`,
+                        ...(options.body
+                            ? {
+                                'Content-Type':
+                                    'application/json'
+                              }
+                            : {}),
+                        ...(options.headers || {})
+                    }
+                }
+            );
+
+        const result =
+            await response
+                .json()
+                .catch(() => null);
+
+        if (
+            !response.ok ||
+            !result?.success
+        ) {
+            throw new Error(
+                result?.message ||
+                `AI History HTTP ${response.status}`
+            );
+        }
+
+        return result;
+    }
+
+    function aiConversationDate(value) {
+        if (!value) return '';
+
+        const date =
+            new Date(
+                String(value)
+                    .replace(' ', 'T')
+            );
+
+        if (
+            Number.isNaN(
+                date.getTime()
+            )
+        ) {
+            return '';
+        }
+
+        return date.toLocaleString(
+            'th-TH',
+            {
+                day: 'numeric',
+                month: 'short',
+                hour: '2-digit',
+                minute: '2-digit'
+            }
+        );
+    }
+
+    function renderAiConversationTitle() {
+        const el =
+            $ai(
+                'tvkAiCurrentConversationTitle'
+            );
+
+        if (!el) return;
+
+        const show =
+            Boolean(
+                aiConversationId &&
+                aiConversationTitle
+            );
+
+        el.classList.toggle(
+            'hidden',
+            !show
+        );
+
+        el.textContent =
+            show
+                ? `ห้อง: ${aiConversationTitle}`
+                : '';
+    }
+
+    async function loadAiConversationList(silent = false) {
+        try {
+            const result =
+                await aiHistoryRequest(
+                    '/conversations'
+                );
+
+            aiConversationList =
+                Array.isArray(
+                    result.conversations
+                )
+                    ? result.conversations
+                    : [];
+
+            renderAiHistoryList();
+
+            return aiConversationList;
+
+        } catch (error) {
+            if (!silent) {
+                const host =
+                    $ai(
+                        'tvkAiHistoryList'
+                    );
+
+                if (host) {
+                    host.innerHTML = `
+                        <div class="py-10 px-4 text-center text-red-400 text-sm">
+                            <i class="fas fa-triangle-exclamation mb-2"></i>
+                            <p>${esc(error?.message || 'โหลดประวัติไม่สำเร็จ')}</p>
+                        </div>
+                    `;
+                }
+            }
+
+            throw error;
+        }
+    }
+
+    function renderAiHistoryList() {
+        const host =
+            $ai(
+                'tvkAiHistoryList'
+            );
+
+        if (!host) return;
+
+        const query =
+            String(
+                $ai(
+                    'tvkAiHistorySearch'
+                )?.value || ''
+            )
+            .trim()
+            .toLowerCase();
+
+        const items =
+            aiConversationList
+                .filter(item => {
+                    if (!query) return true;
+
+                    return [
+                        item.title,
+                        item.preview
+                    ]
+                    .some(value =>
+                        String(value || '')
+                            .toLowerCase()
+                            .includes(query)
+                    );
+                });
+
+        if (!items.length) {
+            host.innerHTML = `
+                <div class="py-14 px-4 text-center text-gray-400">
+                    <div class="w-14 h-14 rounded-2xl bg-gray-100 mx-auto flex items-center justify-center mb-3">
+                        <i class="far fa-comments text-xl"></i>
+                    </div>
+                    <p class="text-sm font-bold text-gray-500">ยังไม่มีประวัติ</p>
+                    <p class="text-xs mt-1">เริ่มคุยกับ TVK69 AI แล้วห้องจะถูกบันทึกอัตโนมัติ</p>
+                </div>
+            `;
+            return;
+        }
+
+        host.innerHTML =
+            items.map(item => {
+                const active =
+                    Number(item.id) ===
+                    Number(
+                        aiConversationId ||
+                        0
+                    );
+
+                return `
+                    <div class="group rounded-2xl border ${active ? 'border-violet-200 bg-violet-50' : 'border-transparent hover:bg-gray-50'} p-2 mb-1 transition">
+                        <div class="flex items-start gap-2">
+                            <button type="button"
+                                onclick="tvkAiOpenConversation(${Number(item.id)})"
+                                class="min-w-0 flex-1 text-left px-2 py-1.5">
+                                <div class="flex items-center gap-2">
+                                    <i class="fas ${item.mode === 'website' ? 'fa-code text-violet-500' : 'fa-message text-gray-400'} text-xs"></i>
+                                    <b class="text-sm text-gray-800 truncate">${esc(item.title || 'แชทใหม่')}</b>
+                                </div>
+                                <p class="text-[11px] text-gray-400 truncate mt-1">${esc(item.preview || 'ยังไม่มีข้อความ')}</p>
+                                <p class="text-[9px] text-gray-300 mt-1">${esc(aiConversationDate(item.updated_at))}</p>
+                            </button>
+
+                            <div class="flex items-center gap-1 shrink-0">
+                                <button type="button"
+                                    onclick="event.stopPropagation();tvkAiRenameConversation(${Number(item.id)})"
+                                    class="w-9 h-9 rounded-xl hover:bg-white text-gray-400 hover:text-violet-600 transition"
+                                    title="เปลี่ยนชื่อห้อง">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                                <button type="button"
+                                    onclick="event.stopPropagation();tvkAiDeleteConversation(${Number(item.id)})"
+                                    class="w-9 h-9 rounded-xl hover:bg-red-50 text-gray-400 hover:text-red-600 transition"
+                                    title="ลบห้อง">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            })
+            .join('');
+    }
+
+    window.tvkAiOpenHistory = async function() {
+        const drawer =
+            $ai(
+                'tvkAiHistoryDrawer'
+            );
+
+        const backdrop =
+            $ai(
+                'tvkAiHistoryBackdrop'
+            );
+
+        drawer?.classList.remove(
+            '-translate-x-full'
+        );
+
+        backdrop?.classList.remove(
+            'hidden'
+        );
+
+        await loadAiConversationList()
+            .catch(() => {});
+
+        setTimeout(
+            () =>
+                $ai(
+                    'tvkAiHistorySearch'
+                )?.focus(),
+            120
+        );
+    };
+
+    window.tvkAiCloseHistory = function() {
+        $ai(
+            'tvkAiHistoryDrawer'
+        )?.classList.add(
+            '-translate-x-full'
+        );
+
+        $ai(
+            'tvkAiHistoryBackdrop'
+        )?.classList.add(
+            'hidden'
+        );
+    };
+
+    window.tvkAiOpenConversation = async function(id) {
+        try {
+            const result =
+                await aiHistoryRequest(
+                    `/conversations/${Number(id)}`
+                );
+
+            const conversation =
+                result.conversation;
+
+            aiConversationId =
+                Number(
+                    conversation.id
+                );
+
+            aiConversationTitle =
+                String(
+                    conversation.title ||
+                    'แชทใหม่'
+                );
+
+            aiMode =
+                conversation.mode ===
+                    'website'
+                    ? 'website'
+                    : 'general';
+
+            aiMessages =
+                (result.messages || [])
+                    .map(message => ({
+                        id:
+                            Number(
+                                message.id
+                            ),
+                        role:
+                            message.role,
+                        content:
+                            String(
+                                message.content ||
+                                ''
+                            ),
+                        created_at:
+                            message.created_at
+                    }));
+
+            saveHistory();
+            saveAiMode();
+
+            renderAiMode();
+            renderAiProjectToolbar();
+            renderAiConversationTitle();
+            render();
+
+            tvkAiCloseHistory();
+
+            requestAnimationFrame(
+                () => {
+                    const host =
+                        $ai(
+                            'tvkAiMessages'
+                        );
+
+                    if (host) {
+                        host.scrollTop =
+                            host.scrollHeight;
+                    }
+                }
+            );
+
+        } catch (error) {
+            window.Swal?.fire(
+                'เปิดประวัติไม่สำเร็จ',
+                error?.message ||
+                'เกิดข้อผิดพลาด',
+                'error'
+            );
+        }
+    };
+
+    window.tvkAiRenameConversation = async function(id) {
+        const item =
+            aiConversationList.find(
+                row =>
+                    Number(row.id) ===
+                    Number(id)
+            );
+
+        if (!item) {
+            await loadAiConversationList(true)
+                .catch(() => {});
+        }
+
+        const current =
+            aiConversationList.find(
+                row =>
+                    Number(row.id) ===
+                    Number(id)
+            );
+
+        if (!current) {
+            return Swal.fire(
+                'ไม่พบห้องแชท',
+                'กรุณาเปิดประวัติใหม่อีกครั้ง',
+                'warning'
+            );
+        }
+
+        const rename =
+            await Swal.fire({
+                title:
+                    'เปลี่ยนชื่อห้อง',
+                input:
+                    'text',
+                inputValue:
+                    current.title || '',
+                inputAttributes: {
+                    maxlength: 120
+                },
+                showCancelButton:
+                    true,
+                confirmButtonText:
+                    'บันทึก',
+                cancelButtonText:
+                    'ยกเลิก',
+                inputValidator:
+                    value =>
+                        !String(value || '').trim()
+                            ? 'กรุณาใส่ชื่อห้อง'
+                            : undefined
+            });
+
+        if (!rename.isConfirmed) {
+            return;
+        }
+
+        try {
+            const title =
+                String(
+                    rename.value ||
+                    ''
+                ).trim();
+
+            await aiHistoryRequest(
+                `/conversations/${Number(id)}`,
+                {
+                    method:
+                        'PATCH',
+                    body:
+                        JSON.stringify({
+                            title
+                        })
+                }
+            );
+
+            if (
+                Number(
+                    aiConversationId
+                ) ===
+                Number(id)
+            ) {
+                aiConversationTitle =
+                    title;
+
+                renderAiConversationTitle();
+            }
+
+            await loadAiConversationList(
+                true
+            );
+
+            Swal.fire({
+                icon:
+                    'success',
+                title:
+                    'เปลี่ยนชื่อแล้ว',
+                timer:
+                    900,
+                showConfirmButton:
+                    false
+            });
+
+        } catch (error) {
+            Swal.fire(
+                'เปลี่ยนชื่อไม่สำเร็จ',
+                error?.message || '',
+                'error'
+            );
+        }
+    };
+
+    window.tvkAiDeleteConversation = async function(id) {
+        const item =
+            aiConversationList.find(
+                row =>
+                    Number(row.id) ===
+                    Number(id)
+            );
+
+        const confirm =
+            await Swal.fire({
+                icon:
+                    'warning',
+                title:
+                    'ลบห้องแชทนี้?',
+                text:
+                    item?.title
+                        ? `ห้อง "${item.title}" และข้อความทั้งหมดจะถูกลบถาวร`
+                        : 'ข้อความทั้งหมดในห้องนี้จะถูกลบถาวร',
+                showCancelButton:
+                    true,
+                confirmButtonText:
+                    'ลบห้อง',
+                cancelButtonText:
+                    'ยกเลิก',
+                confirmButtonColor:
+                    '#dc2626',
+                focusCancel:
+                    true
+            });
+
+        if (!confirm.isConfirmed) {
+            return;
+        }
+
+        try {
+            await aiHistoryRequest(
+                `/conversations/${Number(id)}`,
+                {
+                    method:
+                        'DELETE'
+                }
+            );
+
+            if (
+                Number(
+                    aiConversationId
+                ) ===
+                Number(id)
+            ) {
+                aiConversationId = null;
+                aiConversationTitle = '';
+                aiMessages = [];
+                aiMode = 'general';
+                aiLastResponseIncomplete = false;
+
+                saveHistory();
+                saveAiMode();
+                renderAiMode();
+                renderAiConversationTitle();
+                renderAiProjectToolbar();
+                render();
+            }
+
+            aiConversationList =
+                aiConversationList.filter(
+                    row =>
+                        Number(row.id) !==
+                        Number(id)
+                );
+
+            renderAiHistoryList();
+
+            await loadAiConversationList(
+                true
+            ).catch(() => {});
+
+            Swal.fire({
+                icon:
+                    'success',
+                title:
+                    'ลบห้องแล้ว',
+                timer:
+                    900,
+                showConfirmButton:
+                    false
+            });
+
+        } catch (error) {
+            Swal.fire(
+                'ลบไม่สำเร็จ',
+                error?.message || '',
+                'error'
+            );
+        }
+    };
+
+    // Backward compatibility for older onclick handlers.
+    window.tvkAiConversationMenu = async function(event, id) {
+        event?.stopPropagation?.();
+
+        const result =
+            await Swal.fire({
+                title:
+                    'จัดการห้อง',
+                showCancelButton:
+                    true,
+                showDenyButton:
+                    true,
+                confirmButtonText:
+                    'เปลี่ยนชื่อ',
+                denyButtonText:
+                    'ลบห้อง',
+                cancelButtonText:
+                    'ยกเลิก'
+            });
+
+        if (result.isConfirmed) {
+            return tvkAiRenameConversation(id);
+        }
+
+        if (result.isDenied) {
+            return tvkAiDeleteConversation(id);
+        }
+    };
+
+    window.tvkAiEditMessage = async function(messageId) {
+        const message =
+            aiMessages.find(
+                item =>
+                    Number(item.id) ===
+                    Number(messageId)
+            );
+
+        if (!message) {
+            return Swal.fire(
+                'ไม่พบข้อความ',
+                'กรุณาเปิดห้องจากประวัติใหม่อีกครั้ง',
+                'warning'
+            );
+        }
+
+        if (message.role !== 'user') {
+            return Swal.fire(
+                'ไม่อนุญาต',
+                'ข้อความของ TVK69 AI ไม่สามารถแก้ไขได้',
+                'info'
+            );
+        }
+
+        const isUser = true;
+
+        const edit =
+            await Swal.fire({
+                title:
+                    isUser
+                        ? 'แก้ไขข้อความของคุณ'
+                        : 'แก้ไขข้อความ TVK69 AI',
+                input:
+                    'textarea',
+                inputValue:
+                    message.content,
+                inputAttributes: {
+                    maxlength: 12000,
+                    rows: 8
+                },
+                showCancelButton:
+                    true,
+                confirmButtonText:
+                    isUser
+                        ? 'บันทึกและให้ AI ตอบใหม่'
+                        : 'บันทึกข้อความ AI',
+                cancelButtonText:
+                    'ยกเลิก',
+                inputValidator:
+                    value =>
+                        !String(value || '').trim()
+                            ? 'ข้อความต้องไม่ว่าง'
+                            : undefined
+            });
+
+        if (!edit.isConfirmed) {
+            return;
+        }
+
+        const conversationId =
+            Number(
+                aiConversationId ||
+                0
+            );
+
+        try {
+            const result =
+                await aiHistoryRequest(
+                    `/messages/${Number(messageId)}`,
+                    {
+                        method:
+                            'PATCH',
+                        body:
+                            JSON.stringify({
+                                content:
+                                    String(
+                                        edit.value ||
+                                        ''
+                                    ).trim()
+                            })
+                    }
+                );
+
+            if (!conversationId) {
+                throw new Error(
+                    'ไม่พบ Conversation ID'
+                );
+            }
+
+            await tvkAiOpenConversation(
+                conversationId
+            );
+
+            // User prompt edit changes the branch,
+            // so regenerate an assistant response automatically.
+            if (
+                isUser &&
+                result.truncated
+            ) {
+                await tvkAiRegenerate();
+            }
+
+        } catch (error) {
+            Swal.fire(
+                'แก้ไขไม่สำเร็จ',
+                error?.message || '',
+                'error'
+            );
+        }
+    };
+
+    window.tvkAiDeleteMessage = async function(messageId) {
+        const message =
+            aiMessages.find(
+                item =>
+                    Number(item.id) ===
+                    Number(messageId)
+            );
+
+        if (!message) {
+            return Swal.fire(
+                'ไม่พบข้อความ',
+                'กรุณาเปิดห้องจากประวัติใหม่อีกครั้ง',
+                'warning'
+            );
+        }
+
+        if (message.role !== 'user') {
+            return Swal.fire(
+                'ไม่อนุญาต',
+                'ข้อความของ TVK69 AI ไม่สามารถลบได้',
+                'info'
+            );
+        }
+
+        const confirm =
+            await Swal.fire({
+                icon:
+                    'warning',
+                title:
+                    'ลบข้อความนี้?',
+                text:
+                    'ข้อความนี้และคำตอบหลังจากจุดนี้จะถูกลบ เพื่อรักษาลำดับการสนทนา',
+                showCancelButton:
+                    true,
+                confirmButtonText:
+                    'ลบ',
+                cancelButtonText:
+                    'ยกเลิก',
+                confirmButtonColor:
+                    '#dc2626'
+            });
+
+        if (
+            !confirm.isConfirmed
+        ) {
+            return;
+        }
+
+        try {
+            const conversationId =
+                Number(
+                    aiConversationId ||
+                    0
+                );
+
+            await aiHistoryRequest(
+                `/messages/${Number(messageId)}`,
+                {
+                    method:
+                        'DELETE'
+                }
+            );
+
+            if (conversationId) {
+                await tvkAiOpenConversation(
+                    conversationId
+                );
+            }
+
+            await loadAiConversationList(
+                true
+            );
+
+        } catch (error) {
+            Swal.fire(
+                'ลบข้อความไม่สำเร็จ',
+                error?.message || '',
+                'error'
+            );
+        }
+    };
+
+    function saveHistory() {
+        try {
+            localStorage.setItem(
+                AI_STORAGE_KEY,
+                JSON.stringify(aiMessages.slice(-30))
+            );
+        } catch (_) {}
+    }
+
+    function loadHistory() {
+        try {
+            const data = JSON.parse(localStorage.getItem(AI_STORAGE_KEY) || '[]');
+            aiMessages = Array.isArray(data)
+                ? data.filter(x => x && ['user', 'assistant'].includes(x.role) && typeof x.content === 'string').slice(-30)
+                : [];
+        } catch (_) {
+            aiMessages = [];
+        }
+    }
+
+    function welcomeHtml() {
+        return `
+            <div class="max-w-xl mx-auto text-center py-14">
+                <div class="relative w-20 h-20 mx-auto mb-5">
+                    <img src="https://cdn.tvk69.site/tvk69.png" alt="TVK69 AI"
+                        class="w-20 h-20 rounded-[28px] object-cover border border-violet-100 shadow-lg shadow-violet-100">
+                    <span class="absolute -right-1 -bottom-1 w-7 h-7 rounded-full bg-violet-600 text-white border-[3px] border-white flex items-center justify-center text-[10px]">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                    </span>
+                </div>
+                <h3 class="text-xl font-black text-gray-900">สวัสดี ผมคือ TVK69 AI</h3>
+                <p class="text-sm text-gray-400 mt-2 leading-relaxed">ถามเรื่องเรียน สรุปเนื้อหา ช่วยคิดไอเดีย เขียนโค้ด หรือถามเรื่องทั่วไปได้เลย</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-6 text-left">
+                    <button type="button" onclick="tvkAiUsePrompt('ช่วยสรุปเรื่องที่ฉันกำลังเรียนให้เข้าใจง่าย')" class="p-3 rounded-2xl bg-white border border-gray-200 hover:border-violet-300 hover:bg-violet-50 transition"><b class="text-xs text-gray-700">📚 ช่วยสรุปบทเรียน</b></button>
+                    <button type="button" onclick="tvkAiUsePrompt('ช่วยตรวจและอธิบายโค้ดนี้ให้หน่อย')" class="p-3 rounded-2xl bg-white border border-gray-200 hover:border-violet-300 hover:bg-violet-50 transition"><b class="text-xs text-gray-700">💻 ช่วยเรื่องโค้ด</b></button>
+                    <button type="button" onclick="tvkAiEnableWebsiteMode()" class="p-3 rounded-2xl bg-white border border-gray-200 hover:border-violet-300 hover:bg-violet-50 transition">
+                        <b class="text-xs text-gray-700">🌐 สร้างเว็บไซต์</b>
+                        <p class="text-[11px] text-gray-400 mt-1">เปิด Website Builder Mode</p>
+                    </button>
+                    <button type="button" onclick="tvkAiUsePrompt('ช่วยเขียนข้อความให้เป็นทางการ')" class="p-3 rounded-2xl bg-white border border-gray-200 hover:border-violet-300 hover:bg-violet-50 transition"><b class="text-xs text-gray-700">✍️ ช่วยเขียนข้อความ</b></button>
+                </div>
+            </div>
+        `;
+    }
+
+    function render() {
+        const host = $ai('tvkAiMessages');
+        if (!host) return;
+
+        if (!aiMessages.length) {
+            host.innerHTML = welcomeHtml();
+            return;
+        }
+
+        host.innerHTML = aiMessages.map(msg => {
+            const mine = msg.role === 'user';
+            return `
+                <div class="flex ${mine ? 'justify-end' : 'justify-start'}">
+                    <div class="max-w-[88%] sm:max-w-[78%]">
+                        ${!mine ? `<div class="flex items-center gap-2 mb-1.5 ml-1">
+                            <div class="relative shrink-0">
+                                <img src="https://cdn.tvk69.site/tvk69.png" alt="TVK69 AI" class="w-7 h-7 rounded-lg object-cover border border-violet-100">
+                                <span class="absolute -right-1 -bottom-1 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white" title="ออนไลน์"></span>
+                            </div>
+                            <span class="text-[11px] font-black text-violet-600">TVK69 AI</span>
+                            <span class="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-blue-500 text-white text-[7px]" title="ยืนยันแล้ว">
+                                <i class="fas fa-check"></i>
+                            </span>
+                            <span class="text-[9px] font-bold text-emerald-500">ออนไลน์</span>
+                        </div>` : ''}
+                        <div class="${mine ? 'bg-violet-600 text-white rounded-[22px] rounded-br-md' : 'bg-white border border-gray-200 text-gray-800 rounded-[22px] rounded-bl-md shadow-sm'} px-4 py-3 text-sm leading-relaxed break-words">
+                            ${mine ? esc(msg.content).replace(/\n/g, '<br>') : formatAi(msg.content)}
+                        </div>
+                        ${mine && msg.id ? `
+                            <div class="mt-1 flex justify-end pr-1 gap-1">
+                                <button type="button" onclick="tvkAiEditMessage(${Number(msg.id)})"
+                                    class="px-2 py-1 rounded-lg text-[10px] text-gray-400 hover:text-violet-600 hover:bg-violet-50 transition">
+                                    <i class="fas fa-pen mr-1"></i>แก้ไข
+                                </button>
+                                <button type="button" onclick="tvkAiDeleteMessage(${Number(msg.id)})"
+                                    class="px-2 py-1 rounded-lg text-[10px] text-gray-400 hover:text-red-600 hover:bg-red-50 transition">
+                                    <i class="fas fa-trash mr-1"></i>ลบ
+                                </button>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        requestAnimationFrame(() => {
+            host.scrollTop = host.scrollHeight;
+        });
+    }
+
+    function thinking(show) {
+        const host = $ai('tvkAiMessages');
+        $ai('tvkAiThinking')?.remove();
+
+        if (!show || !host) return;
+
+        host.insertAdjacentHTML(
+            'beforeend',
+            `<div id="tvkAiThinking" class="flex justify-start">
+                <div>
+                    <div class="flex items-center gap-2 mb-1.5 ml-1">
+                        <div class="relative shrink-0">
+                            <img src="https://cdn.tvk69.site/tvk69.png" alt="TVK69 AI"
+                                class="w-7 h-7 rounded-lg object-cover border border-violet-100">
+                            <span class="absolute -right-1 -bottom-1 w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white" title="ออนไลน์"></span>
+                        </div>
+                        <span class="text-[11px] font-black text-violet-600">TVK69 AI</span>
+                        <span class="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-blue-500 text-white text-[7px]" title="ยืนยันแล้ว"><i class="fas fa-check"></i></span>
+                    </div>
+                    <div class="bg-white border border-gray-200 rounded-[22px] rounded-bl-md shadow-sm px-4 py-3">
+                        <div class="flex items-center gap-1.5 text-violet-500">
+                            <span class="tvk-chat-typing-dot"></span>
+                            <span class="tvk-chat-typing-dot"></span>
+                            <span class="tvk-chat-typing-dot"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+        );
+
+        host.scrollTop = host.scrollHeight;
+    }
+
+    window.tvkAiUsePrompt = text => {
+        const input = $ai('tvkAiInput');
+        if (!input) return;
+        input.value = String(text || '');
+        input.focus();
+    };
+
+    window.tvkAiNewChat = () => {
+        aiConversationId = null;
+        aiConversationTitle = '';
+        aiMessages = [];
+        aiMode = 'general';
+        aiLastResponseIncomplete = false;
+
+        saveHistory();
+        saveAiMode();
+
+        renderAiMode();
+        renderAiConversationTitle();
+        renderAiProjectToolbar();
+        render();
+
+        $ai('tvkAiInput')?.focus();
+    };
+
+    window.tvkAiRegenerate = async function() {
+        if (
+            aiBusy ||
+            !aiConversationId ||
+            !aiMessages.length
+        ) {
+            return;
+        }
+
+        const last =
+            aiMessages[
+                aiMessages.length - 1
+            ];
+
+        if (
+            last?.role !== 'user'
+        ) {
+            return;
+        }
+
+        const token =
+            aiAuthToken();
+
+        if (!token) {
+            return;
+        }
+
+        aiBusy = true;
+
+        $ai(
+            'tvkAiSendBtn'
+        )?.setAttribute(
+            'disabled',
+            'disabled'
+        );
+
+        thinking(true);
+
+        try {
+            const response =
+                await fetch(
+                    AI_ENDPOINT,
+                    {
+                        method:
+                            'POST',
+                        headers: {
+                            'Authorization':
+                                `Bearer ${token}`,
+                            'Content-Type':
+                                'application/json'
+                        },
+                        body:
+                            JSON.stringify({
+                                conversationId:
+                                    aiConversationId,
+                                mode:
+                                    aiMode,
+                                reuseLastUser:
+                                    true
+                            })
+                    }
+                );
+
+            const result =
+                await response
+                    .json()
+                    .catch(() => null);
+
+            if (
+                !response.ok ||
+                !result?.success
+            ) {
+                throw new Error(
+                    result?.message ||
+                    `AI HTTP ${response.status}`
+                );
+            }
+
+            aiConversationId =
+                Number(
+                    result.conversationId ||
+                    aiConversationId
+                );
+
+            aiConversationTitle =
+                String(
+                    result.title ||
+                    aiConversationTitle ||
+                    'แชทใหม่'
+                );
+
+            aiMessages.push({
+                id:
+                    Number(
+                        result.assistantMessageId ||
+                        0
+                    ) || undefined,
+                role:
+                    'assistant',
+                content:
+                    String(
+                        result.message ||
+                        ''
+                    )
+            });
+
+            aiLastResponseIncomplete =
+                Boolean(
+                    result.incomplete
+                );
+
+            if (
+                aiMode === 'website'
+            ) {
+                aiMergeProjectFilesFromText(
+                    result.message || ''
+                );
+            }
+
+            saveHistory();
+            renderAiConversationTitle();
+            renderAiProjectToolbar();
+
+            await loadAiConversationList(
+                true
+            );
+
+        } catch (error) {
+            Swal.fire(
+                'ให้ AI ตอบใหม่ไม่สำเร็จ',
+                error?.message || '',
+                'error'
+            );
+
+        } finally {
+            thinking(false);
+            render();
+
+            aiBusy = false;
+
+            $ai(
+                'tvkAiSendBtn'
+            )?.removeAttribute(
+                'disabled'
+            );
+        }
+    };
+
+    window.tvkAiSend = async () => {
+        if (aiBusy) return;
+
+        const input = $ai('tvkAiInput');
+        const text = String(input?.value || '').trim();
+        if (!text) return;
+
+        const token = String(localStorage.getItem('realtimeToken') || '');
+        if (!token) {
+            window.Swal?.fire('กรุณาเข้าสู่ระบบใหม่', 'ไม่พบ Realtime Token สำหรับ TVK69 AI', 'warning');
+            return;
+        }
+
+        aiBusy = true;
+        $ai('tvkAiSendBtn')?.setAttribute('disabled', 'disabled');
+
+        input.value = '';
+        input.style.height = 'auto';
+
+        aiMessages.push({ role: 'user', content: text });
+        aiMessages = aiMessages.slice(-20);
+        saveHistory();
+        render();
+        thinking(true);
+
+        try {
+            const response = await fetch(AI_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    conversationId:
+                        aiConversationId,
+                    messages:
+                        aiMessages.slice(-16),
+                    mode:
+                        aiMode
+                })
+            });
+
+            const result = await response.json().catch(() => null);
+
+            if (!response.ok || !result?.success) {
+                throw new Error(result?.message || `AI HTTP ${response.status}`);
+            }
+
+            const assistantText =
+                String(
+                    result.message || ''
+                );
+
+            aiConversationId =
+                Number(
+                    result.conversationId ||
+                    aiConversationId ||
+                    0
+                ) || null;
+
+            aiConversationTitle =
+                String(
+                    result.title ||
+                    aiConversationTitle ||
+                    text.slice(0, 60) ||
+                    'แชทใหม่'
+                );
+
+            const userMessage =
+                [...aiMessages]
+                    .reverse()
+                    .find(
+                        item =>
+                            item.role ===
+                            'user' &&
+                            !item.id
+                    );
+
+            if (
+                userMessage &&
+                result.userMessageId
+            ) {
+                userMessage.id =
+                    Number(
+                        result.userMessageId
+                    );
+            }
+
+            aiMessages.push({
+                id:
+                    Number(
+                        result.assistantMessageId ||
+                        0
+                    ) || undefined,
+                role:
+                    'assistant',
+                content:
+                    assistantText
+            });
+
+            renderAiConversationTitle();
+
+            await loadAiConversationList(
+                true
+            );
+
+            aiLastResponseIncomplete =
+                Boolean(
+                    result.incomplete
+                );
+
+            if (
+                aiMode === 'website'
+            ) {
+                aiMergeProjectFilesFromText(
+                    assistantText
+                );
+            }
+
+            aiMessages = aiMessages.slice(-20);
+            saveHistory();
+            renderAiProjectToolbar();
+
+        } catch (error) {
+            aiLastResponseIncomplete = true;
+
+            aiMessages.push({
+                role: 'assistant',
+                content: `ขออภัย การสร้างคำตอบหยุดกลางคัน กรุณากดปุ่ม "สร้างต่อ" เพื่อให้ผมทำงานต่อจากเดิม\n\nรายละเอียด: ${error?.message || 'Unknown error'}`
+            });
+
+            renderAiProjectToolbar();
+            saveHistory();
+
+        } finally {
+            thinking(false);
+            render();
+            aiBusy = false;
+            $ai('tvkAiSendBtn')?.removeAttribute('disabled');
+            input.focus();
+        }
+    };
+
+    window.tvkAiShowHome = function() {
+        aiConversationId = null;
+        aiConversationTitle = '';
+        aiMessages = [];
+        aiMode = 'general';
+        aiLastResponseIncomplete = false;
+
+        try {
+            localStorage.removeItem(
+                AI_STORAGE_KEY
+            );
+
+            localStorage.setItem(
+                AI_MODE_STORAGE_KEY,
+                'general'
+            );
+        } catch (_) {}
+
+        renderAiMode();
+        renderAiConversationTitle();
+        renderAiProjectToolbar();
+        render();
+
+        const input =
+            $ai('tvkAiInput');
+
+        if (input) {
+            input.value = '';
+            input.style.height = 'auto';
+        }
+    };
+
+    window.initTvkAi = () => {
+        if (!window.__tvkAiInitialized) {
+            window.__tvkAiInitialized = true;
+
+            loadAiMode();
+            loadAiProject();
+
+            const input =
+                $ai('tvkAiInput');
+
+            $ai(
+                'tvkAiHistorySearch'
+            )?.addEventListener(
+                'input',
+                renderAiHistoryList
+            );
+
+            input?.addEventListener(
+                'input',
+                event => {
+                    const el =
+                        event.currentTarget;
+
+                    el.style.height =
+                        'auto';
+
+                    el.style.height =
+                        Math.min(
+                            el.scrollHeight,
+                            160
+                        ) + 'px';
+                }
+            );
+
+            input?.addEventListener(
+                'keydown',
+                event => {
+                    if (
+                        event.key === 'Enter' &&
+                        !event.shiftKey
+                    ) {
+                        event.preventDefault();
+                        tvkAiSend();
+                    }
+                }
+            );
+        }
+
+        tvkAiShowHome();
+
+        loadAiConversationList(
+            true
+        ).catch(() => {});
+
+        setTimeout(
+            () =>
+                $ai('tvkAiInput')
+                    ?.focus(),
+            100
+        );
+    };
+})();
+</script>
+
+<script id="tvk-chat-script">
+(()=>{'use strict';
+window.chatRooms=[];window.chatContacts=[];window.chatMessagesByRoom=new Map();window.chatCurrentRoomId=null;window.chatCurrentRoom=null;window.chatPending=[];window.chatMode='direct';window.chatModalMode='create';let inited=false,typingTimer=null;
+const chatDesktopMedia=window.matchMedia('(min-width: 1024px)');
+function chatApplyResponsiveLayout(){
+    const sidebar=$('chatSidebar'),
+        conversation=$('chatConversation'),
+        pane=$('chatPane'),
+        empty=$('chatEmpty'),
+        desktop=chatDesktopMedia.matches,
+        hasRoom=Number(window.chatCurrentRoomId||0)>0;
+
+    if(!sidebar||!conversation)return;
+
+    if(desktop){
+        sidebar.classList.remove('chat-mobile-hidden','hidden');
+        conversation.classList.remove('chat-mobile-hidden','hidden');
+        if(hasRoom){
+            empty?.classList.add('hidden');
+            pane?.classList.remove('hidden');
+        }else{
+            pane?.classList.add('hidden');
+            empty?.classList.remove('hidden');
+        }
+        return;
+    }
+
+    if(hasRoom){
+        sidebar.classList.add('chat-mobile-hidden');
+        sidebar.classList.remove('hidden');
+        conversation.classList.remove('chat-mobile-hidden','hidden');
+        empty?.classList.add('hidden');
+        pane?.classList.remove('hidden');
+    }else{
+        sidebar.classList.remove('chat-mobile-hidden','hidden');
+        conversation.classList.add('chat-mobile-hidden');
+        pane?.classList.add('hidden');
+    }
+}
+
+function chatResetInputHeight(){
+    const input=$('chatInput');
+    if(!input)return;
+    input.style.height='auto';
+    input.style.height=Math.min(input.scrollHeight,window.innerWidth<641?96:112)+'px';
+}
+
+let chatResizeRaf=0;
+function chatScheduleResponsiveLayout(){
+    cancelAnimationFrame(chatResizeRaf);
+    chatResizeRaf=requestAnimationFrame(()=>{
+        chatApplyResponsiveLayout();
+        chatResetInputHeight();
+        window.refreshChatPresenceDots?.();
+    });
+}
+
+if(typeof chatDesktopMedia.addEventListener==='function'){
+    chatDesktopMedia.addEventListener('change',chatScheduleResponsiveLayout);
+}else if(typeof chatDesktopMedia.addListener==='function'){
+    chatDesktopMedia.addListener(chatScheduleResponsiveLayout);
+}
+window.addEventListener('resize',chatScheduleResponsiveLayout,{passive:true});
+window.addEventListener('orientationchange',()=>setTimeout(chatScheduleResponsiveLayout,80),{passive:true});
+window.visualViewport?.addEventListener('resize',chatScheduleResponsiveLayout,{passive:true});
+
+const $=id=>document.getElementById(id), E=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const chatVerified=(profile={},sid='')=>{
+    try{
+        if(typeof isVerifiedProfile==='function') return isVerifiedProfile(profile,sid);
+    }catch(_){}
+    const email=String(profile?.gmail||profile?.email||profile?.sender_gmail||'').trim();
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+};
+const chatVerifiedHtml=(profile={},sid='',cls='text-[11px]')=>
+    chatVerified(profile,sid)
+    ? `<span class="inline-flex items-center justify-center text-blue-500 ${cls}" title="ยืนยันอีเมลแล้ว" aria-label="ยืนยันอีเมลแล้ว"><i class="fas fa-circle-check"></i></span>`
+    : '';
+const chatName=(name,profile={},sid='',cls='')=>
+    `<span class="inline-flex items-center gap-1 min-w-0"><span class="${cls}">${E(name||sid||'')}</span>${chatVerifiedHtml(profile,sid,'text-[0.9em] shrink-0')}</span>`;
+
+const img=o=>{const s=String(o?.student_id||'');const r=String(o?.images||'').trim();if(/^https?:\/\//i.test(r))return r;if(r&&r!=='-')return r.startsWith('/')?'https://tvk69.site'+r:'https://tvk69.site/'+r.replace(/^\/+/, '');return s?`https://rms.nwvoc.ac.th/files/importpicstd/01/${encodeURIComponent(s)}.jpg`:'https://cdn.tvk69.site/tvk69.png'};
+const tm=v=>{const d=new Date(String(v||'').replace(' ','T'));return isNaN(d)?'':d.toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'})};
+const rn=r=>r?.room_type==='group'?(r.name||'กลุ่มแชท'):(r?.peer_student_name||r?.peer_student_id||'แชทส่วนตัว');
+const ra=r=>r?.room_type==='group'?'https://cdn.tvk69.site/tvk69.png':img({student_id:r?.peer_student_id,images:r?.peer_images});
+function badge(){const n=(window.chatRooms||[]).reduce((a,r)=>a+Number(r.unread_count||0),0),b=$('chatUnreadBadge');if(b){b.textContent=n>99?'99+':String(n);b.classList.toggle('hidden',n<1)}}
+function rooms(){const h=$('chatRoomList');if(!h)return;const q=String($('chatRoomSearch')?.value||'').toLowerCase();const a=(window.chatRooms||[]).filter(r=>!q||rn(r).toLowerCase().includes(q)||String(r.last_message_text||'').toLowerCase().includes(q));h.innerHTML=a.length?a.map(r=>`<button onclick="chatOpenRoom(${Number(r.id)})" class="w-full text-left p-4 border-b flex gap-3 ${Number(r.id)===Number(window.chatCurrentRoomId)?'bg-emerald-50':'hover:bg-gray-50'}"><div class="relative"><img src="${E(ra(r))}" class="w-12 h-12 rounded-full object-cover border" onerror="this.src='https://cdn.tvk69.site/tvk69.png'">${r.room_type==='direct'&&onlineStudentIds?.has(String(r.peer_student_id||''))?'<span class="absolute right-0 bottom-0 w-3 h-3 rounded-full bg-green-500 border-2 border-white"></span>':''}</div><div class="min-w-0 flex-1"><div class="flex justify-between gap-2"><b class="text-sm truncate flex items-center gap-1">${chatName(rn(r),{gmail:r.peer_gmail},r.peer_student_id,'truncate')}</b><small class="text-[10px] text-gray-400">${E(tm(r.last_message_at||r.updated_at))}</small></div><div class="flex gap-2 mt-1"><span class="text-xs text-gray-400 truncate flex-1">${E(r.last_message_text||((r.last_message_type&&r.last_message_type!=='text')?'📎 ไฟล์แนบ':'เริ่มการสนทนา'))}</span>${Number(r.unread_count)>0?`<span class="bg-emerald-500 text-white rounded-full px-2 text-[10px]">${Number(r.unread_count)}</span>`:''}</div></div></button>`).join(''):'<div class="p-8 text-center text-gray-400">ยังไม่มีแชท</div>'}
+window.chatLoadRooms=async(silent=false)=>{try{const r=await socketRequest('chat:list',{},15000);if(!r?.success)throw Error(r?.message||'โหลดแชทไม่สำเร็จ');window.chatRooms=r.rooms||[];badge();rooms();const c=window.chatRooms.find(x=>Number(x.id)===Number(window.chatCurrentRoomId));if(c){window.chatCurrentRoom=c;head(c)}return window.chatRooms}catch(e){if(!silent&&$('chatRoomList'))$('chatRoomList').innerHTML=`<div class="p-8 text-center text-red-400">${E(e.message)}</div>`;throw e}};
+function head(r){
+$('chatAvatar').src=ra(r);
+$('chatTitle').textContent=rn(r);
+const verified=r.room_type==='direct'&&chatVerified({gmail:r.peer_gmail},r.peer_student_id);
+$('chatTitleVerified')?.classList.toggle('hidden',!verified);
+$('chatHeaderVerified')?.classList.toggle('hidden',!verified);
+$('chatHeaderVerified')?.classList.toggle('flex',verified);
+$('chatSubtitle').textContent=r.room_type==='group'?`${Number(r.member_count||0)} สมาชิก`:(typeof formatOfflineDuration==='function'?formatOfflineDuration(String(r.peer_student_id||'')):String(r.peer_student_id||''));
+$('chatAddMember')?.classList.toggle('hidden',!(r.room_type==='group'&&['owner','admin'].includes(String(r.my_role))))
+
+window.refreshChatPresenceDots?.();
+}
+window.chatOpenImageViewer=function(file={},message={}){
+    const modal=document.getElementById('chatImageViewer'),
+        imgEl=document.getElementById('chatImageViewerImg'),
+        nameEl=document.getElementById('chatImageViewerName'),
+        metaEl=document.getElementById('chatImageViewerMeta'),
+        downloadBtn=document.getElementById('chatImageViewerDownload');
+
+    if(!modal||!imgEl)return;
+
+    const url=String(file.url||''),
+        name=String(file.original_name||'รูปภาพ'),
+        sender=String(message.sender_name||message.sender_id||''),
+        when=typeof tm==='function'?tm(message.created_at):'';
+
+    imgEl.src=url;
+    imgEl.alt=name;
+
+    if(nameEl)nameEl.textContent=name;
+
+    if(metaEl){
+        metaEl.textContent=[sender,when].filter(Boolean).join(' • ');
+    }
+
+    if(downloadBtn){
+        downloadBtn.onclick=()=>window.chatDownloadFile?.(url,name);
+    }
+
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.classList.add('overflow-hidden');
+};
+
+window.chatCloseImageViewer=function(){
+    const modal=document.getElementById('chatImageViewer'),
+        imgEl=document.getElementById('chatImageViewerImg');
+
+    modal?.classList.add('hidden');
+    modal?.classList.remove('flex');
+
+    if(imgEl)imgEl.src='';
+
+    document.body.classList.remove('overflow-hidden');
+};
+
+window.chatDownloadFile=async function(url,name='download'){
+    try{
+        const response=await fetch(url,{credentials:'omit'});
+
+        if(!response.ok)throw new Error(`HTTP ${response.status}`);
+
+        const blob=await response.blob(),
+            objectUrl=URL.createObjectURL(blob),
+            a=document.createElement('a');
+
+        a.href=objectUrl;
+        a.download=name||'download';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        setTimeout(()=>URL.revokeObjectURL(objectUrl),1500);
+    }catch(_){
+        const a=document.createElement('a');
+        a.href=url;
+        a.download=name||'download';
+        a.target='_blank';
+        a.rel='noopener';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    }
+};
+
+document.addEventListener('keydown',event=>{
+    if(event.key==='Escape'&&!document.getElementById('chatImageViewer')?.classList.contains('hidden')){
+        window.chatCloseImageViewer?.();
+    }
+});
+
+document.getElementById('chatImageViewer')?.addEventListener('click',event=>{
+    if(event.target===event.currentTarget){
+        window.chatCloseImageViewer?.();
+    }
+});
+
+function filehtml(f,m={}){
+    const n=E(f.original_name||'ไฟล์'),
+        u=E(f.url||''),
+        mime=String(f.mime_type||''),
+        isImage=mime.startsWith('image/');
+
+    if(isImage){
+        const payload=E(JSON.stringify({
+            url:f.url||'',
+            original_name:f.original_name||'รูปภาพ'
+        })),
+        messagePayload=E(JSON.stringify({
+            sender_name:m.sender_name||'',
+            sender_id:m.sender_id||'',
+            created_at:m.created_at||''
+        }));
+
+        return `<div class="mt-2 max-w-[300px]">
+            <button type="button"
+                onclick='window.chatOpenImageViewer?.(JSON.parse(this.dataset.file),JSON.parse(this.dataset.message))'
+                data-file="${payload}"
+                data-message="${messagePayload}"
+                class="group block w-full overflow-hidden rounded-2xl border border-black/5 bg-black/5 text-left"
+                title="เปิดดูรูป">
+                <img src="${u}" alt="${n}"
+                    class="max-h-72 w-full object-cover transition duration-200 group-hover:scale-[1.02]"
+                    onerror="this.closest('button').innerHTML='<div class=&quot;p-3 text-xs&quot;>ไฟล์ภาพหมดอายุแล้ว</div>'">
+            </button>
+            <div class="mt-1 px-1">
+                <span class="block text-[10px] opacity-60 truncate">${n}</span>
+            </div>
+        </div>`;
+    }
+
+    return `<a href="${u}" target="_blank" rel="noopener"
+        class="mt-2 flex items-center gap-3 rounded-2xl px-3 py-2.5 border border-black/10 bg-white/70 text-gray-700 max-w-[300px]">
+        <span class="w-9 h-9 rounded-xl bg-gray-100 flex items-center justify-center shrink-0"><i class="fas fa-file"></i></span>
+        <span class="min-w-0">
+            <b class="block text-xs truncate">${n}</b>
+            <small class="text-[10px] text-gray-400">${Number(f.size_bytes||0)?(Number(f.size_bytes)/1024/1024).toFixed(2)+' MB':'ไฟล์แนบ'}</small>
+        </span>
+    </a>`;
+}
+
+function mhtml(m){
+    const mine=String(m.sender_id)===String(currentSaveMeId||''),
+        fs=Array.isArray(m.files)?m.files:[],
+        expired=['file','mixed'].includes(String(m.message_type||''))&&!fs.length,
+        avatar=img({student_id:m.sender_id,images:m.sender_images}),
+        verified=chatVerified(m,m.sender_id),
+        online=typeof onlineStudentIds!=='undefined'&&onlineStudentIds?.has(String(m.sender_id||'')),
+        avatarHtml=`<div class="relative shrink-0 self-end mb-0.5" data-chat-avatar-student="${E(m.sender_id||'')}">
+            <img src="${E(avatar)}"
+                class="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-white shadow-sm bg-white"
+                alt="${E(m.sender_name||m.sender_id||'ผู้ใช้')}"
+                onerror="this.src='https://cdn.tvk69.site/tvk69.png'">
+            <span class="chat-presence-dot absolute -right-0.5 -bottom-0.5 w-3.5 h-3.5 rounded-full ${online?'bg-green-500':'bg-gray-300'} border-2 border-white shadow-sm"
+                title="${online?'ออนไลน์':'ออฟไลน์'}"></span>
+            ${verified?'<span class="absolute right-3 -bottom-0.5 w-4 h-4 rounded-full bg-white text-blue-500 text-[11px] flex items-center justify-center shadow-sm" title="ยืนยันอีเมลแล้ว"><i class="fas fa-circle-check"></i></span>':''}
+        </div>`;
+
+    return `<div data-chat-message-id="${Number(m.id)}" class="flex items-end gap-2 ${mine?'justify-end':'justify-start'}">
+        ${mine?'':avatarHtml}
+        <div class="max-w-[78%] sm:max-w-[66%]">
+            ${mine?'':`<div class="ml-2 mb-1 text-[10px] text-gray-400">${chatName(m.sender_name||m.sender_id,m,m.sender_id,'')}</div>`}
+            <div class="px-3.5 py-2.5 ${mine?'bg-emerald-500 text-white rounded-[22px] rounded-br-md':'bg-white border rounded-[22px] rounded-bl-md shadow-sm'}">
+                ${m.message_text?`<div class="text-sm whitespace-pre-wrap break-words">${E(m.message_text)}</div>`:''}
+                ${fs.map(f=>filehtml(f,m)).join('')}
+                ${expired?`<div class="mt-2 text-xs opacity-70"><i class="fas fa-clock mr-1"></i>ไฟล์หมดอายุและถูกลบแล้ว</div>`:''}
+                <div class="text-[9px] mt-1 text-right opacity-60">${E(tm(m.created_at))}</div>
+            </div>
+        </div>
+        ${mine?avatarHtml:''}
+    </div>`
+}
+function rendermsg(rid){const h=$('chatMessages'),a=window.chatMessagesByRoom.get(Number(rid))||[];h.innerHTML=a.length?a.map(mhtml).join(''):'<div class="text-center py-16 text-gray-400">ยังไม่มีข้อความ เริ่มทักได้เลย</div>';requestAnimationFrame(()=>h.scrollTop=h.scrollHeight)}
+window.chatAppend=(m,s=false)=>{const h=$('chatMessages');if(!h||Number(m.room_id)!==Number(window.chatCurrentRoomId)||h.querySelector(`[data-chat-message-id="${Number(m.id)}"]`))return;if(!h.querySelector('[data-chat-message-id]'))h.innerHTML='';h.insertAdjacentHTML('beforeend',mhtml(m));if(s)requestAnimationFrame(()=>h.scrollTop=h.scrollHeight)};
+window.chatOpenRoom=async id=>{
+    id=Number(id);
+    window.chatCurrentRoomId=id;
+    window.chatCurrentRoom=window.chatRooms.find(r=>Number(r.id)===id)||null;
+
+    chatApplyResponsiveLayout();
+
+    if(window.chatCurrentRoom)head(window.chatCurrentRoom);
+    rooms();
+
+    const messages=$('chatMessages');
+    if(messages)messages.innerHTML='<div class="text-center py-12 text-gray-400"><i class="fas fa-spinner fa-spin"></i></div>';
+
+    try{
+        const r=await socketRequest('chat:messages',{roomId:id,limit:80},15000);
+        if(!r?.success)throw Error(r?.message||'โหลดข้อความไม่สำเร็จ');
+
+        window.chatCurrentRoom=r.room||window.chatCurrentRoom;
+        if(window.chatCurrentRoom)head(window.chatCurrentRoom);
+
+        window.chatMessagesByRoom.set(id,r.messages||[]);
+        rendermsg(id);
+
+        const last=(r.messages||[]).at(-1);
+        if(last)chatMarkRead(id,last.id);
+
+        chatApplyResponsiveLayout();
+        window.refreshChatPresenceDots?.();
+    }catch(e){
+        if(messages)messages.innerHTML=`<div class="text-center py-12 text-red-400">${E(e.message)}</div>`;
+    }
+};
+window.chatBack=()=>{
+    if(chatDesktopMedia.matches)return;
+    window.chatCurrentRoomId=null;
+    window.chatCurrentRoom=null;
+    chatApplyResponsiveLayout();
+    rooms();
+};
+window.chatMarkRead=async(rid,mid)=>{try{await rawSocketRequest('chat:read',{roomId:rid,messageId:mid},5000);const r=window.chatRooms.find(x=>Number(x.id)===Number(rid));if(r)r.unread_count=0;badge();rooms()}catch(_){}};
+async function upload(f){if(f.size>10*1024*1024)throw Error(`${f.name}: ไฟล์เกิน 10 MB`);const t=localStorage.getItem('realtimeToken')||'';const r=await fetch(`${REALTIME_URL}/chat/upload?name=${encodeURIComponent(f.name)}`,{method:'POST',headers:{Authorization:`Bearer ${t}`,'Content-Type':f.type||'application/octet-stream'},body:f});const j=await r.json().catch(()=>null);if(!r.ok||!j?.success)throw Error(j?.message||'อัปโหลดไฟล์ไม่สำเร็จ');return j.file}
+function pending(){const a=window.chatPending||[];$('chatPendingWrap')?.classList.toggle('hidden',!a.length);if($('chatPending'))$('chatPending').innerHTML=a.map((f,i)=>`<div class="shrink-0 max-w-48 border rounded-xl px-3 py-2 flex gap-2"><i class="fas fa-file"></i><span class="text-xs truncate">${E(f.original_name)}</span><button onclick="chatRemovePending(${i})"><i class="fas fa-times"></i></button></div>`).join('')}
+window.chatRemovePending=i=>{window.chatPending.splice(Number(i),1);pending()};
+async function handlefiles(list){for(const f of [...list].slice(0,5)){try{const x=await upload(f);window.chatPending.push(x);pending()}catch(e){window.Swal?Swal.fire('อัปโหลดไม่สำเร็จ',e.message,'error'):alert(e.message)}}if($('chatFile'))$('chatFile').value=''}
+window.chatSend=async()=>{const rid=Number(window.chatCurrentRoomId||0),inp=$('chatInput'),text=String(inp?.value||'').trim(),fs=window.chatPending||[];if(!rid||(!text&&!fs.length))return;$('chatSend')?.setAttribute('disabled','disabled');try{const r=await socketRequest('chat:send',{roomId:rid,text,fileIds:fs.map(f=>Number(f.id))},20000);if(!r?.success)throw Error(r?.message||'ส่งข้อความไม่สำเร็จ');if(inp){inp.value='';inp.style.height='auto'}window.chatPending=[];pending();if(r.message){const a=window.chatMessagesByRoom.get(rid)||[];if(!a.some(x=>Number(x.id)===Number(r.message.id))){a.push(r.message);window.chatMessagesByRoom.set(rid,a)}chatAppend(r.message,true)}chatLoadRooms(true).catch(()=>{})}catch(e){window.Swal&&Swal.fire('ส่งข้อความไม่สำเร็จ',e.message,'error')}finally{$('chatSend')?.removeAttribute('disabled')}};
+function typing(){const rid=Number(window.chatCurrentRoomId||0);if(!rid||!realtimeSocket?.connected)return;realtimeSocket.emit('chat:typing',{roomId:rid,typing:true});clearTimeout(typingTimer);typingTimer=setTimeout(()=>realtimeSocket?.emit('chat:typing',{roomId:rid,typing:false}),1200)}
+async function contacts(){const r=await socketRequest('chat:contacts',{},12000);if(!r?.success)throw Error(r?.message||'โหลดรายชื่อไม่สำเร็จ');window.chatContacts=r.contacts||[];return window.chatContacts}
+function rendercontacts(){const h=$('chatContacts');if(!h)return;const q=String($('chatContactSearch')?.value||'').toLowerCase(),existing=new Set((window.chatCurrentRoom?.members||[]).map(m=>String(m.student_id)));const a=(window.chatContacts||[]).filter(c=>(window.chatModalMode!=='add'||!existing.has(String(c.student_id)))&&(!q||String(c.student_name||'').toLowerCase().includes(q)||String(c.student_id).toLowerCase().includes(q)));h.innerHTML=a.length?a.map(c=>window.chatMode==='direct'&&window.chatModalMode==='create'?`<button onclick="chatDirect('${E(c.student_id)}')" class="w-full p-3 flex gap-3 hover:bg-gray-50 rounded-xl text-left"><img src="${E(img(c))}" class="w-11 h-11 rounded-full object-cover border"><div><b class="text-sm">${chatName(c.student_name||c.student_id,c,c.student_id,'truncate')}</b><p class="text-xs text-gray-400">${E(c.student_id)} • ${c.online?'ออนไลน์':'ออฟไลน์'}</p></div></button>`:`<label class="w-full p-3 flex gap-3 hover:bg-gray-50 rounded-xl"><input class="chatCheck" type="checkbox" value="${E(c.student_id)}"><img src="${E(img(c))}" class="w-11 h-11 rounded-full object-cover border"><div><b class="text-sm">${chatName(c.student_name||c.student_id,c,c.student_id,'truncate')}</b><p class="text-xs text-gray-400">${E(c.student_id)}</p></div></label>`).join(''):'<div class="p-8 text-center text-gray-400">ไม่พบรายชื่อ</div>'}
+window.chatOpenModal=async mode=>{window.chatModalMode='create';window.chatMode=mode||'direct';$('chatModal')?.classList.remove('hidden');$('chatModal')?.classList.add('flex');$('chatModeTabs')?.classList.remove('hidden');$('chatAddFooter')?.classList.add('hidden');chatSetMode(window.chatMode);if(!window.chatContacts.length)await contacts();rendercontacts()};
+window.chatOpenAddMembers=async()=>{window.chatModalMode='add';window.chatMode='group';$('chatModalTitle').textContent='เพิ่มสมาชิก';$('chatModalSub').textContent='เลือกเพื่อนที่ต้องการเพิ่มเข้ากลุ่ม';$('chatModeTabs')?.classList.add('hidden');$('chatGroupNameWrap')?.classList.add('hidden');$('chatGroupFooter')?.classList.add('hidden');$('chatAddFooter')?.classList.remove('hidden');$('chatModal')?.classList.remove('hidden');$('chatModal')?.classList.add('flex');if(!window.chatContacts.length)await contacts();rendercontacts()};
+window.chatCloseModal=()=>{$('chatModal')?.classList.add('hidden');$('chatModal')?.classList.remove('flex')};
+window.chatSetMode=m=>{window.chatMode=m==='group'?'group':'direct';const g=window.chatMode==='group';$('chatGroupNameWrap')?.classList.toggle('hidden',!g);$('chatGroupFooter')?.classList.toggle('hidden',!g);$('chatModalTitle').textContent=g?'สร้างกลุ่มใหม่':'เริ่มแชทใหม่';$('chatModeDirect').className=`px-4 py-2 rounded-xl text-sm font-bold ${g?'bg-gray-100':'bg-emerald-500 text-white'}`;$('chatModeGroup').className=`px-4 py-2 rounded-xl text-sm font-bold ${g?'bg-emerald-500 text-white':'bg-gray-100'}`;rendercontacts()};
+window.chatDirect=async sid=>{const r=await socketRequest('chat:direct',{targetStudentId:sid},12000);if(r?.success){chatCloseModal();await chatLoadRooms(true);chatOpenRoom(r.roomId)}};
+window.chatCreateGroup=async()=>{const name=String($('chatGroupName')?.value||'').trim(),members=[...document.querySelectorAll('.chatCheck:checked')].map(e=>e.value);if(!name||!members.length)return;const r=await socketRequest('chat:group-create',{name,memberIds:members},15000);if(r?.success){$('chatGroupName').value='';chatCloseModal();await chatLoadRooms(true);chatOpenRoom(r.roomId)}};
+window.chatAddMembers=async()=>{const members=[...document.querySelectorAll('.chatCheck:checked')].map(e=>e.value),rid=Number(window.chatCurrentRoomId||0);if(!rid||!members.length)return;const r=await socketRequest('chat:group-add',{roomId:rid,memberIds:members},15000);if(r?.success){chatCloseModal();await chatLoadRooms(true);chatOpenRoom(rid)}};
+
+window.chatNotifyNewMessage=(roomId,message,isCurrentRoom=false)=>{
+    if(isCurrentRoom && !document.hidden) return;
+
+    const senderId=String(message?.sender_id||'');
+    const senderName=String(message?.sender_name||senderId||'ข้อความใหม่');
+    const verified=chatVerified(message,senderId);
+    const text=String(message?.message_text||'').trim();
+    const preview=text||(Array.isArray(message?.files)&&message.files.length?'📎 ส่งไฟล์แนบ':'มีข้อความใหม่');
+    const avatar=img({student_id:senderId,images:message?.sender_images});
+
+    try{ if(typeof playSound==='function') playSound('notification'); }catch(_){}
+
+    const host=$('chatToastHost');
+    if(host){
+        const id='chat-toast-'+Date.now()+'-'+Math.random().toString(36).slice(2);
+        host.insertAdjacentHTML('beforeend',`
+            <button id="${id}" type="button"
+                onclick="showTab('chat');chatOpenRoom(${Number(roomId)});this.remove();"
+                class="tvk-chat-toast pointer-events-auto w-full bg-white border border-gray-200 rounded-2xl shadow-xl p-3 flex items-center gap-3 text-left">
+                <div class="relative shrink-0">
+                    <img src="${E(avatar)}" class="w-11 h-11 rounded-full object-cover border border-gray-200" onerror="this.src='https://cdn.tvk69.site/tvk69.png'">
+                    ${verified?'<span class="absolute -right-0.5 -bottom-0.5 bg-white rounded-full text-blue-500 text-xs"><i class="fas fa-circle-check"></i></span>':''}
+                </div>
+                <div class="min-w-0 flex-1">
+                    <div class="flex items-center gap-1">
+                        <b class="text-sm text-gray-900 truncate">${E(senderName)}</b>
+                        ${verified?'<i class="fas fa-circle-check text-blue-500 text-xs shrink-0"></i>':''}
+                    </div>
+                    <p class="text-xs text-gray-500 truncate mt-0.5">${E(preview)}</p>
+                </div>
+                <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
+            </button>
+        `);
+        setTimeout(()=>document.getElementById(id)?.remove(),5000);
+    }
+
+    if('Notification' in window && Notification.permission==='granted' && document.hidden){
+        try{
+            new Notification(`TVK69 Chat • ${senderName}`,{
+                body:preview.slice(0,120),
+                icon:avatar,
+                tag:`tvk69-chat-${roomId}`
+            });
+        }catch(_){}
+    }
+};
+window.initChat=async()=>{
+if('Notification' in window&&Notification.permission==='default'){
+    setTimeout(()=>Notification.requestPermission().catch(()=>{}),1200);
+}
+if(!inited){inited=true;$('chatRoomSearch')?.addEventListener('input',rooms);$('chatContactSearch')?.addEventListener('input',rendercontacts);$('chatFile')?.addEventListener('change',e=>handlefiles(e.target.files));$('chatInput')?.addEventListener('input',e=>{e.currentTarget.style.height='auto';e.currentTarget.style.height=Math.min(e.currentTarget.scrollHeight,window.innerWidth<641?96:112)+'px';typing()});$('chatInput')?.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();chatSend()}});$('chatInput')?.addEventListener('paste',e=>{const fs=[];for(const it of e.clipboardData?.items||[])if(it.kind==='file'&&it.type.startsWith('image/')){const f=it.getAsFile();if(f)fs.push(new File([f],`screenshot-${Date.now()}.png`,{type:f.type||'image/png'}))}if(fs.length){e.preventDefault();handlefiles(fs)}})}await chatLoadRooms().catch(()=>{});chatApplyResponsiveLayout();chatResetInputHeight()};
+})();
+</script>
+
+
+<div id="tvkAiProjectModal" class="fixed inset-0 z-[210] hidden items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+    <div class="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden">
+        <div class="p-5 border-b border-gray-100 flex items-center justify-between">
+            <div>
+                <h3 class="text-lg font-black text-gray-900">ไฟล์ในโปรเจกต์</h3>
+                <p class="text-xs text-gray-400 mt-1">ไฟล์ที่ TVK69 AI สร้างสะสมจากทุกคำตอบ</p>
+            </div>
+            <button type="button" onclick="document.getElementById('tvkAiProjectModal').classList.add('hidden');document.getElementById('tvkAiProjectModal').classList.remove('flex')" class="w-10 h-10 rounded-xl hover:bg-gray-100">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="tvkAiProjectFileList" class="p-4 max-h-[60vh] overflow-y-auto space-y-2"></div>
+        <div class="p-4 border-t border-gray-100">
+            <button type="button" onclick="tvkAiDownloadProjectZip()" class="w-full py-3 rounded-2xl bg-slate-900 hover:bg-black text-white font-bold">
+                <i class="fas fa-file-zipper mr-2"></i>ดาวน์โหลดโปรเจกต์เป็น ZIP
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="tvkAiHistoryBackdrop" class="fixed inset-0 z-[220] hidden bg-black/35 backdrop-blur-[2px]" onclick="tvkAiCloseHistory()"></div>
+
+<aside id="tvkAiHistoryDrawer"
+    class="fixed top-0 left-0 z-[221] h-full w-[min(92vw,390px)] -translate-x-full bg-white border-r border-gray-200 shadow-2xl transition-transform duration-200 flex flex-col">
+    <div class="p-4 border-b border-gray-100">
+        <div class="flex items-center justify-between gap-3">
+            <div>
+                <h3 class="text-lg font-black text-gray-900 flex items-center gap-2">
+                    <i class="fas fa-clock-rotate-left text-violet-600"></i>
+                    ประวัติ TVK69 AI
+                </h3>
+                <p class="text-xs text-gray-400 mt-1">กลับมาเปิดห้องเดิมและคุยต่อได้</p>
+            </div>
+            <button type="button" onclick="tvkAiCloseHistory()" class="w-10 h-10 rounded-xl hover:bg-gray-100 text-gray-500">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <button type="button" onclick="tvkAiNewChat();tvkAiCloseHistory();"
+            class="mt-4 w-full py-2.5 rounded-2xl bg-violet-600 hover:bg-violet-700 text-white text-sm font-bold transition">
+            <i class="fas fa-plus mr-2"></i>แชทใหม่
+        </button>
+
+        <label class="mt-3 flex items-center gap-2 rounded-2xl border border-gray-200 bg-gray-50 px-3 py-2.5">
+            <i class="fas fa-search text-gray-400 text-xs"></i>
+            <input id="tvkAiHistorySearch" type="search" placeholder="ค้นหาประวัติ..."
+                class="w-full bg-transparent outline-none text-sm">
+        </label>
+    </div>
+
+    <div id="tvkAiHistoryList" class="flex-1 overflow-y-auto p-2">
+        <div class="py-12 text-center text-gray-400 text-sm">
+            <i class="fas fa-spinner fa-spin"></i>
+        </div>
+    </div>
+</aside>
+
+<div id="chatImageViewer" class="fixed inset-0 z-[230] hidden items-center justify-center bg-black/90 backdrop-blur-sm p-3 sm:p-6">
+    <button type="button" onclick="window.chatCloseImageViewer?.()"
+        class="absolute top-3 right-3 sm:top-5 sm:right-5 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white transition z-10"
+        title="ปิด">
+        <i class="fas fa-times text-lg"></i>
+    </button>
+
+    <div class="w-full h-full flex flex-col items-center justify-center">
+        <div class="max-w-[95vw] max-h-[78vh] flex items-center justify-center">
+            <img id="chatImageViewerImg"
+                src=""
+                alt="Chat image"
+                class="max-w-full max-h-[78vh] object-contain rounded-2xl shadow-2xl select-none">
+        </div>
+
+        <div class="mt-3 w-full max-w-3xl rounded-2xl bg-white/10 border border-white/10 backdrop-blur px-3 sm:px-4 py-3 text-white">
+            <div class="flex items-center gap-3">
+                <div class="min-w-0 flex-1">
+                    <div id="chatImageViewerName" class="font-bold text-sm truncate">รูปภาพ</div>
+                    <div id="chatImageViewerMeta" class="text-[11px] text-white/60 mt-0.5"></div>
+                </div>
+
+                <button id="chatImageViewerDownload" type="button"
+                    class="shrink-0 px-3 py-2 rounded-xl bg-white text-gray-900 hover:bg-gray-100 text-xs font-bold transition">
+                    <i class="fas fa-download mr-1.5"></i>Download
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 
