@@ -4,7 +4,7 @@ $allowedOrigins = [
     'https://tvk69.site',
     'https://www.tvk69.site',
 	'https://livev1.tvk69.site',
-	'https://api.tvk69.site/'
+	'https://api.tvk69.site'
 ];
 
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
@@ -18,6 +18,7 @@ header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With, X-Admin-CSRF');
 header('Content-Type: application/json; charset=UTF-8');
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 
 
 /* =========================================================
@@ -92,6 +93,40 @@ function checkToken() {
    ========================================================= */
 define('REALTIME_URL', 'https://livev1.tvk69.site/event');
 define('REALTIME_SECRET', getenv('REALTIME_SECRET') ?: 'AYIfwhwEIjt9CXZkoEJ_xAUdBgF4TrfoZhnc8xBcHjw');
+
+
+/* =========================================================
+   TVK69 REALTIME SIGNED TOKEN
+   PHP login -> WSS identity
+   ========================================================= */
+
+function realtimeBase64UrlEncode($value) {
+    return rtrim(strtr(base64_encode($value), '+/', '-_'), '=');
+}
+
+function issueRealtimeToken($studentId, $ttlSeconds = 3600) {
+    $studentId = trim((string)$studentId);
+    if ($studentId === '') return null;
+
+    $payload = [
+        'studentId' => $studentId,
+        'iat' => time(),
+        'exp' => time() + max(300, (int)$ttlSeconds)
+    ];
+
+    $payloadPart = realtimeBase64UrlEncode(
+        json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+    );
+
+    $signature = hash_hmac(
+        'sha256',
+        $payloadPart,
+        REALTIME_SECRET,
+        true
+    );
+
+    return $payloadPart . '.' . realtimeBase64UrlEncode($signature);
+}
 
 function realtimeEmit($event, $data = [], $studentId = null) {
     if (!$event || !function_exists('curl_init')) return false;
@@ -451,6 +486,31 @@ function tvkRecordingCommentRow($db, $id) {
 
 switch ($endpoint) {
 
+    case 'health':
+        try {
+            $db->query("SELECT 1")->fetchColumn();
+
+            echo json_encode([
+                'success' => true,
+                'service' => 'TVK69 API',
+                'database' => true,
+                'timestamp' => gmdate('c')
+            ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        } catch (Throwable $e) {
+            error_log('health: ' . $e->getMessage());
+
+            http_response_code(503);
+
+            echo json_encode([
+                'success' => false,
+                'service' => 'TVK69 API',
+                'database' => false,
+                'message' => 'Database unavailable'
+            ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        }
+        break;
+
+
     case 'recordings':
         if ($method === 'GET') {
             try {
@@ -606,6 +666,129 @@ switch ($endpoint) {
         }
         break;
 
+    case 'session-login':
+        if ($method !== 'POST') {
+            http_response_code(405);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Method not allowed'
+            ], JSON_UNESCAPED_UNICODE);
+            break;
+        }
+
+        try {
+            $raw = file_get_contents('php://input');
+            $input = json_decode($raw ?: '', true);
+
+            if (!is_array($input)) {
+                http_response_code(400);
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Invalid JSON body'
+                ], JSON_UNESCAPED_UNICODE);
+                break;
+            }
+
+            $roomCode = trim((string)($input['roomCode'] ?? ''));
+            $studentId = trim((string)($input['studentId'] ?? ''));
+
+            if ($roomCode === '' || $studentId === '') {
+                http_response_code(422);
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Missing roomCode or studentId'
+                ], JSON_UNESCAPED_UNICODE);
+                break;
+            }
+
+            // ตรวจห้อง + นักศึกษาใน request เดียว
+            $room = $db->query(
+                "SELECT id, room_name
+                 FROM rooms
+                 WHERE room_code = ?
+                 LIMIT 1",
+                [$roomCode]
+            )->fetch(PDO::FETCH_ASSOC);
+
+            if (!$room) {
+                http_response_code(401);
+                echo json_encode([
+                    'success' => false,
+                    'reason' => 'invalid-room',
+                    'message' => 'รหัสเข้าห้องเรียนไม่ถูกต้อง'
+                ], JSON_UNESCAPED_UNICODE);
+                break;
+            }
+
+            $student = $db->query(
+                "SELECT
+                    id,
+                    student_id,
+                    student_name,
+                    images,
+                    gmail
+                 FROM students
+                 WHERE student_id = ?
+                 LIMIT 1",
+                [$studentId]
+            )->fetch(PDO::FETCH_ASSOC);
+
+            if (!$student) {
+                http_response_code(401);
+                echo json_encode([
+                    'success' => false,
+                    'reason' => 'invalid-student',
+                    'message' => 'ไม่พบรหัสนักศึกษานี้ในระบบ TVK69'
+                ], JSON_UNESCAPED_UNICODE);
+                break;
+            }
+
+            // ออก token ใน request เดียว ไม่ต้องเรียก realtime-auth ซ้ำ
+            $realtimeToken = issueRealtimeToken(
+                $studentId,
+                3600
+            );
+
+            // นับการใช้งาน แต่ไม่รอ realtime dashboard push ก่อน Login
+            try {
+                $db->query(
+                    "UPDATE stats
+                     SET usage_count = usage_count + 1
+                     WHERE id = 1"
+                );
+            } catch (Throwable $statsError) {
+                error_log(
+                    'session-login stats: ' .
+                    $statsError->getMessage()
+                );
+            }
+
+            echo json_encode([
+                'success' => true,
+                'room_name' => $room['room_name'],
+                'student' => $student,
+                'realtimeToken' => $realtimeToken,
+                'expiresIn' => 3600
+            ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+            // สำคัญ: ไม่เรียก realtimePushDashboard() ตรงนี้
+            // เพราะจะทำให้ Login ต้องรอ query + HTTP ไป WSS
+
+        } catch (Throwable $e) {
+            error_log(
+                'session-login: ' .
+                $e->getMessage()
+            );
+
+            http_response_code(500);
+
+            echo json_encode([
+                'success' => false,
+                'message' => 'ไม่สามารถเข้าสู่ระบบได้'
+            ], JSON_UNESCAPED_UNICODE);
+        }
+        break;
+
     case 'login':
         if ($method === 'POST') {
             $input = json_decode(file_get_contents("php://input"), true);
@@ -619,6 +802,51 @@ switch ($endpoint) {
             } else {
                 echo json_encode(["success" => false, "message" => "รหัสเข้าห้องเรียนไม่ถูกต้อง"]);
             }
+        }
+        break;
+
+    case 'realtime-auth':
+        if ($method === 'POST') {
+            $in = json_decode(file_get_contents("php://input"), true) ?: [];
+            $roomCode = trim((string)($in['roomCode'] ?? ''));
+            $studentId = trim((string)($in['studentId'] ?? ''));
+
+            if ($roomCode === '' || $studentId === '') {
+                http_response_code(400);
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Missing roomCode or studentId'
+                ], JSON_UNESCAPED_UNICODE);
+                break;
+            }
+
+            $room = $db->query(
+                "SELECT id FROM rooms WHERE room_code = ? LIMIT 1",
+                [$roomCode]
+            )->fetch(PDO::FETCH_ASSOC);
+
+            $student = $db->query(
+                "SELECT student_id, student_name, images FROM students WHERE student_id = ? LIMIT 1",
+                [$studentId]
+            )->fetch(PDO::FETCH_ASSOC);
+
+            if (!$room || !$student) {
+                http_response_code(401);
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Invalid classroom or student identity'
+                ], JSON_UNESCAPED_UNICODE);
+                break;
+            }
+
+            $token = issueRealtimeToken($studentId, 3600);
+
+            echo json_encode([
+                'success' => true,
+                'token' => $token,
+                'expiresIn' => 3600,
+                'student' => $student
+            ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         }
         break;
 
@@ -941,12 +1169,97 @@ switch ($endpoint) {
     case 'program-delete': if ($method==='DELETE') { $in=json_decode(file_get_contents("php://input"),true); $db->query("DELETE FROM programs WHERE id=?",[$in['id']]); realtimeBroadcastUpdate('programs', 'deleted', ['id'=>$in['id']]); echo json_encode(["success"=>true]); } break;
 
     case 'get-bio-data':
-        if ($method === 'POST') {
-            $in = json_decode(file_get_contents("php://input"), true);
-            $bio = $db->query("SELECT * FROM student_bios WHERE student_id = ?", [$in['studentId']])->fetch();
-            $std = $db->query("SELECT student_name, images FROM students WHERE student_id = ?", [$in['studentId']])->fetch();
-            echo json_encode(["success" => true, "bio" => $bio, "student" => $std]);
-        } break;
+        if ($method !== 'POST') {
+            http_response_code(405);
+
+            echo json_encode([
+                'success' => false,
+                'message' => 'Method not allowed'
+            ], JSON_UNESCAPED_UNICODE);
+
+            break;
+        }
+
+        try {
+            $raw = file_get_contents('php://input');
+            $in = json_decode($raw ?: '', true);
+
+            if (!is_array($in)) {
+                http_response_code(400);
+
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Invalid JSON body'
+                ], JSON_UNESCAPED_UNICODE);
+
+                break;
+            }
+
+            $studentId = trim((string)($in['studentId'] ?? ''));
+
+            if ($studentId === '') {
+                http_response_code(422);
+
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'studentId is required'
+                ], JSON_UNESCAPED_UNICODE);
+
+                break;
+            }
+
+            $bio = $db->query(
+                "SELECT *
+                 FROM student_bios
+                 WHERE student_id = ?
+                 LIMIT 1",
+                [$studentId]
+            )->fetch(PDO::FETCH_ASSOC);
+
+            $std = $db->query(
+                "SELECT
+                    id,
+                    student_id,
+                    student_name,
+                    images,
+                    gmail
+                 FROM students
+                 WHERE student_id = ?
+                 LIMIT 1",
+                [$studentId]
+            )->fetch(PDO::FETCH_ASSOC);
+
+            if (!$std) {
+                http_response_code(404);
+
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Student not found'
+                ], JSON_UNESCAPED_UNICODE);
+
+                break;
+            }
+
+            echo json_encode([
+                'success' => true,
+                'bio' => $bio ?: null,
+                'student' => $std
+            ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        } catch (Throwable $e) {
+            error_log(
+                'get-bio-data: ' .
+                $e->getMessage()
+            );
+
+            http_response_code(500);
+
+            echo json_encode([
+                'success' => false,
+                'message' => 'Unable to load bio data'
+            ], JSON_UNESCAPED_UNICODE);
+        }
+        break;
     case 'save-bio':
         if ($method === 'POST') {
             $in = json_decode(file_get_contents("php://input"), true);
@@ -1200,6 +1513,80 @@ switch ($endpoint) {
             }
             echo json_encode($stories);
         } break;
+
+
+    case 'intern-story-upload':
+        if ($method === 'POST') {
+            $studentId = trim((string)($_POST['studentId'] ?? ''));
+
+            if ($studentId === '') {
+                http_response_code(400);
+                echo json_encode([
+                    "success" => false,
+                    "message" => "Missing studentId"
+                ], JSON_UNESCAPED_UNICODE);
+                break;
+            }
+
+            $student = $db->query(
+                "SELECT student_id FROM students WHERE student_id = ? LIMIT 1",
+                [$studentId]
+            )->fetch(PDO::FETCH_ASSOC);
+
+            if (!$student) {
+                http_response_code(403);
+                echo json_encode([
+                    "success" => false,
+                    "message" => "Unknown student"
+                ], JSON_UNESCAPED_UNICODE);
+                break;
+            }
+
+            $uploadedImages = [];
+
+            if (isset($_FILES['images'])) {
+                $files = $_FILES['images'];
+                $count = min(count($files['name']), 4);
+                $allowedExt = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
+                if (!is_dir('../uploads/stories/')) {
+                    mkdir('../uploads/stories/', 0777, true);
+                }
+
+                for ($i = 0; $i < $count; $i++) {
+                    if ((int)$files['error'][$i] !== UPLOAD_ERR_OK) continue;
+
+                    $ext = strtolower(pathinfo($files['name'][$i], PATHINFO_EXTENSION));
+                    if (!in_array($ext, $allowedExt, true)) continue;
+
+                    if ((int)$files['size'][$i] > 10 * 1024 * 1024) continue;
+
+                    $newname =
+                        'story_' .
+                        preg_replace('/[^A-Za-z0-9_-]/', '', $studentId) .
+                        '_' .
+                        time() .
+                        '_' .
+                        bin2hex(random_bytes(4)) .
+                        '_' .
+                        $i .
+                        '.' .
+                        $ext;
+
+                    $dest = '../uploads/stories/' . $newname;
+
+                    if (move_uploaded_file($files['tmp_name'][$i], $dest)) {
+                        $uploadedImages[] = 'uploads/stories/' . $newname;
+                    }
+                }
+            }
+
+            echo json_encode([
+                "success" => true,
+                "images" => $uploadedImages
+            ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        }
+        break;
 
     case 'intern-story-add':
         if ($method === 'POST') {
