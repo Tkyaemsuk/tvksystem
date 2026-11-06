@@ -61,3 +61,5 @@ jobs:
           else
             gh release create "$TAG" "$ZIP_NAME" "$ZIP_NAME.sha256"               --target "${GITHUB_SHA}"               --title "TVK69 v2026.11.06.1"               --notes-file RELEASE_NOTES_v2026.11.06.md
           fi
+
+# trigger: connector-retry-1
